@@ -11,10 +11,10 @@
 </template>
 <script lang="ts">
 import { ref, computed, unref } from "vue";
-import { BasicForm, useForm } from "/@/components/general/Form";
+import { BasicForm, useForm } from "/@/components/general/Form/index";
 import { materialFormSchema } from "./material.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterial, updateMaterial } from "/@/api/product/Material";
+import { insertMaterial, updateMaterial } from "/@/api/material/Material";
 
 export default {
   name: "MaterialModal",
