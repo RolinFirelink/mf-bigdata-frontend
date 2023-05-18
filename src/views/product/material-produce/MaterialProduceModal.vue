@@ -1,5 +1,5 @@
 <!--
- @description: 产品库存表
+ @description: 产品生产表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -11,13 +11,13 @@
 </template>
 <script lang="ts">
 import { ref, computed, unref } from "vue";
-import { BasicForm, useForm } from "/@/components/general/Form/index";
-import { materialStorageFormSchema } from "./materialStorage.data";
+import { BasicForm, useForm } from "/@/components/general/Form";
+import { materialProduceFormSchema } from "./materialProduce.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterialStorage, updateMaterialStorage } from "/@/api/material_storage/MaterialStorage";
+import { insertMaterialProduce, updateMaterialProduce } from "/@/api/product/MaterialProduce";
 
 export default {
-  name: "MaterialStorageModal",
+  name: "MaterialProduceModal",
   components: { BasicModal, BasicForm },
   emits: ["success", "register"],
   setup(_, { emit }) {
@@ -25,7 +25,7 @@ export default {
     const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
       labelWidth: 100,
       baseColProps: { span: 12 },
-      schemas: materialStorageFormSchema,
+      schemas: materialProduceFormSchema,
       showActionButtonGroup: false,
       autoSubmitOnEnter: true
     });
@@ -39,19 +39,19 @@ export default {
         }).then();
       }
     });
-    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品库存表" : "编辑产品库存表"));
+    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品生产表" : "编辑产品生产表"));
 
     async function handleSubmit() {
       let values = await validate();
       setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
-        saveMaterialStorage(updateMaterialStorage, values);
+        saveMaterialProduce(updateMaterialProduce, values);
       } else {
-        saveMaterialStorage(insertMaterialStorage, values);
+        saveMaterialProduce(insertMaterialProduce, values);
       }
     }
 
-    function saveMaterialStorage(save, values) {
+    function saveMaterialProduce(save, values) {
       save(values).then(() => {
         emit("success");
         closeModal();

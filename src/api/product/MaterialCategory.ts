@@ -5,7 +5,7 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialCategory, ReqMaterialCategory, MaterialCategoryPageModel } from "/@/api/material_category/model/MaterialCategoryModel";
+import { MaterialCategory, ReqMaterialCategory, MaterialCategoryPageModel } from "/@/api/product/model/MaterialCategoryModel";
 
 enum Api {
   MaterialCategory = "/material_category/materialCategory"

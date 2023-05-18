@@ -1,5 +1,5 @@
 <!--
- @description: 产品生产表
+ @description: 产品属性表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -8,7 +8,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialProduce:insert')">新增产品生产表</a-button>
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialAttribute:insert')">新增产品属性表</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -17,7 +17,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialProduce:update',
+                auth: 'sys:materialAttribute:update',
                 tooltip: '修改',
               },
               {
@@ -28,7 +28,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialProduce:delete',
+                auth: 'sys:materialAttribute:delete',
                 tooltip: '删除',
               },
             ]"
@@ -36,26 +36,26 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialProduceModal @register="registerModal" @success="handleSuccess" />
+    <MaterialAttributeModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterialProduce, getMaterialProduceList } from "/@/api/material_produce/MaterialProduce";
+import { deleteMaterialAttribute, getMaterialAttributeList } from "/@/api/product/MaterialAttribute";
 import { useModal } from "/@/components/general/Modal";
-import MaterialProduceModal from "./MaterialProduceModal.vue";
-import { columns, searchFormSchema } from "./materialProduce.data";
+import MaterialAttributeModal from "./MaterialAttributeModal.vue";
+import { columns, searchFormSchema } from "./materialAttribute.data";
 import { usePermission } from "/@/hooks/web/UsePermission";
 
 export default {
-  name: "MaterialProduceManagement",
-  components: { BasicTable, MaterialProduceModal, TableAction },
+  name: "MaterialAttributeManagement",
+  components: { BasicTable, MaterialAttributeModal, TableAction },
   setup() {
     const { hasPermission } = usePermission();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload }] = useTable({
-      title: "产品生产表列表",
-      api: getMaterialProduceList,
+      title: "产品属性表列表",
+      api: getMaterialAttributeList,
       columns,
       formConfig: {
         labelWidth: 100,
@@ -86,7 +86,7 @@ export default {
     }
 
     function handleDelete(record: Recordable) {
-      deleteMaterialProduce(record.id).then(() => {
+      deleteMaterialAttribute(record.id).then(() => {
         handleSuccess();
       });
     }
