@@ -32,3 +32,6 @@ coverage
 /mfish-nocode-view/
 
 node_modules/*
+mf-bigdata-frontend/*
+mf-bigdata-frontend.zip
+*.tar.gz
