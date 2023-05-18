@@ -5,7 +5,7 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialAttribute, ReqMaterialAttribute, MaterialAttributePageModel } from "/@/api/material_attribute/model/MaterialAttributeModel";
+import { MaterialAttribute, ReqMaterialAttribute, MaterialAttributePageModel } from "/@/api/product/model/MaterialAttributeModel";
 
 enum Api {
   MaterialAttribute = "/material_attribute/materialAttribute"

@@ -1,5 +1,5 @@
 <!--
- @description: 产品生产表
+ @description: 产品表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -11,13 +11,13 @@
 </template>
 <script lang="ts">
 import { ref, computed, unref } from "vue";
-import { BasicForm, useForm } from "/@/components/general/Form/index";
-import { materialProduceFormSchema } from "./materialProduce.data";
+import { BasicForm, useForm } from "/@/components/general/Form";
+import { materialFormSchema } from "./material.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterialProduce, updateMaterialProduce } from "/@/api/material_produce/MaterialProduce";
+import { insertMaterial, updateMaterial } from "/@/api/product/Material";
 
 export default {
-  name: "MaterialProduceModal",
+  name: "MaterialModal",
   components: { BasicModal, BasicForm },
   emits: ["success", "register"],
   setup(_, { emit }) {
@@ -25,7 +25,7 @@ export default {
     const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
       labelWidth: 100,
       baseColProps: { span: 12 },
-      schemas: materialProduceFormSchema,
+      schemas: materialFormSchema,
       showActionButtonGroup: false,
       autoSubmitOnEnter: true
     });
@@ -39,19 +39,19 @@ export default {
         }).then();
       }
     });
-    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品生产表" : "编辑产品生产表"));
+    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品表" : "编辑产品表"));
 
     async function handleSubmit() {
       let values = await validate();
       setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
-        saveMaterialProduce(updateMaterialProduce, values);
+        saveMaterial(updateMaterial, values);
       } else {
-        saveMaterialProduce(insertMaterialProduce, values);
+        saveMaterial(insertMaterial, values);
       }
     }
 
-    function saveMaterialProduce(save, values) {
+    function saveMaterial(save, values) {
       save(values).then(() => {
         emit("success");
         closeModal();

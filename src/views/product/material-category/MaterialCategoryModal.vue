@@ -11,10 +11,10 @@
 </template>
 <script lang="ts">
 import { ref, computed, unref } from "vue";
-import { BasicForm, useForm } from "/@/components/general/Form/index";
+import { BasicForm, useForm } from "/@/components/general/Form";
 import { materialCategoryFormSchema } from "./materialCategory.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterialCategory, updateMaterialCategory } from "/@/api/material_category/MaterialCategory";
+import { insertMaterialCategory, updateMaterialCategory } from "/@/api/product/MaterialCategory";
 
 export default {
   name: "MaterialCategoryModal",

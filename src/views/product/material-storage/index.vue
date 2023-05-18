@@ -1,5 +1,5 @@
 <!--
- @description: 产品属性表
+ @description: 产品库存表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -8,7 +8,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialAttribute:insert')">新增产品属性表</a-button>
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialStorage:insert')">新增产品库存表</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -17,7 +17,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialAttribute:update',
+                auth: 'sys:materialStorage:update',
                 tooltip: '修改',
               },
               {
@@ -28,7 +28,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialAttribute:delete',
+                auth: 'sys:materialStorage:delete',
                 tooltip: '删除',
               },
             ]"
@@ -36,26 +36,26 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialAttributeModal @register="registerModal" @success="handleSuccess" />
+    <MaterialStorageModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterialAttribute, getMaterialAttributeList } from "/@/api/material_attribute/MaterialAttribute";
+import { deleteMaterialStorage, getMaterialStorageList } from "/@/api/product/MaterialStorage";
 import { useModal } from "/@/components/general/Modal";
-import MaterialAttributeModal from "./MaterialAttributeModal.vue";
-import { columns, searchFormSchema } from "./materialAttribute.data";
+import MaterialStorageModal from "./MaterialStorageModal.vue";
+import { columns, searchFormSchema } from "./materialStorage.data";
 import { usePermission } from "/@/hooks/web/UsePermission";
 
 export default {
-  name: "MaterialAttributeManagement",
-  components: { BasicTable, MaterialAttributeModal, TableAction },
+  name: "MaterialStorageManagement",
+  components: { BasicTable, MaterialStorageModal, TableAction },
   setup() {
     const { hasPermission } = usePermission();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload }] = useTable({
-      title: "产品属性表列表",
-      api: getMaterialAttributeList,
+      title: "产品库存表列表",
+      api: getMaterialStorageList,
       columns,
       formConfig: {
         labelWidth: 100,
@@ -86,7 +86,7 @@ export default {
     }
 
     function handleDelete(record: Recordable) {
-      deleteMaterialAttribute(record.id).then(() => {
+      deleteMaterialStorage(record.id).then(() => {
         handleSuccess();
       });
     }

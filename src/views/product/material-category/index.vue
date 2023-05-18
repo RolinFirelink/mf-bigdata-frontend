@@ -1,5 +1,5 @@
 <!--
- @description: 产品库存表
+ @description: 产品类型表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -8,7 +8,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialStorage:insert')">新增产品库存表</a-button>
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialCategory:insert')">新增产品类型表</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -17,7 +17,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialStorage:update',
+                auth: 'sys:materialCategory:update',
                 tooltip: '修改',
               },
               {
@@ -28,7 +28,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialStorage:delete',
+                auth: 'sys:materialCategory:delete',
                 tooltip: '删除',
               },
             ]"
@@ -36,26 +36,26 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialStorageModal @register="registerModal" @success="handleSuccess" />
+    <MaterialCategoryModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterialStorage, getMaterialStorageList } from "/@/api/material_storage/MaterialStorage";
+import { deleteMaterialCategory, getMaterialCategoryList } from "/@/api/product/MaterialCategory";
 import { useModal } from "/@/components/general/Modal";
-import MaterialStorageModal from "./MaterialStorageModal.vue";
-import { columns, searchFormSchema } from "./materialStorage.data";
+import MaterialCategoryModal from "./MaterialCategoryModal.vue";
+import { columns, searchFormSchema } from "./materialCategory.data";
 import { usePermission } from "/@/hooks/web/UsePermission";
 
 export default {
-  name: "MaterialStorageManagement",
-  components: { BasicTable, MaterialStorageModal, TableAction },
+  name: "MaterialCategoryManagement",
+  components: { BasicTable, MaterialCategoryModal, TableAction },
   setup() {
     const { hasPermission } = usePermission();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload }] = useTable({
-      title: "产品库存表列表",
-      api: getMaterialStorageList,
+      title: "产品类型表列表",
+      api: getMaterialCategoryList,
       columns,
       formConfig: {
         labelWidth: 100,
@@ -86,7 +86,7 @@ export default {
     }
 
     function handleDelete(record: Recordable) {
-      deleteMaterialStorage(record.id).then(() => {
+      deleteMaterialCategory(record.id).then(() => {
         handleSuccess();
       });
     }
