@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "逻辑删除",
-    dataIndex: "isDelete",
+    dataIndex: "deletedFlag",
     width: 120
   },
   {
@@ -59,7 +59,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 4, md: 5 }
   },
   {
-    field: "isDelete",
+    field: "deletedFlag",
     label: "逻辑删除",
     component: "Input",
     colProps: { lg: 4, md: 5 }
@@ -83,7 +83,7 @@ export const materialStorageFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "isDelete",
+    field: "deletedFlag",
     label: "逻辑删除",
     component: "Input",
   },

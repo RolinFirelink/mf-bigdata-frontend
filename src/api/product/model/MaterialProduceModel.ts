@@ -3,7 +3,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
 /**
  * @description: 产品生产表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-19
  * @version: V1.0.0
  */
 export interface MaterialProduce extends BaseEntity<number> {
@@ -16,9 +16,9 @@ export interface MaterialProduce extends BaseEntity<number> {
   number: number;
   name: string;
   categoryId: number;
-  productEstimat: number;
-  marketEstimat: number;
-  timeEstimat: string;
+  productEstimate: number;
+  marketEstimate: number;
+  timeEstimate: string;
   baseId: number;
   quantity: number;
   isSell: number;

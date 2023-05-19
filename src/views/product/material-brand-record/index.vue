@@ -1,14 +1,14 @@
 <!--
- @description: 产品生产表
+ @description: 品牌产品中间表
  @author: cgli
- @date: 2023-05-19
+ @date: 2023-05-18
  @version: V1.0.0
 -->
 <template>
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialProduce:insert')">新增产品生产表</a-button>
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialBrandRecord:insert')">新增品牌产品中间表</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -17,7 +17,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialProduce:update',
+                auth: 'sys:materialBrandRecord:update',
                 tooltip: '修改',
               },
               {
@@ -28,7 +28,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialProduce:delete',
+                auth: 'sys:materialBrandRecord:delete',
                 tooltip: '删除',
               },
             ]"
@@ -36,26 +36,26 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialProduceModal @register="registerModal" @success="handleSuccess" />
+    <MaterialBrandRecordModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterialProduce, getMaterialProduceList } from "/@/api/product/MaterialProduce";
+import { deleteMaterialBrandRecord, getMaterialBrandRecordList } from "/@/api/product/MaterialBrandRecord";
 import { useModal } from "/@/components/general/Modal";
-import MaterialProduceModal from "./MaterialProduceModal.vue";
-import { columns, searchFormSchema } from "./materialProduce.data";
+import MaterialBrandRecordModal from "./MaterialBrandRecordModal.vue";
+import { columns, searchFormSchema } from "./materialBrandRecord.data";
 import { usePermission } from "/@/hooks/web/UsePermission";
 
 export default {
-  name: "MaterialProduceManagement",
-  components: { BasicTable, MaterialProduceModal, TableAction },
+  name: "MaterialBrandRecordManagement",
+  components: { BasicTable, MaterialBrandRecordModal, TableAction },
   setup() {
     const { hasPermission } = usePermission();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload }] = useTable({
-      title: "产品生产表列表",
-      api: getMaterialProduceList,
+      title: "品牌产品中间表列表",
+      api: getMaterialBrandRecordList,
       columns,
       formConfig: {
         labelWidth: 100,
@@ -86,7 +86,7 @@ export default {
     }
 
     function handleDelete(record: Recordable) {
-      deleteMaterialProduce(record.id).then(() => {
+      deleteMaterialBrandRecord(record.id).then(() => {
         handleSuccess();
       });
     }

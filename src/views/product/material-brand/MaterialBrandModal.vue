@@ -1,7 +1,7 @@
 <!--
- @description: 产品生产表
+ @description: 产品品牌表
  @author: cgli
- @date: 2023-05-19
+ @date: 2023-05-18
  @version: V1.0.0
 -->
 <template>
@@ -12,12 +12,12 @@
 <script lang="ts">
 import { ref, computed, unref } from "vue";
 import { BasicForm, useForm } from "/@/components/general/Form";
-import { materialProduceFormSchema } from "./materialProduce.data";
+import { materialBrandFormSchema } from "./materialBrand.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterialProduce, updateMaterialProduce } from "/@/api/product/MaterialProduce";
+import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
 
 export default {
-  name: "MaterialProduceModal",
+  name: "MaterialBrandModal",
   components: { BasicModal, BasicForm },
   emits: ["success", "register"],
   setup(_, { emit }) {
@@ -25,7 +25,7 @@ export default {
     const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
       labelWidth: 100,
       baseColProps: { span: 12 },
-      schemas: materialProduceFormSchema,
+      schemas: materialBrandFormSchema,
       showActionButtonGroup: false,
       autoSubmitOnEnter: true
     });
@@ -39,19 +39,19 @@ export default {
         }).then();
       }
     });
-    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品生产表" : "编辑产品生产表"));
+    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品品牌表" : "编辑产品品牌表"));
 
     async function handleSubmit() {
       let values = await validate();
       setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
-        saveMaterialProduce(updateMaterialProduce, values);
+        saveMaterialBrand(updateMaterialBrand, values);
       } else {
-        saveMaterialProduce(insertMaterialProduce, values);
+        saveMaterialBrand(insertMaterialBrand, values);
       }
     }
 
-    function saveMaterialProduce(save, values) {
+    function saveMaterialBrand(save, values) {
       save(values).then(() => {
         emit("success");
         closeModal();

@@ -9,7 +9,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
 export interface MaterialStorage extends BaseEntity<number> {
   flag: number;
   data: string;
-  isDelete: number;
+  deletedFlag: number;
   ownerId: number;
   materialId: number;
   materialName: string;
