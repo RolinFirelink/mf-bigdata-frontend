@@ -42,6 +42,8 @@
   </div>
 </template>
 <script lang="ts">
+  import { toRaw } from "vue";
+  import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteArticle, getArticleList } from "/@/api/cms/Article";
   import { useModal } from "/@/components/general/Modal";
@@ -53,11 +55,18 @@
     name: "ArticleManagement",
     components: { BasicTable, ArticleModal, TableAction },
     setup() {
+      // 根据路径获取分类id
+      let router = useRouter();
+      let path = toRaw(router).currentRoute.value.fullPath;
+      let categoryId = path.charAt(path.length - 1);
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "文章列表",
         api: getArticleList,
+        searchInfo: {
+          categoryId: categoryId,
+        },
         columns,
         formConfig: {
           labelWidth: 100,

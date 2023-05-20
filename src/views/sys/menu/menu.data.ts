@@ -9,7 +9,7 @@ export const columns: BasicColumn[] = [
     title: "菜单名称",
     dataIndex: "menuName",
     width: 200,
-    align: "left"
+    align: "left",
   },
   {
     title: "图标",
@@ -17,21 +17,21 @@ export const columns: BasicColumn[] = [
     width: 50,
     customRender: ({ record }) => {
       return h(Icon, { icon: record.menuIcon });
-    }
+    },
   },
   {
     title: "权限标识",
     dataIndex: "permissions",
-    width: 180
+    width: 180,
   },
   {
     title: "组件",
-    dataIndex: "component"
+    dataIndex: "component",
   },
   {
     title: "排序",
     dataIndex: "menuSort",
-    width: 50
+    width: 50,
   },
   {
     title: "菜单状态",
@@ -43,13 +43,13 @@ export const columns: BasicColumn[] = [
       const color = enable ? "green" : "red";
       const text = enable ? "显示" : "隐藏";
       return h(Tag, { color: color }, () => text);
-    }
+    },
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
-    width: 180
-  }
+    width: 180,
+  },
 ];
 const isMenu = (type: number) => type === 1;
 const isButton = (type: number) => type === 2;
@@ -59,7 +59,7 @@ export const searchFormSchema: FormSchema[] = [
     field: "menuName",
     label: "菜单名称",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "menuType",
@@ -69,10 +69,10 @@ export const searchFormSchema: FormSchema[] = [
       options: [
         { label: "目录", value: 0 },
         { label: "菜单", value: 1 },
-        { label: "按钮", value: 2 }
-      ]
+        { label: "按钮", value: 2 },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "isVisible",
@@ -81,11 +81,11 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "显示", value: 1 },
-        { label: "隐藏", value: 0 }
-      ]
+        { label: "隐藏", value: 0 },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -93,7 +93,7 @@ export const formSchema: FormSchema[] = [
     label: "id",
     field: "id",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "menuType",
@@ -104,16 +104,16 @@ export const formSchema: FormSchema[] = [
       options: [
         { label: "目录", value: 0 },
         { label: "菜单", value: 1 },
-        { label: "按钮", value: 2 }
-      ]
+        { label: "按钮", value: 2 },
+      ],
     },
-    colProps: { span: 24 }
+    colProps: { span: 24 },
   },
   {
     field: "menuName",
     label: "菜单名称",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "parentId",
@@ -123,41 +123,41 @@ export const formSchema: FormSchema[] = [
       fieldNames: {
         label: "menuName",
         key: "id",
-        value: "id"
+        value: "id",
       },
-      getPopupContainer: () => document.body
-    }
+      getPopupContainer: () => document.body,
+    },
   },
   {
     field: "menuSort",
     label: "排序",
     component: "InputNumber",
-    required: true
+    required: true,
   },
   {
     field: "menuIcon",
     label: "图标",
     component: "IconPicker",
-    ifShow: ({ values }) => !isButton(values.menuType)
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
     field: "routePath",
     label: "路由地址",
     component: "Input",
     required: true,
-    ifShow: ({ values }) => !isButton(values.menuType)
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
     field: "component",
     label: "组件路径",
     component: "Input",
-    ifShow: ({ values }) => isMenu(values.menuType)
+    ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
     field: "permissions",
     label: "权限标识",
     component: "Input",
-    ifShow: ({ values }) => isButton(values.menuType)
+    ifShow: ({ values }) => isButton(values.menuType),
   },
   {
     field: "isVisible",
@@ -167,10 +167,10 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "显示", value: 1 },
-        { label: "隐藏", value: 0 }
-      ]
+        { label: "隐藏", value: 0 },
+      ],
     },
-    ifShow: ({ values }) => !isButton(values.menuType)
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
     field: "activeMenu",
@@ -180,11 +180,11 @@ export const formSchema: FormSchema[] = [
       fieldNames: {
         label: "menuName",
         key: "menuCode",
-        value: "menuCode"
+        value: "menuCode",
       },
-      getPopupContainer: () => document.body
+      getPopupContainer: () => document.body,
     },
-    ifShow: ({ values }) => isMenu(values.menuType) && values.isVisible === 0
+    ifShow: ({ values }) => isMenu(values.menuType) && values.isVisible === 0,
   },
   {
     field: "isExternal",
@@ -194,10 +194,10 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "是", value: 1 },
-        { label: "否", value: 0 }
-      ]
+        { label: "否", value: 0 },
+      ],
     },
-    ifShow: ({ values }) => isMenu(values.menuType)
+    ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
     field: "isKeepalive",
@@ -207,9 +207,9 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "是", value: 1 },
-        { label: "否", value: 0 }
-      ]
+        { label: "否", value: 0 },
+      ],
     },
-    ifShow: ({ values }) => isMenu(values.menuType)
-  }
+    ifShow: ({ values }) => isMenu(values.menuType),
+  },
 ];
