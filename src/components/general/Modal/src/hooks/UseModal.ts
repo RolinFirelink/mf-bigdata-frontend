@@ -3,7 +3,7 @@ import type {
   ModalMethods,
   ModalProps,
   ReturnMethods,
-  UseModalInnerReturnType
+  UseModalInnerReturnType,
 } from "../Typing";
 import {
   ref,
@@ -13,7 +13,7 @@ import {
   reactive,
   watchEffect,
   nextTick,
-  toRaw
+  toRaw,
 } from "vue";
 import { isProdMode } from "/@/utils/Env";
 import { isFunction } from "/@/utils/Is";
@@ -40,11 +40,11 @@ export function useModal(): UseModalReturnType {
     }
     uid.value = uuid;
     isProdMode() &&
-    onUnmounted(() => {
-      modal.value = null;
-      loaded.value = false;
-      dataTransfer[unref(uid)] = null;
-    });
+      onUnmounted(() => {
+        modal.value = null;
+        loaded.value = false;
+        dataTransfer[unref(uid)] = null;
+      });
     if (unref(loaded) && isProdMode() && modalMethod === unref(modal)) return;
     modal.value = modalMethod;
     loaded.value = true;
@@ -76,7 +76,7 @@ export function useModal(): UseModalReturnType {
 
     openModal: <T = any>(visible = true, data?: T, openOnSet = true): void => {
       getInstance()?.setModalProps({
-        visible: visible
+        visible: visible,
       });
 
       if (!data) return;
@@ -94,7 +94,7 @@ export function useModal(): UseModalReturnType {
 
     closeModal: () => {
       getInstance()?.setModalProps({ visible: false });
-    }
+    },
   };
   return [register, methods];
 }
@@ -114,9 +114,9 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
 
   const register = (modalInstance: ModalMethods, uuid: string) => {
     isProdMode() &&
-    tryOnUnmounted(() => {
-      modalInstanceRef.value = null;
-    });
+      tryOnUnmounted(() => {
+        modalInstanceRef.value = null;
+      });
     uidRef.value = uuid;
     modalInstanceRef.value = modalInstance;
     currentInstance?.emit("register", modalInstance, uuid);
@@ -156,7 +156,7 @@ export const useModalInner = (callbackFn?: Fn): UseModalInnerReturnType => {
       redoModalHeight: () => {
         const callRedo = getInstance()?.redoModalHeight;
         callRedo && callRedo();
-      }
-    }
+      },
+    },
   ];
 };

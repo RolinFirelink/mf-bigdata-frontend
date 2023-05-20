@@ -160,16 +160,41 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 4, md: 5 },
   },
   {
-    field: "summary",
-    label: "摘要",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
     field: "author",
     label: "作者",
     component: "Input",
     colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "source",
+    label: "来源",
+    component: "Input",
+    colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "[startTime, endTime]",
+    label: "发布时间",
+    component: "RangePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: ["开始时间", "结束时间"],
+      showTime: {
+        hideDisabledOptions: true,
+        defaultValue: [dateUtil("00:00:00", "HH:mm:ss"), dateUtil("23:59:59", "HH:mm:ss")],
+      },
+      ranges: {
+        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
+        ["昨天"]: [
+          dateUtil().startOf("day").subtract(1, "days"),
+          dateUtil().endOf("day").subtract(1, "days"),
+        ],
+        ["最近一周"]: [dateUtil().subtract(1, "weeks"), dateUtil()],
+        ["最近两周"]: [dateUtil().subtract(2, "weeks"), dateUtil()],
+        ["最近1个月"]: [dateUtil().subtract(1, "months"), dateUtil()],
+        ["最近3个月"]: [dateUtil().subtract(3, "months"), dateUtil()],
+      },
+    },
+    colProps: { lg: 7, md: 8 },
   },
 ];
 export const articleFormSchema: FormSchema[] = [

@@ -67,9 +67,9 @@
           schemas: searchFormSchema,
         },
         useSearchForm: true,
-        // owTableSetting: true,
+        showTableSetting: true,
         bordered: true,
-        // owIndexColumn: false,
+        showIndexColumn: false,
         actionColumn: {
           width: 80,
           title: "操作",

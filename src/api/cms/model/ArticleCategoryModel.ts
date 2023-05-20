@@ -17,7 +17,8 @@ export interface ArticleCategory extends BaseEntity<number> {
   deleteFlag: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ReqArticleCategory {}
+export interface ReqArticleCategory {
+  name: string;
+}
 
 export type ArticleCategoryPageModel = PageResult<ArticleCategory>;

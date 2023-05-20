@@ -1,0 +1,73 @@
+<!--
+ @description: 产品品牌表
+ @author: cgli
+ @date: 2023-05-18
+ @version: V1.0.0
+-->
+<template>
+  <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+    <BasicForm @register="registerForm" @submit="handleSubmit" />
+  </BasicModal>
+</template>
+<script lang="ts">
+  import { ref, computed, unref } from "vue";
+  import { BasicForm, useForm } from "/@/components/general/Form";
+  import { materialBrandFormSchema } from "./materialBrand.data";
+  import { BasicModal, useModalInner } from "/@/components/general/Modal";
+  import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
+
+  export default {
+    name: "MaterialBrandModal",
+    components: { BasicModal, BasicForm },
+    emits: ["success", "register"],
+    setup(_, { emit }) {
+      const isUpdate = ref(true);
+      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+        labelWidth: 100,
+        baseColProps: { span: 12 },
+        schemas: materialBrandFormSchema,
+        showActionButtonGroup: false,
+        autoSubmitOnEnter: true,
+      });
+      const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
+        resetFields().then();
+        setModalProps({ confirmLoading: false, width: "800px" });
+        isUpdate.value = !!data?.isUpdate;
+        if (unref(isUpdate)) {
+          setFieldsValue({
+            ...data.record,
+          }).then();
+        }
+      });
+      const getTitle = computed(() => (!unref(isUpdate) ? "新增产品品牌表" : "编辑产品品牌表"));
+
+      async function handleSubmit() {
+        let values = await validate();
+        setModalProps({ confirmLoading: true });
+        if (unref(isUpdate)) {
+          saveMaterialBrand(updateMaterialBrand, values);
+        } else {
+          saveMaterialBrand(insertMaterialBrand, values);
+        }
+      }
+
+      function saveMaterialBrand(save, values) {
+        save(values)
+          .then(() => {
+            emit("success");
+            closeModal();
+          })
+          .finally(() => {
+            setModalProps({ confirmLoading: false });
+          });
+      }
+
+      return {
+        registerModal,
+        registerForm,
+        getTitle,
+        handleSubmit,
+      };
+    },
+  };
+</script>

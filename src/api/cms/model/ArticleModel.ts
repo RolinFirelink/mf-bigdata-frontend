@@ -34,7 +34,13 @@ export interface Article extends BaseEntity<number> {
   content: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ReqArticle {}
+export interface ReqArticle {
+  title: string;
+  author: string;
+  source: string;
+  categoryId: number;
+  startTime: string;
+  endTime: string;
+}
 
 export type ArticlePageModel = PageResult<Article>;

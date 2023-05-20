@@ -42,6 +42,8 @@
   </div>
 </template>
 <script lang="ts">
+  import { toRaw } from "vue";
+  import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteArticle, getArticleList } from "/@/api/cms/Article";
   import { useModal } from "/@/components/general/Modal";
@@ -53,11 +55,17 @@
     name: "ArticleManagement",
     components: { BasicTable, ArticleModal, TableAction },
     setup() {
+      let router = useRouter();
+      var categoryId = toRaw(router).currentRoute.value.fullPath;
+      console.log("route", categoryId);
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "文章列表",
         api: getArticleList,
+        searchInfo: {
+          categoryId: categoryId.charAt(categoryId.length - 1),
+        },
         columns,
         formConfig: {
           labelWidth: 100,

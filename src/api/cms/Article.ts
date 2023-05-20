@@ -5,7 +5,7 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { Article, ReqArticle, ArticlePageModel } from "/@/api/web/cms/model/ArticleModel";
+import { Article, ReqArticle, ArticlePageModel } from "/@/api/cms/model/ArticleModel";
 
 enum Api {
   Article = "/web/cms/article",

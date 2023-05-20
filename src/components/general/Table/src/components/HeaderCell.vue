@@ -6,15 +6,15 @@
   <BasicHelp v-if="getHelpMessage" :text="getHelpMessage" :class="`${prefixCls}__help`" />
 </template>
 <script lang="ts">
-  import type { PropType } from 'vue';
-  import type { BasicColumn } from '../types/Table';
-  import { defineComponent, computed } from 'vue';
-  import BasicHelp from '/@/components/general/Basic/src/BasicHelp.vue';
-  import EditTableHeaderCell from './EditTableHeaderIcon.vue';
-  import { useDesign } from '/@/hooks/web/UseDesign';
+  import type { PropType } from "vue";
+  import type { BasicColumn } from "../types/Table";
+  import { defineComponent, computed } from "vue";
+  import BasicHelp from "/@/components/general/Basic/src/BasicHelp.vue";
+  import EditTableHeaderCell from "./EditTableHeaderIcon.vue";
+  import { useDesign } from "/@/hooks/web/UseDesign";
 
   export default defineComponent({
-    name: 'TableHeaderCell',
+    name: "TableHeaderCell",
     components: {
       EditTableHeaderCell,
       BasicHelp,
@@ -26,7 +26,7 @@
       },
     },
     setup(props) {
-      const { prefixCls } = useDesign('basic-table-header-cell');
+      const { prefixCls } = useDesign("basic-table-header-cell");
 
       const getIsEdit = computed(() => !!props.column?.edit);
       const getTitle = computed(() => props.column?.customTitle || props.column?.title);
@@ -37,7 +37,7 @@
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-basic-table-header-cell';
+  @prefix-cls: ~"@{namespace}-basic-table-header-cell";
 
   .@{prefix-cls} {
     &__help {
