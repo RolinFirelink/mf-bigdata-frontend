@@ -7,23 +7,30 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
  * @version: V1.0.0
  */
 export interface Material extends BaseEntity<number> {
+  title: string;
+  summary: string;
+  author: string;
+  source: string;
   categoryId: number;
-  name: string;
-  model: string;
-  standard: string;
-  color: string;
-  unit: string;
-  remark: string;
-  expiryNum: number;
-  weight: number;
-  enabled: number;
-  extendField: string;
-  enableSerialNumber: number;
-  enableBatchNumber: number;
-  deletedFlag: number;
+  coverImg: string;
+  status: number;
+  isTop: number;
+  contentModel: number;
+  clickNum: number;
+  collectNum: number;
+  commentNum: number;
+  likeNum: number;
+  downloadNum: number;
+  shareNum: number;
+  allowComment: number;
+  allowSubscribe: number;
+  sort: number;
+  startTime: string;
+  endTime: string;
+  mediaType: string;
+  extendAttribute: string;
   orgId: number;
-  scale: number;
-  flag: number;
+  deleteFlag: number;
 }
 
 export interface ReqMaterial {

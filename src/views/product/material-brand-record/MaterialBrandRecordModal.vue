@@ -1,5 +1,5 @@
 <!--
- @description: 产品表
+ @description: 品牌产品中间表
  @author: cgli
  @date: 2023-05-18
  @version: V1.0.0
@@ -11,13 +11,13 @@
 </template>
 <script lang="ts">
 import { ref, computed, unref } from "vue";
-import { BasicForm, useForm } from "/@/components/general/Form/index";
-import { materialFormSchema } from "./material.data";
+import { BasicForm, useForm } from "/@/components/general/Form";
+import { materialBrandRecordFormSchema } from "./materialBrandRecord.data";
 import { BasicModal, useModalInner } from "/@/components/general/Modal";
-import { insertMaterial, updateMaterial } from "/@/api/material/Material";
+import { insertMaterialBrandRecord, updateMaterialBrandRecord } from "/@/api/product/MaterialBrandRecord";
 
 export default {
-  name: "MaterialModal",
+  name: "MaterialBrandRecordModal",
   components: { BasicModal, BasicForm },
   emits: ["success", "register"],
   setup(_, { emit }) {
@@ -25,7 +25,7 @@ export default {
     const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
       labelWidth: 100,
       baseColProps: { span: 12 },
-      schemas: materialFormSchema,
+      schemas: materialBrandRecordFormSchema,
       showActionButtonGroup: false,
       autoSubmitOnEnter: true
     });
@@ -39,19 +39,19 @@ export default {
         }).then();
       }
     });
-    const getTitle = computed(() => (!unref(isUpdate) ? "新增产品表" : "编辑产品表"));
+    const getTitle = computed(() => (!unref(isUpdate) ? "新增品牌产品中间表" : "编辑品牌产品中间表"));
 
     async function handleSubmit() {
       let values = await validate();
       setModalProps({ confirmLoading: true });
       if (unref(isUpdate)) {
-        saveMaterial(updateMaterial, values);
+        saveMaterialBrandRecord(updateMaterialBrandRecord, values);
       } else {
-        saveMaterial(insertMaterial, values);
+        saveMaterialBrandRecord(insertMaterialBrandRecord, values);
       }
     }
 
-    function saveMaterial(save, values) {
+    function saveMaterialBrandRecord(save, values) {
       save(values).then(() => {
         emit("success");
         closeModal();

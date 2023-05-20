@@ -41,7 +41,7 @@
 </template>
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
+import { deleteMaterial, getMaterialList } from "/@/api/material/Material";
 import { useModal } from "/@/components/general/Modal";
 import MaterialModal from "./MaterialModal.vue";
 import { columns, searchFormSchema } from "./material.data";

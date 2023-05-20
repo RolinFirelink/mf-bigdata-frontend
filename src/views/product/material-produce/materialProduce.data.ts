@@ -4,7 +4,7 @@ import { FormSchema } from "/@/components/general/Table";
 /**
  * @description: 产品生产表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-19
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
@@ -55,17 +55,17 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "单位产量估算",
-    dataIndex: "productEstimat",
+    dataIndex: "productEstimate",
     width: 120
   },
   {
     title: "预计上市产量",
-    dataIndex: "marketEstimat",
+    dataIndex: "marketEstimate",
     width: 120
   },
   {
     title: "预计上市时间",
-    dataIndex: "timeEstimat",
+    dataIndex: "timeEstimate",
     width: 120
   },
   {
@@ -163,17 +163,17 @@ export const materialProduceFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "productEstimat",
+    field: "productEstimate",
     label: "单位产量估算",
     component: "Input",
   },
   {
-    field: "marketEstimat",
+    field: "marketEstimate",
     label: "预计上市产量",
     component: "Input",
   },
   {
-    field: "timeEstimat",
+    field: "timeEstimate",
     label: "预计上市时间",
     component: "Input",
   },
