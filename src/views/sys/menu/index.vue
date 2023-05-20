@@ -6,25 +6,23 @@
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'ant-design:edit-outlined',
-                onClick: handleEdit.bind(null, record),
-                auth: 'sys:menu:update'
+          <TableAction :actions="[
+            {
+              icon: 'ant-design:edit-outlined',
+              onClick: handleEdit.bind(null, record),
+              auth: 'sys:menu:update',
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                placement: 'left',
+                confirm: handleDelete.bind(null, record),
               },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
-                auth: 'sys:menu:delete'
-              },
-            ]"
-          />
+              auth: 'sys:menu:delete',
+            },
+          ]" />
         </template>
       </template>
     </BasicTable>
@@ -46,7 +44,7 @@ export default {
     const { hasPermission } = usePermission();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload, setTableData, deleteTableDataRecord }] = useTable({
-      title: "菜单列表",
+      title: "菜单列表2",
       api: getMenuList,
       rowKey: "id",
       columns,
@@ -54,7 +52,7 @@ export default {
         name: "search_form_item",
         labelWidth: 100,
         schemas: searchFormSchema,
-        autoSubmitOnEnter: true
+        autoSubmitOnEnter: true,
       },
       isTreeTable: true,
       pagination: false,
@@ -67,20 +65,20 @@ export default {
         width: 80,
         title: "操作",
         dataIndex: "action",
-        fixed: undefined
-      }
+        fixed: undefined,
+      },
     });
 
     function handleCreate() {
       openModal(true, {
-        isUpdate: false
+        isUpdate: false,
       });
     }
 
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
-        isUpdate: true
+        isUpdate: true,
       });
     }
 
@@ -92,9 +90,9 @@ export default {
 
     function handleSuccess({ isUpdate }) {
       if (isUpdate) {
-        getMenuList().then((res)=>{
-          setTableData(res)
-        })
+        getMenuList().then((res) => {
+          setTableData(res);
+        });
       } else {
         reload();
       }
@@ -107,8 +105,8 @@ export default {
       handleEdit,
       handleDelete,
       handleSuccess,
-      hasPermission
+      hasPermission,
     };
-  }
+  },
 };
 </script>

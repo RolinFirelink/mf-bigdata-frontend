@@ -13,12 +13,12 @@ export const columns: BasicColumn[] = [
   {
     title: "字典名称",
     dataIndex: "dictName",
-    width: 180
+    width: 180,
   },
   {
     title: "字典编码",
     dataIndex: "dictCode",
-    width: 150
+    width: 150,
   },
   {
     title: "状态",
@@ -30,25 +30,25 @@ export const columns: BasicColumn[] = [
       const color = enable ? "green" : "red";
       const text = enable ? "启用" : "停用";
       return h(Tag, { color: color }, () => text);
-    }
+    },
   },
   {
     title: "备注",
-    dataIndex: "remark"
-  }
+    dataIndex: "remark",
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "dictName",
     label: "字典名称",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "dictCode",
     label: "字典编码",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "status",
@@ -57,18 +57,18 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 export const dictFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "status",
@@ -78,25 +78,25 @@ export const dictFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
-    }
+        { label: "停用", value: 1 },
+      ],
+    },
   },
   {
     field: "dictName",
     label: "字典名称",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "dictCode",
     label: "字典编码",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "remark",
     label: "备注",
-    component: "InputTextArea"
-  }
+    component: "InputTextArea",
+  },
 ];

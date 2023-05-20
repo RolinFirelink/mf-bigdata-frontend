@@ -9,7 +9,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es6: true
+    es6: true,
   },
   // 设置解析器
   parser: "vue-eslint-parser",
@@ -20,14 +20,14 @@ module.exports = {
     sourceType: "module",
     jsxPragma: "React",
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   // 扩展项
   extends: [
     "plugin:vue/vue3-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
   // 自定义规则配置
   rules: {
@@ -61,16 +61,16 @@ module.exports = {
       "error",
       {
         argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+      },
     ],
     //禁止使用未使用的变量
     "no-unused-vars": [
       "error",
       {
         argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+      },
     ],
     //在函数括号前需要或不允许有空格
     "space-before-function-paren": "off",
@@ -98,12 +98,12 @@ module.exports = {
         html: {
           void: "always",
           normal: "never",
-          component: "always"
+          component: "always",
         },
         svg: "always",
-        math: "always"
-      }
+        math: "always",
+      },
     ],
-    "vue/multi-word-component-names": "off"
-  }
+    "vue/multi-word-component-names": "off",
+  },
 };

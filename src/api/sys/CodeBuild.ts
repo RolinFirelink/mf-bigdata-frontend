@@ -5,12 +5,17 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { CodeBuild, ReqCodeBuild, CodeBuildPageModel, CodeVo } from "/@/api/sys/model/CodeBuildModel";
+import {
+  CodeBuild,
+  ReqCodeBuild,
+  CodeBuildPageModel,
+  CodeVo,
+} from "/@/api/sys/model/CodeBuildModel";
 
 enum Api {
   CodeBuild = "/sys/codeBuild",
   View = "/sys/codeBuild/view",
-  Download = "/sys/codeBuild/download"
+  Download = "/sys/codeBuild/download",
 }
 
 /**
@@ -30,8 +35,11 @@ export const getCodeBuildList = (reqCodeBuild?: ReqCodeBuild) => {
  * @return
  */
 export function insertCodeBuild(codeBuild: CodeBuild) {
-  return defHttp.post<CodeBuild>({ url: Api.CodeBuild, params: codeBuild }, { successMessageMode: "message" });
-};
+  return defHttp.post<CodeBuild>(
+    { url: Api.CodeBuild, params: codeBuild },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 查看代码
@@ -39,7 +47,7 @@ export function insertCodeBuild(codeBuild: CodeBuild) {
  */
 export function viewCode(codeBuild: CodeBuild) {
   return defHttp.get<CodeVo[]>({ url: Api.View, params: codeBuild });
-};
+}
 
 /**
  * 下载代码
@@ -48,9 +56,9 @@ export function viewCode(codeBuild: CodeBuild) {
 export function downloadCode(codeBuild: CodeBuild) {
   return defHttp.download<CodeVo[]>({
     url: Api.Download,
-    params: codeBuild
+    params: codeBuild,
   });
-};
+}
 
 /**
  * 修改代码构建
@@ -59,8 +67,11 @@ export function downloadCode(codeBuild: CodeBuild) {
  * @return
  */
 export function updateCodeBuild(codeBuild: CodeBuild) {
-  return defHttp.put<CodeBuild>({ url: Api.CodeBuild, params: codeBuild }, { successMessageMode: "message" });
-};
+  return defHttp.put<CodeBuild>(
+    { url: Api.CodeBuild, params: codeBuild },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除代码构建
@@ -69,5 +80,8 @@ export function updateCodeBuild(codeBuild: CodeBuild) {
  * @return
  */
 export function deleteCodeBuild(id: string) {
-  return defHttp.delete<CodeBuild>({ url: Api.CodeBuild + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<CodeBuild>(
+    { url: Api.CodeBuild + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
