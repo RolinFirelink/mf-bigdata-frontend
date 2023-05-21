@@ -14,7 +14,9 @@ type UseTableMethod = TableActionType & {
   getForm: () => FormActionType;
 };
 
-export function useTable(tableProps?: Props): [(instance: TableActionType, formInstance: UseTableMethod) => void, UseTableMethod] {
+export function useTable(
+  tableProps?: Props,
+): [(instance: TableActionType, formInstance: UseTableMethod) => void, UseTableMethod] {
   const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
   const formRef = ref<Nullable<UseTableMethod>>(null);
@@ -22,33 +24,32 @@ export function useTable(tableProps?: Props): [(instance: TableActionType, formI
 
   function register(instance: TableActionType, formInstance: UseTableMethod) {
     isProdMode() &&
-    onUnmounted(() => {
-      tableRef.value = null;
-      loadedRef.value = null;
-    });
+      onUnmounted(() => {
+        tableRef.value = null;
+        loadedRef.value = null;
+      });
     if (unref(loadedRef) && isProdMode() && instance === unref(tableRef)) return;
     tableRef.value = instance;
     formRef.value = formInstance;
     tableProps && instance.setProps(getDynamicProps(tableProps));
     loadedRef.value = true;
     stopWatch?.();
-    stopWatch = watch(() => tableProps,
+    stopWatch = watch(
+      () => tableProps,
       () => {
         tableProps && instance.setProps(getDynamicProps(tableProps));
       },
       {
         immediate: true,
-        deep: true
-      }
+        deep: true,
+      },
     );
   }
 
   function getTableInstance(): TableActionType {
     const table = unref(tableRef);
     if (!table) {
-      error(
-        "尚未获取表实例，请确保在执行表操作时实例化该表！"
-      );
+      error("尚未获取表实例，请确保在执行表操作时实例化该表！");
     }
     return table as TableActionType;
   }
@@ -149,7 +150,7 @@ export function useTable(tableProps?: Props): [(instance: TableActionType, formI
     },
     scrollTo: (pos: string) => {
       getTableInstance().scrollTo(pos);
-    }
+    },
   };
 
   return [register, methods];

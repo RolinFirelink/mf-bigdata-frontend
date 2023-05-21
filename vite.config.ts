@@ -15,7 +15,7 @@ function pathResolve(dir: string) {
 const { dependencies, devDependencies, name, version } = pkg;
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: dayjs().format("YYYY-MM-DD HH:mm:ss")
+  lastBuildTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
 };
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -29,19 +29,19 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       alias: [
         {
           find: "vue-i18n",
-          replacement: "vue-i18n/dist/vue-i18n.cjs.js"
+          replacement: "vue-i18n/dist/vue-i18n.cjs.js",
         },
         // /@/xxxx => src/xxxx
         {
           find: /\/@\//,
-          replacement: pathResolve("src") + "/"
+          replacement: pathResolve("src") + "/",
         },
         // /#/xxxx => types/xxxx
         {
           find: /\/#\//,
-          replacement: pathResolve("types") + "/"
-        }
-      ]
+          replacement: pathResolve("types") + "/",
+        },
+      ],
     },
     server: {
       https: false,
@@ -49,10 +49,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       host: true,
       port: VITE_PORT,
       // Load proxy configuration from .env
-      proxy: createProxy(VITE_PROXY)
+      proxy: createProxy(VITE_PROXY),
     },
     esbuild: {
-      pure: VITE_DROP_CONSOLE ? ["console.log", "debugger"] : []
+      pure: VITE_DROP_CONSOLE ? ["console.log", "debugger"] : [],
     },
     build: {
       target: "es2015",
@@ -72,22 +72,22 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // },
       // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能
       reportCompressedSize: false,
-      chunkSizeWarningLimit: 2000
+      chunkSizeWarningLimit: 2000,
     },
     define: {
       // setting vue-i18-next
       // Suppress warning
       __INTLIFY_PROD_DEVTOOLS__: false,
-      __APP_INFO__: JSON.stringify(__APP_INFO__)
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
     css: {
       preprocessorOptions: {
         less: {
           modifyVars: generateModifyVars(),
-          javascriptEnabled: true
-        }
-      }
+          javascriptEnabled: true,
+        },
+      },
     },
 
     // 单独管理Vite插件
@@ -100,8 +100,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         "@vue/shared",
         "@iconify/iconify",
         "ant-design-vue/es/locale/zh_CN",
-        "ant-design-vue/es/locale/en_US"
-      ]
-    }
+        "ant-design-vue/es/locale/en_US",
+      ],
+    },
   };
 };

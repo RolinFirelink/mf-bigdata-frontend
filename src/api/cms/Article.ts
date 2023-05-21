@@ -42,7 +42,6 @@ export function insertArticle(article: Article) {
  * @return
  */
 export function updateArticle(article: Article) {
-  console.log("api", article);
   return defHttp.put<Article>(
     { url: Api.Article, params: article },
     { successMessageMode: "message" },
@@ -58,6 +57,19 @@ export function updateArticle(article: Article) {
 export function deleteArticle(id: string) {
   return defHttp.delete<Article>(
     { url: Api.Article + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteArticle(ids: string) {
+  return defHttp.delete<Article>(
+    { url: Api.Article + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

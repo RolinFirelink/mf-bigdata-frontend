@@ -11,6 +11,13 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:article:insert')"
           >新增文章</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:article:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -42,10 +49,10 @@
   </div>
 </template>
 <script lang="ts">
-  import { toRaw } from "vue";
+  import { toRaw, ref } from "vue";
   import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteArticle, getArticleList } from "/@/api/cms/Article";
+  import { deleteArticle, getArticleList, batchDeleteArticle } from "/@/api/cms/Article";
   import { useModal } from "/@/components/general/Modal";
   import ArticleModal from "./ArticleModal.vue";
   import { columns, searchFormSchema } from "./article.data";
@@ -55,6 +62,8 @@
     name: "ArticleManagement",
     components: { BasicTable, ArticleModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       // 根据路径获取分类id
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
@@ -64,8 +73,19 @@
       const [registerTable, { reload }] = useTable({
         title: "文章列表",
         api: getArticleList,
+        // 额外参数
         searchInfo: {
           categoryId: categoryId,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         columns,
         formConfig: {
@@ -106,6 +126,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteArticle(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
         registerTable,
         registerModal,
@@ -114,6 +141,8 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        batchDelete,
+        selectedIds,
       };
     },
   };

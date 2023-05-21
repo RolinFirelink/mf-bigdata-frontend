@@ -7,7 +7,7 @@
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
     <BasicForm @register="registerForm" @submit="handleSubmit" />
-    <ArticleContent ref="articleContent" v-if="dialogVisible" />
+    <ArticleContent ref="articleContent" v-if="dialogVisible" style="z-index: 100" />
   </BasicModal>
 </template>
 <script lang="ts">
