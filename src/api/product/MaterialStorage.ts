@@ -1,10 +1,11 @@
 /**
  * @description: 产品库存表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
+<<<<<<< HEAD
 import {
   MaterialStorage,
   ReqMaterialStorage,
@@ -13,6 +14,12 @@ import {
 
 enum Api {
   MaterialStorage = "/material_storage/materialStorage",
+=======
+import { MaterialStorage, ReqMaterialStorage, MaterialStoragePageModel } from "/@/api/product/model/MaterialStorageModel";
+
+enum Api {
+  MaterialStorage = "/web/materialStorage"
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 }
 
 /**

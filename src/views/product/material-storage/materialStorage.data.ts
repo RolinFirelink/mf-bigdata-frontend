@@ -4,7 +4,7 @@ import { FormSchema } from "/@/components/general/Table";
 /**
  * @description: 产品库存表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [

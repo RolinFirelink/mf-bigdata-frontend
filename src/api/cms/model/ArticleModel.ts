@@ -35,10 +35,17 @@ export interface Article extends BaseEntity<number> {
 }
 
 export interface ReqArticle {
+<<<<<<< HEAD
   title: string;
   author: string;
   source: string;
   categoryId: number;
+=======
+  categoryId: number;
+  title: string;
+  author: string;
+  source: string;
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
   startTime: string;
   endTime: string;
 }

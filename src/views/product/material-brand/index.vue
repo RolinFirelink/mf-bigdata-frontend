@@ -1,7 +1,7 @@
 <!--
  @description: 产品品牌表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -17,27 +17,25 @@
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'ant-design:edit-outlined',
-                onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialBrand:update',
-                tooltip: '修改',
+          <TableAction :actions="[
+            {
+              icon: 'ant-design:edit-outlined',
+              onClick: handleEdit.bind(null, record),
+              auth: 'sys:materialBrand:update',
+              tooltip: '修改',
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                placement: 'left',
+                confirm: handleDelete.bind(null, record),
               },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
-                auth: 'sys:materialBrand:delete',
-                tooltip: '删除',
-              },
-            ]"
-          />
+              auth: 'sys:materialBrand:delete',
+              tooltip: '删除',
+            },
+          ]" />
         </template>
       </template>
     </BasicTable>

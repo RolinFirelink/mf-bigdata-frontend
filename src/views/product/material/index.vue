@@ -1,7 +1,7 @@
 <!--
  @description: 产品表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -14,27 +14,25 @@
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'ant-design:edit-outlined',
-                onClick: handleEdit.bind(null, record),
-                auth: 'sys:material:update',
-                tooltip: '修改',
+          <TableAction :actions="[
+            {
+              icon: 'ant-design:edit-outlined',
+              onClick: handleEdit.bind(null, record),
+              auth: 'sys:material:update',
+              tooltip: '修改',
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                placement: 'left',
+                confirm: handleDelete.bind(null, record),
               },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
-                auth: 'sys:material:delete',
-                tooltip: '删除',
-              },
-            ]"
-          />
+              auth: 'sys:material:delete',
+              tooltip: '删除',
+            },
+          ]" />
         </template>
       </template>
     </BasicTable>
@@ -42,12 +40,21 @@
   </div>
 </template>
 <script lang="ts">
+<<<<<<< HEAD
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteMaterial, getMaterialList } from "/@/api/material/Material";
   import { useModal } from "/@/components/general/Modal";
   import MaterialModal from "./MaterialModal.vue";
   import { columns, searchFormSchema } from "./material.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+=======
+import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
+import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
+import { useModal } from "/@/components/general/Modal";
+import MaterialModal from "./MaterialModal.vue";
+import { columns, searchFormSchema } from "./material.data";
+import { usePermission } from "/@/hooks/web/UsePermission";
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 
   export default {
     name: "MaterialManagement",

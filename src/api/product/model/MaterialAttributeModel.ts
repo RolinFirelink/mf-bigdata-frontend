@@ -3,7 +3,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
 /**
  * @description: 产品属性表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export interface MaterialAttribute extends BaseEntity<number> {

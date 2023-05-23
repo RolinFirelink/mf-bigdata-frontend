@@ -1,43 +1,46 @@
 <!--
  @description: 产品库存表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
+<<<<<<< HEAD
         <a-button
           type="primary"
           @click="handleCreate"
           v-if="hasPermission('sys:materialStorage:insert')"
           >新增产品库存表</a-button
         >
+=======
+        <a-button type="primary" @click="handleCreate"
+          v-if="hasPermission('sys:materialStorage:insert')">新增产品库存表</a-button>
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'ant-design:edit-outlined',
-                onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialStorage:update',
-                tooltip: '修改',
+          <TableAction :actions="[
+            {
+              icon: 'ant-design:edit-outlined',
+              onClick: handleEdit.bind(null, record),
+              auth: 'sys:materialStorage:update',
+              tooltip: '修改',
+            },
+            {
+              icon: 'ant-design:delete-outlined',
+              color: 'error',
+              popConfirm: {
+                title: '是否确认删除',
+                placement: 'left',
+                confirm: handleDelete.bind(null, record),
               },
-              {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
-                popConfirm: {
-                  title: '是否确认删除',
-                  placement: 'left',
-                  confirm: handleDelete.bind(null, record),
-                },
-                auth: 'sys:materialStorage:delete',
-                tooltip: '删除',
-              },
-            ]"
-          />
+              auth: 'sys:materialStorage:delete',
+              tooltip: '删除',
+            },
+          ]" />
         </template>
       </template>
     </BasicTable>

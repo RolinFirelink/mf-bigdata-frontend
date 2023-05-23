@@ -1,7 +1,7 @@
 /**
  * @description: 产品生产表
  * @author cgli
- * @date: 2023-05-19
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
@@ -12,7 +12,11 @@ import {
 } from "/@/api/product/model/MaterialProduceModel";
 
 enum Api {
+<<<<<<< HEAD
   MaterialProduce = "/material_produce/materialProduce",
+=======
+  MaterialProduce = "/web/materialProduce"
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 }
 
 /**

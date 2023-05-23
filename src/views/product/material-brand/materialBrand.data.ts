@@ -4,7 +4,7 @@ import { FormSchema } from "/@/components/general/Table";
 /**
  * @description: 产品品牌表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
@@ -25,6 +25,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "品牌价值观",
+<<<<<<< HEAD
     dataIndex: "values",
     width: 120,
   },
@@ -32,6 +33,15 @@ export const columns: BasicColumn[] = [
     title: "品牌官网",
     dataIndex: "website",
     width: 120,
+=======
+    dataIndex: "companyValue",
+    width: 120
+  },
+  {
+    title: "品牌官网",
+    dataIndex: "companyWebsite",
+    width: 120
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
   },
   {
     title: "品牌创立时间",
@@ -98,12 +108,12 @@ export const materialBrandFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "values",
+    field: "companyValue",
     label: "品牌价值观",
     component: "Input",
   },
   {
-    field: "website",
+    field: "companyWebsite",
     label: "品牌官网",
     component: "Input",
   },

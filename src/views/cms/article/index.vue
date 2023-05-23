@@ -55,16 +55,27 @@
     name: "ArticleManagement",
     components: { BasicTable, ArticleModal, TableAction },
     setup() {
+<<<<<<< HEAD
       let router = useRouter();
       var categoryId = toRaw(router).currentRoute.value.fullPath;
       console.log("route", categoryId);
+=======
+      // 根据路径获取分类id
+      let router = useRouter();
+      let path = toRaw(router).currentRoute.value.fullPath;
+      let categoryId = path.charAt(path.length - 1);
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "文章列表",
         api: getArticleList,
         searchInfo: {
+<<<<<<< HEAD
           categoryId: categoryId.charAt(categoryId.length - 1),
+=======
+          categoryId: categoryId,
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
         },
         columns,
         formConfig: {

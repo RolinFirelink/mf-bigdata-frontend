@@ -4,7 +4,7 @@ import { FormSchema } from "/@/components/general/Table";
 /**
  * @description: 产品类型表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
@@ -38,6 +38,7 @@ export const columns: BasicColumn[] = [
     dataIndex: "remark",
     width: 120,
   },
+<<<<<<< HEAD
   {
     title: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
     dataIndex: "deletedFlag",
@@ -53,6 +54,18 @@ export const columns: BasicColumn[] = [
     dataIndex: "flag",
     width: 120,
   },
+=======
+  /*{
+    title: "归属组织id",
+    dataIndex: "orgId",
+    width: 120
+  },*/
+  // {
+  //   title: "区分字段",
+  //   dataIndex: "flag",
+  //   width: 120
+  // },
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -99,12 +112,21 @@ export const materialCategoryFormSchema: FormSchema[] = [
     component: "Input",
     required: true,
   },
+<<<<<<< HEAD
   {
     field: "parentId",
     label: "上级id",
     component: "Input",
     required: true,
   },
+=======
+  // {
+  //   field: "parentId",
+  //   label: "上级id",
+  //   component: "TreeSelect",
+  //   required: true
+  // },
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
   {
     field: "sort",
     label: "显示顺序",
@@ -115,19 +137,14 @@ export const materialCategoryFormSchema: FormSchema[] = [
     label: "备注",
     component: "Input",
   },
-  {
-    field: "deletedFlag",
-    label: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
-    component: "Input",
-  },
-  {
+/*  {
     field: "orgId",
     label: "归属组织id",
     component: "Input",
-  },
-  {
-    field: "flag",
-    label: "区分字段",
-    component: "Input",
-  },
+  },*/
+  // {
+  //   field: "flag",
+  //   label: "区分字段",
+  //   component: "Input",
+  // },
 ];

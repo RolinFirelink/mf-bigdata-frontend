@@ -1,7 +1,7 @@
 <!--
  @description: 产品表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -10,11 +10,19 @@
   </BasicModal>
 </template>
 <script lang="ts">
+<<<<<<< HEAD
   import { ref, computed, unref } from "vue";
   import { BasicForm, useForm } from "/@/components/general/Form/index";
   import { materialFormSchema } from "./material.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertMaterial, updateMaterial } from "/@/api/product/Material";
+=======
+import { ref, computed, unref } from "vue";
+import { BasicForm, useForm } from "/@/components/general/Form/index";
+import { materialFormSchema } from "./material.data";
+import { BasicModal, useModalInner } from "/@/components/general/Modal";
+import { insertMaterial, updateMaterial } from "/@/api/product/Material";
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 
   export default {
     name: "MaterialModal",

@@ -1,7 +1,7 @@
 /**
  * @description: 品牌产品中间表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
@@ -12,7 +12,11 @@ import {
 } from "/@/api/product/model/MaterialBrandRecordModel";
 
 enum Api {
+<<<<<<< HEAD
   MaterialBrandRecord = "/material_brand_record/materialBrandRecord",
+=======
+  MaterialBrandRecord = "/web/materialBrandRecord"
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 }
 
 /**

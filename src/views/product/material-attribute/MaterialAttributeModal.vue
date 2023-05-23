@@ -1,7 +1,7 @@
 <!--
  @description: 产品属性表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -10,6 +10,7 @@
   </BasicModal>
 </template>
 <script lang="ts">
+<<<<<<< HEAD
   import { ref, computed, unref } from "vue";
   import { BasicForm, useForm } from "/@/components/general/Form";
   import { materialAttributeFormSchema } from "./materialAttribute.data";
@@ -18,6 +19,13 @@
     insertMaterialAttribute,
     updateMaterialAttribute,
   } from "/@/api/product/MaterialAttribute";
+=======
+import { ref, computed, unref } from "vue";
+import { BasicForm, useForm } from "/@/components/general/Form/index";
+import { materialAttributeFormSchema } from "./materialAttribute.data";
+import { BasicModal, useModalInner } from "/@/components/general/Modal";
+import { insertMaterialAttribute, updateMaterialAttribute } from "/@/api/product/MaterialAttribute";
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 
   export default {
     name: "MaterialAttributeModal",

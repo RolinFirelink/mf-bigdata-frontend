@@ -1,7 +1,7 @@
 <!--
  @description: 产品品牌表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -10,11 +10,19 @@
   </BasicModal>
 </template>
 <script lang="ts">
+<<<<<<< HEAD
   import { ref, computed, unref } from "vue";
   import { BasicForm, useForm } from "/@/components/general/Form";
   import { materialBrandFormSchema } from "./materialBrand.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
+=======
+import { ref, computed, unref } from "vue";
+import { BasicForm, useForm } from "/@/components/general/Form/index";
+import { materialBrandFormSchema } from "./materialBrand.data";
+import { BasicModal, useModalInner } from "/@/components/general/Modal";
+import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
+>>>>>>> 251b7fc60b5e59fa107f5e1f83f61b3399975e8d
 
   export default {
     name: "MaterialBrandModal",
