@@ -8,7 +8,9 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:material:insert')">新增产品表</a-button>
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:material:insert')"
+          >新增产品表</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -40,70 +42,70 @@
   </div>
 </template>
 <script lang="ts">
-import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterial, getMaterialList } from "/@/api/material/Material";
-import { useModal } from "/@/components/general/Modal";
-import MaterialModal from "./MaterialModal.vue";
-import { columns, searchFormSchema } from "./material.data";
-import { usePermission } from "/@/hooks/web/UsePermission";
+  import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
+  import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
+  import { useModal } from "/@/components/general/Modal";
+  import MaterialModal from "./MaterialModal.vue";
+  import { columns, searchFormSchema } from "./material.data";
+  import { usePermission } from "/@/hooks/web/UsePermission";
 
-export default {
-  name: "MaterialManagement",
-  components: { BasicTable, MaterialModal, TableAction },
-  setup() {
-    const { hasPermission } = usePermission();
-    const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload }] = useTable({
-      title: "产品表列表",
-      api: getMaterialList,
-      columns,
-      formConfig: {
-        labelWidth: 100,
-        schemas: searchFormSchema
-      },
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      showIndexColumn: false,
-      actionColumn: {
-        width: 80,
-        title: "操作",
-        dataIndex: "action"
+  export default {
+    name: "MaterialManagement",
+    components: { BasicTable, MaterialModal, TableAction },
+    setup() {
+      const { hasPermission } = usePermission();
+      const [registerModal, { openModal }] = useModal();
+      const [registerTable, { reload }] = useTable({
+        title: "产品表列表",
+        api: getMaterialList,
+        columns,
+        formConfig: {
+          labelWidth: 100,
+          schemas: searchFormSchema,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: false,
+        actionColumn: {
+          width: 80,
+          title: "操作",
+          dataIndex: "action",
+        },
+      });
+
+      function handleCreate() {
+        openModal(true, {
+          isUpdate: false,
+        });
       }
-    });
 
-    function handleCreate() {
-      openModal(true, {
-        isUpdate: false
-      });
-    }
+      function handleEdit(record: Recordable) {
+        openModal(true, {
+          record,
+          isUpdate: true,
+        });
+      }
 
-    function handleEdit(record: Recordable) {
-      openModal(true, {
-        record,
-        isUpdate: true
-      });
-    }
+      function handleDelete(record: Recordable) {
+        deleteMaterial(record.id).then(() => {
+          handleSuccess();
+        });
+      }
 
-    function handleDelete(record: Recordable) {
-      deleteMaterial(record.id).then(() => {
-        handleSuccess();
-      });
-    }
+      function handleSuccess() {
+        reload();
+      }
 
-    function handleSuccess() {
-      reload();
-    }
-
-    return {
-      registerTable,
-      registerModal,
-      handleCreate,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      hasPermission
-    };
-  }
-};
+      return {
+        registerTable,
+        registerModal,
+        handleCreate,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+        hasPermission,
+      };
+    },
+  };
 </script>

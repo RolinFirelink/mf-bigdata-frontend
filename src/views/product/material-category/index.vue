@@ -8,7 +8,12 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:materialCategory:insert')">新增产品类型表</a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          v-if="hasPermission('sys:materialCategory:insert')"
+          >新增产品类型表</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -40,70 +45,70 @@
   </div>
 </template>
 <script lang="ts">
-import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { deleteMaterialCategory, getMaterialCategoryList } from "/@/api/product/MaterialCategory";
-import { useModal } from "/@/components/general/Modal";
-import MaterialCategoryModal from "./MaterialCategoryModal.vue";
-import { columns, searchFormSchema } from "./materialCategory.data";
-import { usePermission } from "/@/hooks/web/UsePermission";
+  import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
+  import { deleteMaterialCategory, getMaterialCategoryList } from "/@/api/product/MaterialCategory";
+  import { useModal } from "/@/components/general/Modal";
+  import MaterialCategoryModal from "./MaterialCategoryModal.vue";
+  import { columns, searchFormSchema } from "./materialCategory.data";
+  import { usePermission } from "/@/hooks/web/UsePermission";
 
-export default {
-  name: "MaterialCategoryManagement",
-  components: { BasicTable, MaterialCategoryModal, TableAction },
-  setup() {
-    const { hasPermission } = usePermission();
-    const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload }] = useTable({
-      title: "产品类型表列表",
-      api: getMaterialCategoryList,
-      columns,
-      formConfig: {
-        labelWidth: 100,
-        schemas: searchFormSchema
-      },
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      showIndexColumn: false,
-      actionColumn: {
-        width: 80,
-        title: "操作",
-        dataIndex: "action"
+  export default {
+    name: "MaterialCategoryManagement",
+    components: { BasicTable, MaterialCategoryModal, TableAction },
+    setup() {
+      const { hasPermission } = usePermission();
+      const [registerModal, { openModal }] = useModal();
+      const [registerTable, { reload }] = useTable({
+        title: "产品类型表列表",
+        api: getMaterialCategoryList,
+        columns,
+        formConfig: {
+          labelWidth: 100,
+          schemas: searchFormSchema,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: false,
+        actionColumn: {
+          width: 80,
+          title: "操作",
+          dataIndex: "action",
+        },
+      });
+
+      function handleCreate() {
+        openModal(true, {
+          isUpdate: false,
+        });
       }
-    });
 
-    function handleCreate() {
-      openModal(true, {
-        isUpdate: false
-      });
-    }
+      function handleEdit(record: Recordable) {
+        openModal(true, {
+          record,
+          isUpdate: true,
+        });
+      }
 
-    function handleEdit(record: Recordable) {
-      openModal(true, {
-        record,
-        isUpdate: true
-      });
-    }
+      function handleDelete(record: Recordable) {
+        deleteMaterialCategory(record.id).then(() => {
+          handleSuccess();
+        });
+      }
 
-    function handleDelete(record: Recordable) {
-      deleteMaterialCategory(record.id).then(() => {
-        handleSuccess();
-      });
-    }
+      function handleSuccess() {
+        reload();
+      }
 
-    function handleSuccess() {
-      reload();
-    }
-
-    return {
-      registerTable,
-      registerModal,
-      handleCreate,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      hasPermission
-    };
-  }
-};
+      return {
+        registerTable,
+        registerModal,
+        handleCreate,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+        hasPermission,
+      };
+    },
+  };
 </script>
