@@ -5,7 +5,7 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialBrandRecord, ReqMaterialBrandRecord, MaterialBrandRecordPageModel } from "/@/api/material_brand_record/model/MaterialBrandRecordModel";
+import { MaterialBrandRecord, ReqMaterialBrandRecord, MaterialBrandRecordPageModel } from "/@/api/product/model/MaterialBrandRecordModel";
 
 enum Api {
   MaterialBrandRecord = "/web/materialBrandRecord"
