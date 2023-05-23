@@ -38,11 +38,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "remark",
     width: 120
   },
-  {
+  /*{
     title: "归属组织id",
     dataIndex: "orgId",
     width: 120
-  },
+  },*/
   // {
   //   title: "区分字段",
   //   dataIndex: "flag",
@@ -110,11 +110,11 @@ export const materialCategoryFormSchema: FormSchema[] = [
     label: "备注",
     component: "Input",
   },
-  {
+/*  {
     field: "orgId",
     label: "归属组织id",
     component: "Input",
-  },
+  },*/
   // {
   //   field: "flag",
   //   label: "区分字段",

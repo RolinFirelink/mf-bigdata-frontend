@@ -20,8 +20,8 @@ export interface Material extends BaseEntity<number> {
   extendField: string;
   enableSerialNumber: number;
   enableBatchNumber: number;
-  deletedFlag: number;
-  orgId: number;
+ // deletedFlag: number;
+  //orgId: number;
   scale: number;
   flag: number;
 }

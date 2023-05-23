@@ -54,7 +54,7 @@ export const columns: BasicColumn[] = [
     width: 120
   },
   {
-    title: "启用 0-禁用  1-启用",
+    title: "状态",
     dataIndex: "enabled",
     width: 120
   },
@@ -73,7 +73,7 @@ export const columns: BasicColumn[] = [
     dataIndex: "enableBatchNumber",
     width: 120
   },
-  {
+  /*{
     title: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
     dataIndex: "deletedFlag",
     width: 120
@@ -82,7 +82,7 @@ export const columns: BasicColumn[] = [
     title: "归属组织id",
     dataIndex: "orgId",
     width: 120
-  },
+  },*/
   {
     title: "种植规模(单位为㎡)",
     dataIndex: "scale",
@@ -189,7 +189,7 @@ export const materialFormSchema: FormSchema[] = [
     label: "是否开启批号，0否，1是",
     component: "Input",
   },
-  {
+  /*{
     field: "deletedFlag",
     label: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
     component: "Input",
@@ -198,7 +198,7 @@ export const materialFormSchema: FormSchema[] = [
     field: "orgId",
     label: "归属组织id",
     component: "Input",
-  },
+  },*/
   {
     field: "scale",
     label: "种植规模(单位为㎡)",

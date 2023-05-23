@@ -13,8 +13,8 @@ export interface MaterialCategory extends BaseEntity<number> {
   parentId: number;
   sort: string;
   remark: string;
-  deletedFlag: number;
-  orgId: number;
+  //deletedFlag: number;
+ // orgId: number;
   flag: number;
 }
 
