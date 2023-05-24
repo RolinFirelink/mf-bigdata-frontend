@@ -1,14 +1,18 @@
 /**
  * @description: 品牌产品中间表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialBrandRecord, ReqMaterialBrandRecord, MaterialBrandRecordPageModel } from "/@/api/product/model/MaterialBrandRecordModel";
+import {
+  MaterialBrandRecord,
+  ReqMaterialBrandRecord,
+  MaterialBrandRecordPageModel,
+} from "/@/api/product/model/MaterialBrandRecordModel";
 
 enum Api {
-  MaterialBrandRecord = "/material_brand_record/materialBrandRecord"
+  MaterialBrandRecord = "/web/materialBrandRecord",
 }
 
 /**
@@ -18,7 +22,10 @@ enum Api {
  * @return
  */
 export const getMaterialBrandRecordList = (reqMaterialBrandRecord?: ReqMaterialBrandRecord) => {
-  return defHttp.get<MaterialBrandRecordPageModel>({ url: Api.MaterialBrandRecord, params: reqMaterialBrandRecord });
+  return defHttp.get<MaterialBrandRecordPageModel>({
+    url: Api.MaterialBrandRecord,
+    params: reqMaterialBrandRecord,
+  });
 };
 
 /**
@@ -28,8 +35,11 @@ export const getMaterialBrandRecordList = (reqMaterialBrandRecord?: ReqMaterialB
  * @return
  */
 export function insertMaterialBrandRecord(materialBrandRecord: MaterialBrandRecord) {
-  return defHttp.post<MaterialBrandRecord>({ url: Api.MaterialBrandRecord, params: materialBrandRecord }, { successMessageMode: "message" });
-};
+  return defHttp.post<MaterialBrandRecord>(
+    { url: Api.MaterialBrandRecord, params: materialBrandRecord },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改品牌产品中间表
@@ -38,8 +48,11 @@ export function insertMaterialBrandRecord(materialBrandRecord: MaterialBrandReco
  * @return
  */
 export function updateMaterialBrandRecord(materialBrandRecord: MaterialBrandRecord) {
-  return defHttp.put<MaterialBrandRecord>({ url: Api.MaterialBrandRecord, params: materialBrandRecord }, { successMessageMode: "message" });
-};
+  return defHttp.put<MaterialBrandRecord>(
+    { url: Api.MaterialBrandRecord, params: materialBrandRecord },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除品牌产品中间表
@@ -48,5 +61,8 @@ export function updateMaterialBrandRecord(materialBrandRecord: MaterialBrandReco
  * @return
  */
 export function deleteMaterialBrandRecord(id: string) {
-  return defHttp.delete<MaterialBrandRecord>({ url: Api.MaterialBrandRecord + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<MaterialBrandRecord>(
+    { url: Api.MaterialBrandRecord + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

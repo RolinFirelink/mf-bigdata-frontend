@@ -53,7 +53,9 @@
           }).then();
         }
       });
+
       const getTitle = computed(() => (!unref(isUpdate) ? "新增文章" : "编辑文章"));
+      // 获取并设置内容分类树形列表
       async function setTreeData() {
         const treeData = await getArticleCategoryList();
         updateSchema([

@@ -8,7 +8,8 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:job:insert')">新增任务
+        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:job:insert')"
+          >新增任务
         </a-button>
       </template>
       <template #expandedRowRender="{ record }">
@@ -22,7 +23,7 @@
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
                 auth: 'sys:job:update',
-                tooltip: '修改'
+                tooltip: '修改',
               },
               {
                 icon: 'ant-design:delete-outlined',
@@ -33,7 +34,7 @@
                   confirm: handleDelete.bind(null, record),
                 },
                 auth: 'sys:job:delete',
-                tooltip: '删除'
+                tooltip: '删除',
               },
               {
                 icon: 'ant-design:caret-right-outlined',
@@ -44,23 +45,35 @@
                   confirm: handleExecute.bind(null, record),
                 },
                 color: 'warning',
-                tooltip: '立即执行'
-              }
+                tooltip: '立即执行',
+              },
             ]"
           />
         </template>
         <template v-if="column.key === 'jobType'">
-          <Tag v-for="item in jobTypes" v-show="record.jobType == item.dictValue" :color="item.color">
+          <Tag
+            v-for="item in jobTypes"
+            v-show="record.jobType == item.dictValue"
+            :color="item.color"
+          >
             {{ item.dictLabel }}
           </Tag>
         </template>
         <template v-if="column.key === 'misfireHandler'">
-          <Tag v-for="item in misfireHandlers" v-show="record.misfireHandler == item.dictValue" :color="item.color">
+          <Tag
+            v-for="item in misfireHandlers"
+            v-show="record.misfireHandler == item.dictValue"
+            :color="item.color"
+          >
             {{ item.dictLabel }}
           </Tag>
         </template>
         <template v-if="column.key === 'timeZone'">
-          <Tag v-for="item in timeZones" v-show="record.timeZone == item.dictValue" :color="item.color">
+          <Tag
+            v-for="item in timeZones"
+            v-show="record.timeZone == item.dictValue"
+            :color="item.color"
+          >
             {{ item.dictLabel }}
           </Tag>
         </template>
@@ -70,115 +83,122 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, onBeforeMount } from "vue";
-import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-import { Tag } from "ant-design-vue";
-import { deleteJob, executeJob, getJobList } from "/@/api/scheduler/Job";
-import { useModal } from "/@/components/general/Modal";
-import JobModal from "./JobModal.vue";
-import { columns, searchFormSchema } from "./job.data";
-import { usePermission } from "/@/hooks/web/UsePermission";
-import { getDictItems } from "/@/api/sys/DictItem";
-import { DictItem } from "/@/api/sys/model/DictItemModel";
-import { Job } from "/@/api/scheduler/model/JobModel";
-import JobSubscribeManagement from "/@/views/scheduler/job-subscribe/index.vue";
-import JobSubscribeList from "/@/views/scheduler/job/JobSubscribeList.vue";
+  import { ref, onBeforeMount } from "vue";
+  import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
+  import { Tag } from "ant-design-vue";
+  import { deleteJob, executeJob, getJobList } from "/@/api/scheduler/Job";
+  import { useModal } from "/@/components/general/Modal";
+  import JobModal from "./JobModal.vue";
+  import { columns, searchFormSchema } from "./job.data";
+  import { usePermission } from "/@/hooks/web/UsePermission";
+  import { getDictItems } from "/@/api/sys/DictItem";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { Job } from "/@/api/scheduler/model/JobModel";
+  import JobSubscribeManagement from "/@/views/scheduler/job-subscribe/index.vue";
+  import JobSubscribeList from "/@/views/scheduler/job/JobSubscribeList.vue";
 
-export default {
-  name: "JobManagement",
-  components: { JobSubscribeList, BasicTable, JobModal, TableAction, Tag, JobSubscribeManagement },
-  setup() {
-    const { hasPermission } = usePermission();
-    const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload }] = useTable({
-      title: "定时调度任务列表",
-      api: getJobList,
-      columns,
-      formConfig: {
-        name: "search_form_item",
-        labelWidth: 100,
-        schemas: searchFormSchema,
-        autoSubmitOnEnter: true
-      },
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      showIndexColumn: false,
-      expandRowByClick: true,
-      actionColumn: {
-        width: 100,
-        title: "操作",
-        dataIndex: "action"
+  export default {
+    name: "JobManagement",
+    components: {
+      JobSubscribeList,
+      BasicTable,
+      JobModal,
+      TableAction,
+      Tag,
+      JobSubscribeManagement,
+    },
+    setup() {
+      const { hasPermission } = usePermission();
+      const [registerModal, { openModal }] = useModal();
+      const [registerTable, { reload }] = useTable({
+        title: "定时调度任务列表",
+        api: getJobList,
+        columns,
+        formConfig: {
+          name: "search_form_item",
+          labelWidth: 100,
+          schemas: searchFormSchema,
+          autoSubmitOnEnter: true,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: false,
+        expandRowByClick: true,
+        actionColumn: {
+          width: 100,
+          title: "操作",
+          dataIndex: "action",
+        },
+      });
+
+      let jobTypes = ref<DictItem[]>([]);
+      let misfireHandlers = ref<DictItem[]>([]);
+      let timeZones = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getJobTypes();
+        getMisfireHandlers();
+        getTimeZone();
+      });
+
+      function getJobTypes() {
+        getDictItems("sys_job_type").then((res) => {
+          jobTypes.value = res;
+        });
       }
-    });
 
-    let jobTypes = ref<DictItem[]>([]);
-    let misfireHandlers = ref<DictItem[]>([]);
-    let timeZones = ref<DictItem[]>([]);
-    onBeforeMount(() => {
-      getJobTypes();
-      getMisfireHandlers();
-      getTimeZone();
-    });
+      function getMisfireHandlers() {
+        getDictItems("sys_job_misfire").then((res) => {
+          misfireHandlers.value = res;
+        });
+      }
 
-    function getJobTypes() {
-      getDictItems("sys_job_type").then((res) => {
-        jobTypes.value = res;
-      });
-    }
+      function getTimeZone() {
+        getDictItems("sys_time_zone").then((res) => {
+          timeZones.value = res;
+        });
+      }
 
-    function getMisfireHandlers() {
-      getDictItems("sys_job_misfire").then((res) => {
-        misfireHandlers.value = res;
-      });
-    }
+      function handleCreate() {
+        openModal(true, {
+          isUpdate: false,
+        });
+      }
 
-    function getTimeZone() {
-      getDictItems("sys_time_zone").then((res) => {
-        timeZones.value = res;
-      });
-    }
+      function handleExecute(record: Job) {
+        executeJob(record).then();
+      }
 
-    function handleCreate() {
-      openModal(true, {
-        isUpdate: false
-      });
-    }
+      function handleEdit(record: Job) {
+        openModal(true, {
+          record,
+          isUpdate: true,
+        });
+      }
 
-    function handleExecute(record: Job) {
-      executeJob(record).then();
-    }
+      function handleDelete(record: Job) {
+        deleteJob(record.id).then(() => {
+          handleSuccess();
+        });
+      }
 
-    function handleEdit(record: Job) {
-      openModal(true, {
-        record,
-        isUpdate: true
-      });
-    }
+      function handleSuccess() {
+        reload();
+      }
 
-    function handleDelete(record: Job) {
-      deleteJob(record.id).then(() => {
-        handleSuccess();
-      });
-    }
-
-    function handleSuccess() {
-      reload();
-    }
-
-    return {
-      registerTable,
-      registerModal,
-      handleCreate,
-      handleExecute,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      hasPermission,
-      jobTypes,
-      misfireHandlers,
-      timeZones
-    };
-  }
-};
+      return {
+        registerTable,
+        registerModal,
+        handleCreate,
+        handleExecute,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+        hasPermission,
+        jobTypes,
+        misfireHandlers,
+        timeZones,
+      };
+    },
+  };
 </script>

@@ -8,7 +8,7 @@ import { defHttp } from "/@/utils/http/axios";
 import { Customer, ReqCustomer, CustomerPageModel } from "/@/api/customer/model/CustomerModel";
 
 enum Api {
-  Customer = "/web/customer"
+  Customer = "/web/customer",
 }
 
 /**
@@ -28,8 +28,11 @@ export const getCustomerList = (reqCustomer?: ReqCustomer) => {
  * @return
  */
 export function insertCustomer(customer: Customer) {
-  return defHttp.post<Customer>({ url: Api.Customer, params: customer }, { successMessageMode: "message" });
-};
+  return defHttp.post<Customer>(
+    { url: Api.Customer, params: customer },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改客户表
@@ -38,8 +41,11 @@ export function insertCustomer(customer: Customer) {
  * @return
  */
 export function updateCustomer(customer: Customer) {
-  return defHttp.put<Customer>({ url: Api.Customer, params: customer }, { successMessageMode: "message" });
-};
+  return defHttp.put<Customer>(
+    { url: Api.Customer, params: customer },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除客户表
@@ -48,5 +54,8 @@ export function updateCustomer(customer: Customer) {
  * @return
  */
 export function deleteCustomer(id: string) {
-  return defHttp.delete<Customer>({ url: Api.Customer + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<Customer>(
+    { url: Api.Customer + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

@@ -23,16 +23,16 @@
   </div>
 </template>
 <script lang="ts">
-  import type { TableSetting, ColumnChangeParam } from '../types/Table';
-  import type { PropType } from 'vue';
-  import { defineComponent } from 'vue';
-  import { Divider } from 'ant-design-vue';
-  import TableSettingComponent from './settings/index.vue';
-  import TableTitle from './TableTitle.vue';
-  import { useDesign } from '/@/hooks/web/UseDesign';
+  import type { TableSetting, ColumnChangeParam } from "../types/Table";
+  import type { PropType } from "vue";
+  import { defineComponent } from "vue";
+  import { Divider } from "ant-design-vue";
+  import TableSettingComponent from "./settings/index.vue";
+  import TableTitle from "./TableTitle.vue";
+  import { useDesign } from "/@/hooks/web/UseDesign";
 
   export default defineComponent({
-    name: 'BasicTableHeader',
+    name: "BasicTableHeader",
     components: {
       Divider,
       TableTitle,
@@ -50,21 +50,21 @@
       },
       titleHelpMessage: {
         type: [String, Array] as PropType<string | string[]>,
-        default: '',
+        default: "",
       },
     },
-    emits: ['columns-change'],
+    emits: ["columns-change"],
     setup(_, { emit }) {
-      const { prefixCls } = useDesign('basic-table-header');
+      const { prefixCls } = useDesign("basic-table-header");
       function handleColumnChange(data: ColumnChangeParam[]) {
-        emit('columns-change', data);
+        emit("columns-change", data);
       }
       return { prefixCls, handleColumnChange };
     },
   });
 </script>
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-basic-table-header';
+  @prefix-cls: ~"@{namespace}-basic-table-header";
 
   .@{prefix-cls} {
     &__toolbar {

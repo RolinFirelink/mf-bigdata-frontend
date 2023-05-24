@@ -3,7 +3,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
 /**
  * @description: 产品生产表
  * @author cgli
- * @date: 2023-05-19
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export interface MaterialProduce extends BaseEntity<number> {
@@ -25,8 +25,7 @@ export interface MaterialProduce extends BaseEntity<number> {
   flag: number;
 }
 
-export interface ReqMaterialProduce {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ReqMaterialStorage {}
 
 export type MaterialProducePageModel = PageResult<MaterialProduce>;

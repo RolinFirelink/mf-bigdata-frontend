@@ -157,23 +157,23 @@ export const searchFormSchema: FormSchema[] = [
     field: "title",
     label: "标题",
     component: "Input",
-    colProps: { lg: 10, md: 5 },
+    colProps: { lg: 9, md: 5 },
   },
   {
     field: "author",
     label: "作者",
     component: "Input",
-    colProps: { lg: 6, md: 5 },
+    colProps: { lg: 9, md: 5 },
   },
   {
     field: "source",
     label: "来源",
     component: "Input",
-    colProps: { lg: 8, md: 5 },
+    colProps: { lg: 9, md: 5 },
   },
   {
     field: "[startTime, endTime]",
-    label: "时间范围",
+    label: "发布时间",
     component: "RangePicker",
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
@@ -194,7 +194,7 @@ export const searchFormSchema: FormSchema[] = [
         ["最近3个月"]: [dateUtil().subtract(3, "months"), dateUtil()],
       },
     },
-    colProps: { lg: 11, md: 8 },
+    colProps: { lg: 12, md: 8 },
   },
 ];
 export const articleFormSchema: FormSchema[] = [

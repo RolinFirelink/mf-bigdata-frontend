@@ -1,92 +1,87 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-
+import { dateUtil } from "/@/utils/DateUtil";
 /**
  * @description: 产品生产表
  * @author cgli
- * @date: 2023-05-19
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
   {
     title: "公司id",
     dataIndex: "companyId",
-    width: 120
+    width: 120,
   },
   {
     title: "产品id",
     dataIndex: "materialId",
-    width: 120
+    width: 120,
   },
   {
     title: "生产批次",
     dataIndex: "batch",
-    width: 120
+    width: 120,
   },
   {
     title: "生产规模",
     dataIndex: "productionScale",
-    width: 120
+    width: 120,
   },
   {
     title: "规模单位",
     dataIndex: "unit",
-    width: 120
-  },
-  {
-    title: "逻辑删除",
-    dataIndex: "deletedFlag",
-    width: 120
+    width: 120,
   },
   {
     title: "产品编号",
     dataIndex: "number",
-    width: 120
+    width: 120,
   },
   {
     title: "产品名称",
     dataIndex: "name",
-    width: 120
+    width: 120,
   },
   {
     title: "产品类型id",
     dataIndex: "categoryId",
-    width: 120
+    width: 120,
   },
   {
     title: "单位产量估算",
     dataIndex: "productEstimate",
-    width: 120
+    width: 120,
   },
   {
     title: "预计上市产量",
     dataIndex: "marketEstimate",
-    width: 120
+    width: 120,
   },
   {
     title: "预计上市时间",
     dataIndex: "timeEstimate",
-    width: 120
+    width: 120,
   },
   {
     title: "基地id",
     dataIndex: "baseId",
-    width: 120
+    width: 120,
   },
   {
     title: "生产数量",
     dataIndex: "quantity",
-    width: 120
+    width: 120,
   },
   {
     title: "是否卖出",
     dataIndex: "isSell",
-    width: 120
+    width: 120,
   },
   {
     title: "区分字段",
     dataIndex: "flag",
-    width: 120
+    width: 120,
   },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
@@ -95,19 +90,19 @@ export const searchFormSchema: FormSchema[] = [
     field: "companyId",
     label: "公司id",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "materialId",
     label: "产品id",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "batch",
     label: "生产批次",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
 ];
 export const materialProduceFormSchema: FormSchema[] = [
@@ -115,7 +110,7 @@ export const materialProduceFormSchema: FormSchema[] = [
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "companyId",
@@ -140,11 +135,6 @@ export const materialProduceFormSchema: FormSchema[] = [
   {
     field: "unit",
     label: "规模单位",
-    component: "Input",
-  },
-  {
-    field: "deletedFlag",
-    label: "逻辑删除",
     component: "Input",
   },
   {
@@ -175,7 +165,27 @@ export const materialProduceFormSchema: FormSchema[] = [
   {
     field: "timeEstimate",
     label: "预计上市时间",
-    component: "Input",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: "发布时间",
+      showTime: {
+        hideDisabledOptions: true,
+        defaultValue: [dateUtil("00:00:00")],
+      },
+      ranges: {
+        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
+        ["昨天"]: [
+          dateUtil().startOf("day").subtract(1, "days"),
+          dateUtil().endOf("day").subtract(1, "days"),
+        ],
+        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
+        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
+        ["最近1个月"]: [dateUtil().subtract(1, "months")],
+        ["最近3个月"]: [dateUtil().subtract(3, "months")],
+      },
+    },
+    colProps: { lg: 12, md: 8 },
   },
   {
     field: "baseId",

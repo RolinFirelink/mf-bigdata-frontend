@@ -4,7 +4,7 @@ import { FormSchema } from "/@/components/general/Table";
 /**
  * @description: 产品类型表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
@@ -36,21 +36,6 @@ export const columns: BasicColumn[] = [
   {
     title: "备注",
     dataIndex: "remark",
-    width: 120,
-  },
-  {
-    title: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
-    dataIndex: "deletedFlag",
-    width: 120,
-  },
-  {
-    title: "归属组织id",
-    dataIndex: "orgId",
-    width: 120,
-  },
-  {
-    title: "区分字段",
-    dataIndex: "flag",
     width: 120,
   },
 ];
@@ -100,12 +85,6 @@ export const materialCategoryFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: "parentId",
-    label: "上级id",
-    component: "Input",
-    required: true,
-  },
-  {
     field: "sort",
     label: "显示顺序",
     component: "Input",
@@ -113,21 +92,6 @@ export const materialCategoryFormSchema: FormSchema[] = [
   {
     field: "remark",
     label: "备注",
-    component: "Input",
-  },
-  {
-    field: "deletedFlag",
-    label: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
-    component: "Input",
-  },
-  {
-    field: "orgId",
-    label: "归属组织id",
-    component: "Input",
-  },
-  {
-    field: "flag",
-    label: "区分字段",
     component: "Input",
   },
 ];

@@ -1,7 +1,7 @@
 <!--
- @description: 产品类型表
+ @description: 产品表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -12,7 +12,7 @@
           type="primary"
           @click="handleCreate"
           v-if="hasPermission('sys:materialCategory:insert')"
-          >新增产品类型表</a-button
+          >新增产品表</a-button
         >
       </template>
       <template #bodyCell="{ column, record }">
@@ -41,25 +41,25 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialCategoryModal @register="registerModal" @success="handleSuccess" />
+    <materialCategoryModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteMaterialCategory, getMaterialCategoryList } from "/@/api/product/MaterialCategory";
   import { useModal } from "/@/components/general/Modal";
-  import MaterialCategoryModal from "./MaterialCategoryModal.vue";
+  import materialCategoryModal from "./MaterialCategoryModal.vue";
   import { columns, searchFormSchema } from "./materialCategory.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
 
   export default {
     name: "MaterialCategoryManagement",
-    components: { BasicTable, MaterialCategoryModal, TableAction },
+    components: { BasicTable, materialCategoryModal, TableAction },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: "产品类型表列表",
+        title: "产品分类表列表",
         api: getMaterialCategoryList,
         columns,
         formConfig: {
@@ -75,6 +75,7 @@
           title: "操作",
           dataIndex: "action",
         },
+        isTreeTable: true,
       });
 
       function handleCreate() {

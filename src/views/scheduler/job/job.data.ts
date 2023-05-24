@@ -16,30 +16,30 @@ export const columns: BasicColumn[] = [
   {
     title: "任务名称",
     dataIndex: "jobName",
-    width: 120
+    width: 120,
   },
   {
     title: "任务组",
     dataIndex: "jobGroup",
-    width: 120
+    width: 120,
   },
   {
     title: "任务类型",
     dataIndex: "jobType",
-    width: 120
+    width: 120,
   },
   {
     title: "调用类",
-    dataIndex: "className"
+    dataIndex: "className",
   },
   {
     title: "调用方法",
     dataIndex: "methodName",
-    width: 120
+    width: 120,
   },
   {
     title: "调用参数",
-    dataIndex: "params"
+    dataIndex: "params",
   },
   {
     title: "允许并发",
@@ -50,22 +50,22 @@ export const columns: BasicColumn[] = [
       const color = enable ? "green" : "red";
       const text = enable ? "允许" : "不允许";
       return h(Tag, { color: color }, () => text);
-    }
+    },
   },
   {
     title: "优先级",
     dataIndex: "priority",
-    width: 80
+    width: 80,
   },
   {
     title: "时区",
     dataIndex: "timeZone",
-    width: 120
+    width: 120,
   },
   {
     title: "过期策略",
     dataIndex: "misfireHandler",
-    width: 120
+    width: 120,
   },
   {
     title: "任务状态",
@@ -83,39 +83,41 @@ export const columns: BasicColumn[] = [
         onChange(checked: boolean) {
           record.pendingStatus = true;
           const newStatus = checked ? 0 : 1;
-          setJobStatus(record.id, newStatus).then(() => {
-            record.status = newStatus;
-          }).finally(() => {
-            record.pendingStatus = false;
-          });
-        }
+          setJobStatus(record.id, newStatus)
+            .then(() => {
+              record.status = newStatus;
+            })
+            .finally(() => {
+              record.pendingStatus = false;
+            });
+        },
       });
-    }
+    },
   },
   {
     title: "备注信息",
-    dataIndex: "remark"
-  }
+    dataIndex: "remark",
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "jobName",
     label: "任务名称",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "jobGroup",
     label: "任务组",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "jobType",
     label: "任务类型",
     component: "ApiSelect",
     componentProps: getDictProps("sys_job_type"),
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     label: "任务状态",
@@ -124,37 +126,37 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 export const jobFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "jobName",
     label: "任务名称",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "jobGroup",
     label: "任务组",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "jobType",
     label: "任务类型",
     component: "ApiSelect",
     componentProps: getDictProps("sys_job_type"),
-    required: true
+    required: true,
   },
   {
     field: "status",
@@ -164,23 +166,23 @@ export const jobFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    required: true
+    required: true,
   },
   {
     field: "priority",
     label: "优先级",
     component: "InputNumber",
-    defaultValue: 1
+    defaultValue: 1,
   },
   {
     field: "timeZone",
     label: "时区",
     component: "ApiSelect",
     componentProps: getDictProps("sys_time_zone"),
-    defaultValue: "Asia/Shanghai"
+    defaultValue: "Asia/Shanghai",
   },
   {
     field: "allowConcurrent",
@@ -190,9 +192,9 @@ export const jobFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "不允许", value: 0 },
-        { label: "允许", value: 1 }
-      ]
-    }
+        { label: "允许", value: 1 },
+      ],
+    },
   },
   {
     field: "misfireHandler",
@@ -202,16 +204,16 @@ export const jobFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "立即执行", value: 1 },
-        { label: "放弃执行", value: 2 }
-      ]
-    }
+        { label: "放弃执行", value: 2 },
+      ],
+    },
   },
   {
     field: "className",
     label: "调用类",
     helpMessage: ["调用类包含包名全路径 例如：", "com.arg.smart.scheduler.job.MfJob"],
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "methodName",
@@ -219,21 +221,24 @@ export const jobFormSchema: FormSchema[] = [
     helpMessage: ["执行方法 例如：", "test"],
     helpComponentProps: { position: "left" },
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "params",
     label: "调用参数",
-    helpMessage: ["参数支持普通对象数组类型 例如:[\"****\",11]", "复杂对象数组类型，属性包括type、value 例如：", "[{\"type\":\"java.lang.String\",\"value\":\"inner\"},{\"type\":\"com.arg.smart.sys.api.entity.SysLog\",\"value\":{\"title\":\"aaaa\"}}]"],
+    helpMessage: [
+      '参数支持普通对象数组类型 例如:["****",11]',
+      "复杂对象数组类型，属性包括type、value 例如：",
+      '[{"type":"java.lang.String","value":"inner"},{"type":"com.arg.smart.sys.api.entity.SysLog","value":{"title":"aaaa"}}]',
+    ],
     slot: "params",
     component: "Input",
-    colProps: { span: 24 }
+    colProps: { span: 24 },
   },
   {
     label: "备注",
     field: "remark",
     component: "InputTextArea",
-    colProps: { span: 24 }
-  }
+    colProps: { span: 24 },
+  },
 ];
-

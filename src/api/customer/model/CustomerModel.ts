@@ -14,8 +14,6 @@ export interface Customer extends BaseEntity<number> {
   version: number;
 }
 
-export interface ReqCustomer {
-
-}
+export interface ReqCustomer {}
 
 export type CustomerPageModel = PageResult<Customer>;

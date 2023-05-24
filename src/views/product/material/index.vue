@@ -1,7 +1,7 @@
 <!--
  @description: 产品表
  @author: cgli
- @date: 2023-05-18
+ @date: 2023-05-21
  @version: V1.0.0
 -->
 <template>
@@ -42,6 +42,13 @@
   </div>
 </template>
 <script lang="ts">
+  import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
+  import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
+  import { useModal } from "/@/components/general/Modal";
+  import MaterialModal from "./MaterialModal.vue";
+  import { columns, searchFormSchema } from "./material.data";
+  import { usePermission } from "/@/hooks/web/UsePermission";
+
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
   import { useModal } from "/@/components/general/Modal";

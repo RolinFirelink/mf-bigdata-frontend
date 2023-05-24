@@ -1,14 +1,14 @@
 /**
  * @description: 产品表
  * @author cgli
- * @date: 2023-05-18
+ * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
 import { Material, ReqMaterial, MaterialPageModel } from "/@/api/product/model/MaterialModel";
 
 enum Api {
-  Material = "/material/material"
+  Material = "/web/material",
 }
 
 /**
@@ -28,8 +28,11 @@ export const getMaterialList = (reqMaterial?: ReqMaterial) => {
  * @return
  */
 export function insertMaterial(material: Material) {
-  return defHttp.post<Material>({ url: Api.Material, params: material }, { successMessageMode: "message" });
-};
+  return defHttp.post<Material>(
+    { url: Api.Material, params: material },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改产品表
@@ -38,8 +41,11 @@ export function insertMaterial(material: Material) {
  * @return
  */
 export function updateMaterial(material: Material) {
-  return defHttp.put<Material>({ url: Api.Material, params: material }, { successMessageMode: "message" });
-};
+  return defHttp.put<Material>(
+    { url: Api.Material, params: material },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除产品表
@@ -48,5 +54,8 @@ export function updateMaterial(material: Material) {
  * @return
  */
 export function deleteMaterial(id: string) {
-  return defHttp.delete<Material>({ url: Api.Material + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<Material>(
+    { url: Api.Material + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
