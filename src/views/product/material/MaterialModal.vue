@@ -14,7 +14,7 @@
   import { BasicForm, useForm } from "/@/components/general/Form/index";
   import { materialFormSchema } from "./material.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
-  import { insertMaterial, updateMaterial } from "/@/api/product/Material";
+  import { insertMaterial, updateMaterial, getMaterialList } from "/@/api/product/Material";
 
   export default {
     name: "MaterialModal",
@@ -22,7 +22,7 @@
     emits: ["success", "register"],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: materialFormSchema,
@@ -34,6 +34,7 @@
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
+          setTreeData();
           setFieldsValue({
             ...data.record,
           }).then();
@@ -41,9 +42,21 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品表" : "编辑产品表"));
 
+      async function setTreeData() {
+        const treeData = await getMaterialList();
+        updateSchema([
+          {
+            field: "categoryId",
+            componentProps: { treeData: treeData.list },
+          },
+        ]).then();
+      }
       async function handleSubmit() {
         let values = await validate();
         setModalProps({ confirmLoading: true });
+        if (!values.categoryId) {
+          values.categoryId = 0;
+        }
         if (unref(isUpdate)) {
           saveMaterial(updateMaterial, values);
         } else {

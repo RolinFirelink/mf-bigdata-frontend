@@ -1,7 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { h } from "vue";
 import { Tag } from "ant-design-vue";
+import { h } from "vue";
 /**
  * @description: 产品表
  * @author cgli
@@ -10,7 +10,7 @@ import { Tag } from "ant-design-vue";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "产品类型id",
+    title: "产品类型",
     dataIndex: "categoryId",
     width: 120,
   },
@@ -55,41 +55,75 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "启用状态",
+    title: "是否启用",
     dataIndex: "enabled",
     width: 120,
     customRender: ({ record }) => {
       const status = record.enabled;
       const enable = ~~status === 1;
-      const color = enable ? "green" : "red";
-      const text = enable ? "启用" : "禁用";
+      const color = enable ? "green" : "grey";
+      const text = enable ? "启用" : "禁止";
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  // {
+  //   title: "自定义扩展字段JSON结构",
+  //   dataIndex: "extendField",
+  //   width: 120,
+  // },
+  {
+    title: "是否开启序列号",
+    dataIndex: "enableSerialNumber",
+    width: 120,
+    customRender: ({ record }) => {
+      const status = record.enableSerialNumber;
+      const enable = ~~status === 1;
+      const color = enable ? "green" : "grey";
+      const text = enable ? "是" : "否";
       return h(Tag, { color: color }, () => text);
     },
   },
   {
-    title: "自定义扩展字段JSON结构",
-    dataIndex: "extendField",
+    title: "是否开启批号",
+    dataIndex: "enableBatchNumber",
+    width: 120,
+    customRender: ({ record }) => {
+      const status = record.enableBatchNumber;
+      const enable = ~~status === 1;
+      const color = enable ? "green" : "grey";
+      const text = enable ? "是" : "否";
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  // {
+  //   title: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
+  //   dataIndex: "deletedFlag",
+  //   width: 120,
+  // },
+  {
+    title: "归属组织id",
+    dataIndex: "orgId",
     width: 120,
   },
   {
-    title: "种植规模(单位为㎡)",
+    title: "种植规模(㎡)",
     dataIndex: "scale",
     width: 120,
   },
-  {
-    title: "区分字段",
-    dataIndex: "flag",
-    width: 120,
-  },
+  // {
+  //   title: "区分字段",
+  //   dataIndex: "flag",
+  //   width: 120,
+  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: "categoryId",
-    label: "产品类型id",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "categoryId",
+  //   label: "产品类型",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
   {
     field: "name",
     label: "产品名称",
@@ -112,8 +146,8 @@ export const materialFormSchema: FormSchema[] = [
   },
   {
     field: "categoryId",
-    label: "产品类型id",
-    component: "Input",
+    label: "产品类型",
+    component: "TreeSelect",
     required: true,
   },
   {
@@ -159,7 +193,7 @@ export const materialFormSchema: FormSchema[] = [
   },
   {
     field: "enabled",
-    label: "启用状态",
+    label: "是否启用",
     component: "RadioButtonGroup",
     defaultValue: 0,
     componentProps: {
@@ -168,16 +202,15 @@ export const materialFormSchema: FormSchema[] = [
         { label: "启用", value: 1 },
       ],
     },
-    colProps: { span: 12 },
   },
-  {
-    field: "extendField",
-    label: "自定义扩展字段JSON结构",
-    component: "Input",
-  },
+  // {
+  //   field: "extendField",
+  //   label: "自定义扩展字段JSON结构",
+  //   component: "Input",
+  // },
   {
     field: "enableSerialNumber",
-    label: "开启序列号",
+    label: "是否开启序列号",
     component: "RadioButtonGroup",
     defaultValue: 0,
     componentProps: {
@@ -186,11 +219,10 @@ export const materialFormSchema: FormSchema[] = [
         { label: "是", value: 1 },
       ],
     },
-    colProps: { span: 12 },
   },
   {
     field: "enableBatchNumber",
-    label: "开启批号",
+    label: "是否开启批号",
     component: "RadioButtonGroup",
     defaultValue: 0,
     componentProps: {
@@ -199,8 +231,12 @@ export const materialFormSchema: FormSchema[] = [
         { label: "是", value: 1 },
       ],
     },
-    colProps: { span: 12 },
   },
+  // {
+  //   field: "deletedFlag",
+  //   label: "0--未删除 1--已删除 DIC_NAME=DELETE_FLAG",
+  //   component: "Input",
+  // },
   {
     field: "orgId",
     label: "归属组织id",
@@ -208,7 +244,7 @@ export const materialFormSchema: FormSchema[] = [
   },
   {
     field: "scale",
-    label: "种植规模(单位为㎡)",
+    label: "种植规模(㎡)",
     component: "Input",
   },
   {

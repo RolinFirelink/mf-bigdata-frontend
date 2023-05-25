@@ -18,7 +18,11 @@
             :actions="[
               {
                 icon: 'ant-design:edit-outlined',
-                onClick: handleEdit.bind(null, record),
+                popConfirm: {
+                  title: '是否确认修改',
+                  placement: 'left',
+                  confirm: handleEdit.bind(null, record),
+                },
                 auth: 'sys:material:update',
                 tooltip: '修改',
               },
@@ -42,13 +46,6 @@
   </div>
 </template>
 <script lang="ts">
-  import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
-  import { useModal } from "/@/components/general/Modal";
-  import MaterialModal from "./MaterialModal.vue";
-  import { columns, searchFormSchema } from "./material.data";
-  import { usePermission } from "/@/hooks/web/UsePermission";
-
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteMaterial, getMaterialList } from "/@/api/product/Material";
   import { useModal } from "/@/components/general/Modal";

@@ -14,7 +14,11 @@
   import { BasicForm, useForm } from "/@/components/general/Form/index";
   import { materialCategoryFormSchema } from "./materialCategory.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
-  import { insertMaterialCategory, updateMaterialCategory } from "/@/api/product/MaterialCategory";
+  import {
+    insertMaterialCategory,
+    updateMaterialCategory,
+    getMaterialCategoryList,
+  } from "/@/api/product/MaterialCategory";
 
   export default {
     name: "MaterialCategoryModal",
@@ -22,7 +26,7 @@
     emits: ["success", "register"],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: materialCategoryFormSchema,
@@ -33,6 +37,7 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
+        setTreeData();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -41,9 +46,22 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品类型表" : "编辑产品类型表"));
 
+      async function setTreeData() {
+        const treeData = await getMaterialCategoryList();
+        updateSchema([
+          {
+            field: "parentId",
+            componentProps: { treeData: treeData.list },
+          },
+        ]).then();
+      }
+
       async function handleSubmit() {
         let values = await validate();
         setModalProps({ confirmLoading: true });
+        if (!values.parentId) {
+          values.parentId = 0;
+        }
         if (unref(isUpdate)) {
           saveMaterialCategory(updateMaterialCategory, values);
         } else {

@@ -24,8 +24,8 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "上级id",
-    dataIndex: "parentId",
+    title: "上级分类",
+    dataIndex: "name",
     width: 120,
   },
   {
@@ -53,12 +53,12 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "categoryLevel",
-    label: "等级",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "categoryLevel",
+  //   label: "等级",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
 ];
 export const materialCategoryFormSchema: FormSchema[] = [
   {
@@ -85,6 +85,20 @@ export const materialCategoryFormSchema: FormSchema[] = [
     required: true,
   },
   {
+    field: "parentId",
+    label: "上级分类",
+    component: "TreeSelect",
+    required: true,
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        key: "id",
+        value: "id",
+      },
+      getPopupContainer: () => document.body,
+    },
+  },
+  {
     field: "sort",
     label: "显示顺序",
     component: "Input",
@@ -94,4 +108,14 @@ export const materialCategoryFormSchema: FormSchema[] = [
     label: "备注",
     component: "Input",
   },
+  {
+    field: "orgId",
+    label: "归属组织id",
+    component: "Input",
+  },
+  // {
+  //   field: "flag",
+  //   label: "区分字段",
+  //   component: "Input",
+  // },
 ];

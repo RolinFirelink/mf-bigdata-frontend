@@ -1,6 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { dateUtil } from "/@/utils/DateUtil";
+import { Tag } from "ant-design-vue";
+import { h } from "vue";
 /**
  * @description: 产品品牌表
  * @author cgli
@@ -9,15 +10,27 @@ import { dateUtil } from "/@/utils/DateUtil";
  */
 export const columns: BasicColumn[] = [
   {
+    title: "是否删除",
+    dataIndex: "deletedFlag",
+    width: 120,
+    customRender: ({ record }) => {
+      const status = record.deletedFlag;
+      const enable = ~~status === 1;
+      const color = enable ? "green" : "grey";
+      const text = enable ? "是" : "否";
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
     title: "品牌名",
     dataIndex: "name",
     width: 120,
   },
-  {
-    title: "品牌描述",
-    dataIndex: "description",
-    width: 120,
-  },
+  // {
+  //   title: "品牌描述",
+  //   dataIndex: "description",
+  //   width: 120,
+  // },
   {
     title: "品牌价值观",
     dataIndex: "companyValue",
@@ -43,21 +56,32 @@ export const columns: BasicColumn[] = [
     dataIndex: "companyName",
     width: 120,
   },
+  {
+    title: "品牌归属公司",
+    dataIndex: "companyId",
+    width: 120,
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
+  // {
+  //   field: "deletedFlag",
+  //   label: "是否删除",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
   {
     field: "name",
     label: "品牌名",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "description",
-    label: "品牌描述",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "description",
+  //   label: "品牌描述",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
 ];
 export const materialBrandFormSchema: FormSchema[] = [
   {
@@ -67,15 +91,27 @@ export const materialBrandFormSchema: FormSchema[] = [
     show: false,
   },
   {
+    field: "deletedFlag",
+    label: "是否删除",
+    component: "RadioButtonGroup",
+    defaultValue: 0,
+    componentProps: {
+      options: [
+        { label: "否", value: 0 },
+        { label: "是", value: 1 },
+      ],
+    },
+  },
+  {
     field: "name",
     label: "品牌名",
     component: "Input",
   },
-  {
-    field: "description",
-    label: "品牌描述",
-    component: "Input",
-  },
+  // {
+  //   field: "description",
+  //   label: "品牌描述",
+  //   component: "Input",
+  // },
   {
     field: "companyValue",
     label: "品牌价值观",
@@ -89,27 +125,7 @@ export const materialBrandFormSchema: FormSchema[] = [
   {
     field: "establishedDate",
     label: "品牌创立时间",
-    component: "DatePicker",
-    componentProps: {
-      format: "YYYY-MM-DD HH:mm:ss",
-      placeholder: "发布时间",
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00")],
-      },
-      ranges: {
-        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
-        ["昨天"]: [
-          dateUtil().startOf("day").subtract(1, "days"),
-          dateUtil().endOf("day").subtract(1, "days"),
-        ],
-        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
-        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
-        ["最近1个月"]: [dateUtil().subtract(1, "months")],
-        ["最近3个月"]: [dateUtil().subtract(3, "months")],
-      },
-    },
-    colProps: { lg: 12, md: 8 },
+    component: "Input",
   },
   {
     field: "flag",
@@ -123,7 +139,16 @@ export const materialBrandFormSchema: FormSchema[] = [
   },
   {
     field: "companyId",
-    label: "品牌归属公司id",
-    component: "Input",
+    label: "品牌归属公司",
+    component: "TreeSelect",
+    required: true,
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        key: "id",
+        value: "id",
+      },
+      getPopupContainer: () => document.body,
+    },
   },
 ];

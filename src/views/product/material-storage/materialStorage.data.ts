@@ -13,11 +13,16 @@ export const columns: BasicColumn[] = [
     dataIndex: "flag",
     width: 120,
   },
-  {
-    title: "产品id",
-    dataIndex: "materialId",
-    width: 120,
-  },
+  // {
+  //   title: "自定义拓展JSON结构数据",
+  //   dataIndex: "data",
+  //   width: 120
+  // },
+  // {
+  //   title: "产品id",
+  //   dataIndex: "materialId",
+  //   width: 120,
+  // },
   {
     title: "产品名称",
     dataIndex: "materialName",
@@ -37,12 +42,12 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "data",
-    label: "自定义拓展JSON结构数据",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "data",
+  //   label: "自定义拓展JSON结构数据",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
 ];
 export const materialStorageFormSchema: FormSchema[] = [
   {
@@ -51,19 +56,19 @@ export const materialStorageFormSchema: FormSchema[] = [
     component: "Input",
     show: false,
   },
-  {
-    field: "flag",
-    label: "区分字段",
-    component: "Input",
-  },
-  {
-    field: "data",
-    label: "自定义拓展JSON结构数据",
-    component: "Input",
-  },
+  // {
+  //   field: "flag",
+  //   label: "区分字段",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "data",
+  //   label: "自定义拓展JSON结构数据",
+  //   component: "Input",
+  // },
   {
     field: "ownerId",
-    label: "归属组织id",
+    label: "归属组织",
     component: "Input",
   },
   {
