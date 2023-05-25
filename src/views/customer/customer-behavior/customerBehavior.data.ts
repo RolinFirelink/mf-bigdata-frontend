@@ -8,6 +8,12 @@ import { FormSchema } from "/@/components/general/Table";
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
+  
+  {
+    title: "客户ID",
+    dataIndex: "customerId",
+    width: 120,
+  },
   {
     title: "行为类型",
     dataIndex: "type",
@@ -27,21 +33,23 @@ export const columns: BasicColumn[] = [
     title: "产品分类",
     dataIndex: "flag",
     width: 120,
-  },
-  {
-    title: "",
-    dataIndex: "deleteFlag",
-    width: 120,
-  },
-  {
-    title: "乐观锁",
-    dataIndex: "version",
-    width: 120,
-  },
+  }
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
+    field: "id",
+    label: "唯一ID",
+    component: "Input",
+    show: false,
+  },
+  {
+    field: "customerId",
+    label: "客户ID",
+    component: "Input",
+  },
+  {
+    
     field: "type",
     label: "行为类型",
     component: "Input",
@@ -68,6 +76,11 @@ export const customerBehaviorFormSchema: FormSchema[] = [
     show: false,
   },
   {
+    field: "customerId",
+    label: "客户ID",
+    component: "Input",
+  },
+  {
     field: "type",
     label: "行为类型",
     component: "Input",
@@ -86,15 +99,5 @@ export const customerBehaviorFormSchema: FormSchema[] = [
     field: "flag",
     label: "产品分类",
     component: "Input",
-  },
-  {
-    field: "deleteFlag",
-    label: "",
-    component: "Input",
-  },
-  {
-    field: "version",
-    label: "乐观锁",
-    component: "Input",
-  },
+  }
 ];
