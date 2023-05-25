@@ -5,10 +5,14 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialStorage, ReqMaterialStorage, MaterialStoragePageModel } from "/@/api/product/model/MaterialStorageModel";
+import {
+  MaterialStorage,
+  ReqMaterialStorage,
+  MaterialStoragePageModel,
+} from "/@/api/product/model/MaterialStorageModel";
 
 enum Api {
-  MaterialStorage = "/web/materialStorage"
+  MaterialStorage = "/web/materialStorage",
 }
 
 /**
@@ -18,7 +22,10 @@ enum Api {
  * @return
  */
 export const getMaterialStorageList = (reqMaterialStorage?: ReqMaterialStorage) => {
-  return defHttp.get<MaterialStoragePageModel>({ url: Api.MaterialStorage, params: reqMaterialStorage });
+  return defHttp.get<MaterialStoragePageModel>({
+    url: Api.MaterialStorage,
+    params: reqMaterialStorage,
+  });
 };
 
 /**
@@ -28,8 +35,11 @@ export const getMaterialStorageList = (reqMaterialStorage?: ReqMaterialStorage) 
  * @return
  */
 export function insertMaterialStorage(materialStorage: MaterialStorage) {
-  return defHttp.post<MaterialStorage>({ url: Api.MaterialStorage, params: materialStorage }, { successMessageMode: "message" });
-};
+  return defHttp.post<MaterialStorage>(
+    { url: Api.MaterialStorage, params: materialStorage },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改产品库存表
@@ -38,8 +48,11 @@ export function insertMaterialStorage(materialStorage: MaterialStorage) {
  * @return
  */
 export function updateMaterialStorage(materialStorage: MaterialStorage) {
-  return defHttp.put<MaterialStorage>({ url: Api.MaterialStorage, params: materialStorage }, { successMessageMode: "message" });
-};
+  return defHttp.put<MaterialStorage>(
+    { url: Api.MaterialStorage, params: materialStorage },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除产品库存表
@@ -48,5 +61,8 @@ export function updateMaterialStorage(materialStorage: MaterialStorage) {
  * @return
  */
 export function deleteMaterialStorage(id: string) {
-  return defHttp.delete<MaterialStorage>({ url: Api.MaterialStorage + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<MaterialStorage>(
+    { url: Api.MaterialStorage + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

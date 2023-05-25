@@ -5,10 +5,14 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialAttribute, ReqMaterialAttribute, MaterialAttributePageModel } from "/@/api/product/model/MaterialAttributeModel";
+import {
+  MaterialAttribute,
+  ReqMaterialAttribute,
+  MaterialAttributePageModel,
+} from "/@/api/product/model/MaterialAttributeModel";
 
 enum Api {
-  MaterialAttribute = "/web/materialAttribute"
+  MaterialAttribute = "/web/materialAttribute",
 }
 
 /**
@@ -18,7 +22,10 @@ enum Api {
  * @return
  */
 export const getMaterialAttributeList = (reqMaterialAttribute?: ReqMaterialAttribute) => {
-  return defHttp.get<MaterialAttributePageModel>({ url: Api.MaterialAttribute, params: reqMaterialAttribute });
+  return defHttp.get<MaterialAttributePageModel>({
+    url: Api.MaterialAttribute,
+    params: reqMaterialAttribute,
+  });
 };
 
 /**
@@ -28,8 +35,11 @@ export const getMaterialAttributeList = (reqMaterialAttribute?: ReqMaterialAttri
  * @return
  */
 export function insertMaterialAttribute(materialAttribute: MaterialAttribute) {
-  return defHttp.post<MaterialAttribute>({ url: Api.MaterialAttribute, params: materialAttribute }, { successMessageMode: "message" });
-};
+  return defHttp.post<MaterialAttribute>(
+    { url: Api.MaterialAttribute, params: materialAttribute },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改产品属性表
@@ -38,8 +48,11 @@ export function insertMaterialAttribute(materialAttribute: MaterialAttribute) {
  * @return
  */
 export function updateMaterialAttribute(materialAttribute: MaterialAttribute) {
-  return defHttp.put<MaterialAttribute>({ url: Api.MaterialAttribute, params: materialAttribute }, { successMessageMode: "message" });
-};
+  return defHttp.put<MaterialAttribute>(
+    { url: Api.MaterialAttribute, params: materialAttribute },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除产品属性表
@@ -48,5 +61,8 @@ export function updateMaterialAttribute(materialAttribute: MaterialAttribute) {
  * @return
  */
 export function deleteMaterialAttribute(id: string) {
-  return defHttp.delete<MaterialAttribute>({ url: Api.MaterialAttribute + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<MaterialAttribute>(
+    { url: Api.MaterialAttribute + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

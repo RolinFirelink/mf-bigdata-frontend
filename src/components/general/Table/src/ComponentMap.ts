@@ -8,10 +8,15 @@ import {
   DatePicker,
   TimePicker,
   AutoComplete,
-  Radio
+  Radio,
 } from "ant-design-vue";
 import type { ComponentType } from "./types/ComponentType";
-import { ApiSelect, ApiTreeSelect, RadioButtonGroup, ApiRadioGroup } from "/@/components/general/Form";
+import {
+  ApiSelect,
+  ApiTreeSelect,
+  RadioButtonGroup,
+  ApiRadioGroup,
+} from "/@/components/general/Form";
 
 const componentMap = new Map<ComponentType, Component>();
 

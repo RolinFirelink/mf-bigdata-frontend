@@ -15,8 +15,7 @@ export interface MaterialAttribute extends BaseEntity<number> {
   flag: number;
 }
 
-export interface ReqMaterialAttribute {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ReqMaterialAttribute {}
 
 export type MaterialAttributePageModel = PageResult<MaterialAttribute>;

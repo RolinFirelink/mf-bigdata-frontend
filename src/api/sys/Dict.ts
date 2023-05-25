@@ -8,7 +8,7 @@ import { defHttp } from "/@/utils/http/axios";
 import { Dict, ReqDict, DictPageModel } from "/@/api/sys/model/DictModel";
 
 enum Api {
-  Dict = "/sys/dict"
+  Dict = "/sys/dict",
 }
 
 /**
@@ -29,7 +29,7 @@ export const getDictList = (reqDict?: ReqDict) => {
  */
 export function insertDict(dict: Dict) {
   return defHttp.post<Dict>({ url: Api.Dict, params: dict }, { successMessageMode: "message" });
-};
+}
 
 /**
  * 修改字典
@@ -39,7 +39,7 @@ export function insertDict(dict: Dict) {
  */
 export function updateDict(dict: Dict) {
   return defHttp.put<Dict>({ url: Api.Dict, params: dict }, { successMessageMode: "message" });
-};
+}
 
 /**
  * 删除字典
@@ -49,4 +49,4 @@ export function updateDict(dict: Dict) {
  */
 export function deleteDict(id: string) {
   return defHttp.delete<Dict>({ url: Api.Dict + "/" + id }, { successMessageMode: "message" });
-};
+}

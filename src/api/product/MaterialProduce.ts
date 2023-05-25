@@ -5,10 +5,14 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialProduce, ReqMaterialProduce, MaterialProducePageModel } from "/@/api/product/model/MaterialProduceModel";
+import {
+  MaterialProduce,
+  ReqMaterialProduce,
+  MaterialProducePageModel,
+} from "/@/api/product/model/MaterialProduceModel";
 
 enum Api {
-  MaterialProduce = "/web/materialProduce"
+  MaterialProduce = "/web/materialProduce",
 }
 
 /**
@@ -18,7 +22,10 @@ enum Api {
  * @return
  */
 export const getMaterialProduceList = (reqMaterialProduce?: ReqMaterialProduce) => {
-  return defHttp.get<MaterialProducePageModel>({ url: Api.MaterialProduce, params: reqMaterialProduce });
+  return defHttp.get<MaterialProducePageModel>({
+    url: Api.MaterialProduce,
+    params: reqMaterialProduce,
+  });
 };
 
 /**
@@ -28,8 +35,11 @@ export const getMaterialProduceList = (reqMaterialProduce?: ReqMaterialProduce) 
  * @return
  */
 export function insertMaterialProduce(materialProduce: MaterialProduce) {
-  return defHttp.post<MaterialProduce>({ url: Api.MaterialProduce, params: materialProduce }, { successMessageMode: "message" });
-};
+  return defHttp.post<MaterialProduce>(
+    { url: Api.MaterialProduce, params: materialProduce },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改产品生产表
@@ -38,8 +48,11 @@ export function insertMaterialProduce(materialProduce: MaterialProduce) {
  * @return
  */
 export function updateMaterialProduce(materialProduce: MaterialProduce) {
-  return defHttp.put<MaterialProduce>({ url: Api.MaterialProduce, params: materialProduce }, { successMessageMode: "message" });
-};
+  return defHttp.put<MaterialProduce>(
+    { url: Api.MaterialProduce, params: materialProduce },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除产品生产表
@@ -48,5 +61,8 @@ export function updateMaterialProduce(materialProduce: MaterialProduce) {
  * @return
  */
 export function deleteMaterialProduce(id: string) {
-  return defHttp.delete<MaterialProduce>({ url: Api.MaterialProduce + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<MaterialProduce>(
+    { url: Api.MaterialProduce + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

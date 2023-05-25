@@ -18,7 +18,7 @@ import {
   TreeSelect,
   Slider,
   Rate,
-  Divider
+  Divider,
 } from "ant-design-vue";
 
 import ApiRadioGroup from "./components/ApiRadioGroup.vue";

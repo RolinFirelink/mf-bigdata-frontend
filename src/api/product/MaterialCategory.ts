@@ -5,10 +5,14 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { MaterialCategory, ReqMaterialCategory, MaterialCategoryPageModel } from "/@/api/product/model/MaterialCategoryModel";
+import {
+  MaterialCategory,
+  ReqMaterialCategory,
+  MaterialCategoryPageModel,
+} from "/@/api/product/model/MaterialCategoryModel";
 
 enum Api {
-  MaterialCategory = "/web/materialCategory"
+  MaterialCategory = "/web/materialCategory",
 }
 
 /**
@@ -18,7 +22,10 @@ enum Api {
  * @return
  */
 export const getMaterialCategoryList = (reqMaterialCategory?: ReqMaterialCategory) => {
-  return defHttp.get<MaterialCategoryPageModel>({ url: Api.MaterialCategory, params: reqMaterialCategory });
+  return defHttp.get<MaterialCategoryPageModel>({
+    url: Api.MaterialCategory,
+    params: reqMaterialCategory,
+  });
 };
 
 /**
@@ -28,8 +35,11 @@ export const getMaterialCategoryList = (reqMaterialCategory?: ReqMaterialCategor
  * @return
  */
 export function insertMaterialCategory(materialCategory: MaterialCategory) {
-  return defHttp.post<MaterialCategory>({ url: Api.MaterialCategory, params: materialCategory }, { successMessageMode: "message" });
-};
+  return defHttp.post<MaterialCategory>(
+    { url: Api.MaterialCategory, params: materialCategory },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改产品类型表
@@ -38,8 +48,11 @@ export function insertMaterialCategory(materialCategory: MaterialCategory) {
  * @return
  */
 export function updateMaterialCategory(materialCategory: MaterialCategory) {
-  return defHttp.put<MaterialCategory>({ url: Api.MaterialCategory, params: materialCategory }, { successMessageMode: "message" });
-};
+  return defHttp.put<MaterialCategory>(
+    { url: Api.MaterialCategory, params: materialCategory },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除产品类型表
@@ -48,5 +61,8 @@ export function updateMaterialCategory(materialCategory: MaterialCategory) {
  * @return
  */
 export function deleteMaterialCategory(id: string) {
-  return defHttp.delete<MaterialCategory>({ url: Api.MaterialCategory + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<MaterialCategory>(
+    { url: Api.MaterialCategory + "/" + id },
+    { successMessageMode: "message" },
+  );
+}

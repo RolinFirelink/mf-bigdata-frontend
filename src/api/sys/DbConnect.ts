@@ -11,7 +11,9 @@ import {
   DbConnectPageModel,
   ReqTable,
   TableInfo,
-  FieldInfo, DataTable, DBTreeNode
+  FieldInfo,
+  DataTable,
+  DBTreeNode,
 } from "/@/api/sys/model/DbConnectModel";
 import { PageResult } from "/@/api/model/BaseModel";
 
@@ -21,7 +23,7 @@ enum Api {
   Tables = "/sys/dbConnect/tables",
   Fields = "/sys/dbConnect/fields",
   DataTable = "/sys/dbConnect/data",
-  Tree = "/sys/dbConnect/tree"
+  Tree = "/sys/dbConnect/tree",
 }
 
 /**
@@ -73,8 +75,11 @@ export const getDataTable = (params: ReqTable) => {
  * @return
  */
 export function insertDbConnect(dbConnect: DbConnect) {
-  return defHttp.post<DbConnect>({ url: Api.DbConnect, params: dbConnect }, { successMessageMode: "message" });
-};
+  return defHttp.post<DbConnect>(
+    { url: Api.DbConnect, params: dbConnect },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改数据库连接
@@ -83,8 +88,11 @@ export function insertDbConnect(dbConnect: DbConnect) {
  * @return
  */
 export function updateDbConnect(dbConnect: DbConnect) {
-  return defHttp.put<DbConnect>({ url: Api.DbConnect, params: dbConnect }, { successMessageMode: "message" });
-};
+  return defHttp.put<DbConnect>(
+    { url: Api.DbConnect, params: dbConnect },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除数据库连接
@@ -93,13 +101,19 @@ export function updateDbConnect(dbConnect: DbConnect) {
  * @return
  */
 export function deleteDbConnect(id: string) {
-  return defHttp.delete<DbConnect>({ url: Api.DbConnect + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<DbConnect>(
+    { url: Api.DbConnect + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 测试数据库连接
  * @param dbConnect
  */
 export function testDbConnect(dbConnect: DbConnect) {
-  return defHttp.post<DbConnect>({ url: Api.TestConnect, params: dbConnect }, { successMessageMode: "message" });
-};
+  return defHttp.post<DbConnect>(
+    { url: Api.TestConnect, params: dbConnect },
+    { successMessageMode: "message" },
+  );
+}

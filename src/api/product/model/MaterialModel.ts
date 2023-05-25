@@ -20,14 +20,11 @@ export interface Material extends BaseEntity<number> {
   extendField: string;
   enableSerialNumber: number;
   enableBatchNumber: number;
-  deletedFlag: number;
-  orgId: number;
   scale: number;
   flag: number;
 }
 
-export interface ReqMaterial {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ReqMaterial {}
 
 export type MaterialPageModel = PageResult<Material>;

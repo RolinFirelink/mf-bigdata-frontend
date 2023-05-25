@@ -37,7 +37,7 @@ export interface FormActionType {
   appendSchemaByField: (
     schema: FormSchema,
     prefixField: string | undefined,
-    first?: boolean | undefined
+    first?: boolean | undefined,
   ) => Promise<void>;
   validateFields: (nameList?: NamePath[]) => Promise<any>;
   validate: (nameList?: NamePath[]) => Promise<any>;
@@ -152,11 +152,11 @@ export interface FormSchema {
   // Component parameters
   componentProps?:
     | ((opt: {
-    schema: FormSchema;
-    tableAction: TableActionType;
-    formActionType: FormActionType;
-    formModel: Recordable;
-  }) => Recordable)
+        schema: FormSchema;
+        tableAction: TableActionType;
+        formActionType: FormActionType;
+        formModel: Recordable;
+      }) => Recordable)
     | object;
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);

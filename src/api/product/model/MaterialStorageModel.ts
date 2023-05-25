@@ -16,8 +16,7 @@ export interface MaterialStorage extends BaseEntity<number> {
   number: number;
 }
 
-export interface ReqMaterialStorage {
-
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ReqMaterialStorage {}
 
 export type MaterialStoragePageModel = PageResult<MaterialStorage>;
