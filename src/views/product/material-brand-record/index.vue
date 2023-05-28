@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:materialBrandRecord:insert')"
           >新增产品品牌表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:materialBrandRecord:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -45,10 +52,12 @@
   </div>
 </template>
 <script lang="ts">
+  import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import {
-    deleteMaterialBrand,
+    deleteMaterialBrandRecord,
     getMaterialBrandRecordList,
+    batchDeleteMaterialBrandRecord,
   } from "/@/api/product/MaterialBrandRecord";
   import { useModal } from "/@/components/general/Modal";
   import MaterialBrandModal from "./MaterialBrandModalRecord.vue";
@@ -59,6 +68,8 @@
     name: "MaterialBrandRecordManagement",
     components: { BasicTable, MaterialBrandModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -68,6 +79,16 @@
         formConfig: {
           labelWidth: 100,
           schemas: searchFormSchema,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -94,7 +115,7 @@
       }
 
       function handleDelete(record: Recordable) {
-        deleteMaterialBrand(record.id).then(() => {
+        deleteMaterialBrandRecord(record.id).then(() => {
           handleSuccess();
         });
       }
@@ -103,7 +124,16 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteMaterialBrandRecord(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
+        batchDelete,
+        selectedIds,
         registerTable,
         registerModal,
         handleCreate,

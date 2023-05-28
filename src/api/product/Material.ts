@@ -72,3 +72,13 @@ export function batchDeleteMaterial(ids: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 获取产品选项
+ *
+ * @param reqMaterial
+ * @return
+ */
+export const getMaterialOptions = () => {
+  return defHttp.get<MaterialPageModel>({ url: Api.Material + "/options" });
+};

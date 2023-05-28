@@ -66,3 +66,16 @@ export function deleteMaterialProduce(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除产品生产表
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteMaterialProduce(ids: string) {
+  return defHttp.delete<MaterialProduce>(
+    { url: Api.MaterialProduce + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

@@ -43,14 +43,13 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品基地" : "编辑产品基地"));
 
-      // 获取并设置公司列表数据
+      // 获取并设置供应商列表数据
       async function setListData() {
-        const listData = await getCompanyOptions();
-        console.log(listData);
+        const companyList = await getCompanyOptions(1);
         updateSchema([
           {
             field: "parentId",
-            componentProps: { options: listData.list },
+            componentProps: { options: companyList },
           },
         ]).then();
       }

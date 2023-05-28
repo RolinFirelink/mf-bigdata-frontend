@@ -5,25 +5,11 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import {
-  OrderDetail,
-  ReqOrderDetail,
-  OrderDetailPageModel,
-} from "/@/api/order/model/OrderDetailModel";
+import { OrderDetail } from "/@/api/order/model/OrderDetailModel";
 
 enum Api {
   OrderDetail = "/web/orderDetail",
 }
-
-/**
- * 分页列表查询
- *
- * @param reqOrderDetail
- * @return
- */
-export const getOrderDetailList = (reqOrderDetail?: ReqOrderDetail) => {
-  return defHttp.get<OrderDetailPageModel>({ url: Api.OrderDetail, params: reqOrderDetail });
-};
 
 /**
  * 新增订单数据明细表
@@ -67,9 +53,9 @@ export function deleteOrderDetail(id: string) {
 /**
  * 根据订单ID获取产品信息列表
  *
- * @param parentId 订单ID
+ * @param orderId 订单ID
  * @return
  */
-export function listByOrderId(parentId: string) {
-  return defHttp.delete<OrderDetail>({ url: Api.OrderDetail + "/" + parentId });
+export function listByOrderId(orderId: string) {
+  return defHttp.get<OrderDetail>({ url: Api.OrderDetail + "/listByOrderId/" + orderId });
 }

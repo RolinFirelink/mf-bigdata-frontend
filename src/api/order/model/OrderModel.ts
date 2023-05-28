@@ -6,7 +6,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
  * @date: 2023-05-24
  * @version: V1.0.0
  */
-export interface ShOrder extends BaseEntity<number> {
+export interface Order extends BaseEntity<number> {
   companyId: number;
   companyNo: string;
   companyName: string;
@@ -28,8 +28,8 @@ export interface ShOrder extends BaseEntity<number> {
   deleteFlag: number;
 }
 
-export interface ReqShOrder {
+export interface ReqOrder {
   category: number;
 }
 
-export type ShOrderPageModel = PageResult<ShOrder>;
+export type OrderPageModel = PageResult<Order>;

@@ -76,3 +76,12 @@ export function batchDeleteMaterialBrand(ids: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 获取品牌选项
+ *
+ * @return
+ */
+export const getMaterialBrandOptions = () => {
+  return defHttp.get<MaterialBrandPageModel>({ url: Api.MaterialBrand + "/options" });
+};

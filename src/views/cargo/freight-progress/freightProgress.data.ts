@@ -14,7 +14,7 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "进度地点,各个地点之间用,分隔",
+    title: "运输路线",
     dataIndex: "transportLocation",
     width: 120,
   },
@@ -34,7 +34,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: "transportLocation",
-    label: "进度地点,各个地点之间用,分隔",
+    label: "进度地点",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },

@@ -9,27 +9,27 @@ import { FormSchema } from "/@/components/general/Table";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "品牌id",
-    dataIndex: "brandId",
+    title: "品牌",
+    dataIndex: "brandName",
     width: 120,
   },
   {
-    title: "产品id",
-    dataIndex: "materialId",
+    title: "产品",
+    dataIndex: "materialName",
     width: 120,
   },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "brandId",
-    label: "品牌id",
+    field: "brandName",
+    label: "品牌",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
   {
-    field: "materialId",
-    label: "产品id",
+    field: "materialName",
+    label: "产品",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
@@ -43,12 +43,24 @@ export const materialBrandRecordFormSchema: FormSchema[] = [
   },
   {
     field: "brandId",
-    label: "品牌id",
+    label: "品牌",
     component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
   },
   {
     field: "materialId",
-    label: "产品id",
+    label: "产品",
     component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
   },
 ];

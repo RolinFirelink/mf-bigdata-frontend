@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:productBase:insert')"
           >新增农业基地</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:company:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -45,8 +52,13 @@
   </div>
 </template>
 <script lang="ts">
+  import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteProductBase, getProductBaseList } from "/@/api/company/ProductBase";
+  import {
+    deleteProductBase,
+    getProductBaseList,
+    batchDeleteProductBase,
+  } from "/@/api/company/ProductBase";
   import { useModal } from "/@/components/general/Modal";
   import ProductBaseModal from "./ProductBaseModal.vue";
   import { columns, searchFormSchema } from "./productBase.data";
@@ -56,6 +68,8 @@
     name: "ProductBaseManagement",
     components: { BasicTable, ProductBaseModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -65,6 +79,16 @@
         formConfig: {
           labelWidth: 100,
           schemas: searchFormSchema,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -96,6 +120,13 @@
         });
       }
 
+      function batchDelete() {
+        batchDeleteProductBase(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
@@ -108,6 +139,8 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        selectedIds,
+        batchDelete,
       };
     },
   };

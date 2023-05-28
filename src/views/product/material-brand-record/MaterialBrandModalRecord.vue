@@ -14,8 +14,12 @@
   import { BasicForm, useForm } from "/@/components/general/Form/index";
   import { materialBrandRecordFormSchema } from "./materialBrandRecord.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
-  import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
-  import { getCompanyOptions } from "/@/api/company/Company";
+  import {
+    insertMaterialBrandRecord,
+    updateMaterialBrandRecord,
+  } from "/@/api/product/MaterialBrandRecord";
+  import { getMaterialBrandOptions } from "/@/api/product/MaterialBrand";
+  import { getMaterialOptions } from "/@/api/product/Material";
 
   export default {
     name: "MaterialBrandModal",
@@ -35,7 +39,7 @@
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
-        setCompanyOptions();
+        setOptions();
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
           setFieldsValue({
@@ -45,13 +49,18 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品品牌表" : "编辑产品品牌表"));
 
-      async function setCompanyOptions() {
-        const data = await getCompanyOptions();
-        companyList.value = data.list;
+      async function setOptions() {
+        const brandList = await getMaterialBrandOptions();
+        const materialList = await getMaterialOptions();
+        companyList.value = brandList;
         updateSchema([
           {
-            field: "companyId",
+            field: "brandId",
             componentProps: { options: companyList },
+          },
+          {
+            field: "materialId",
+            componentProps: { options: materialList },
           },
         ]).then();
       }
@@ -66,9 +75,9 @@
         });
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
-          saveMaterialBrand(updateMaterialBrand, values);
+          saveMaterialBrand(updateMaterialBrandRecord, values);
         } else {
-          saveMaterialBrand(insertMaterialBrand, values);
+          saveMaterialBrand(insertMaterialBrandRecord, values);
         }
       }
 
@@ -85,7 +94,7 @@
 
       return {
         companyList,
-        setCompanyOptions,
+        setOptions,
         registerModal,
         registerForm,
         getTitle,

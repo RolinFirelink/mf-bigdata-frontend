@@ -34,7 +34,7 @@ export const getMaterialBrandRecordList = (reqMaterialBrand?: ReqMaterialBrandRe
  * @param materialBrand
  * @return
  */
-export function insertMaterialBrand(materialBrand: MaterialBrandRecord) {
+export function insertMaterialBrandRecord(materialBrand: MaterialBrandRecord) {
   return defHttp.post<MaterialBrandRecord>(
     { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
@@ -47,7 +47,7 @@ export function insertMaterialBrand(materialBrand: MaterialBrandRecord) {
  * @param materialBrand
  * @return
  */
-export function updateMaterialBrand(materialBrand: MaterialBrandRecord) {
+export function updateMaterialBrandRecord(materialBrand: MaterialBrandRecord) {
   return defHttp.put<MaterialBrandRecord>(
     { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
@@ -60,9 +60,22 @@ export function updateMaterialBrand(materialBrand: MaterialBrandRecord) {
  * @param id 唯一ID
  * @return
  */
-export function deleteMaterialBrand(id: string) {
+export function deleteMaterialBrandRecord(id: string) {
   return defHttp.delete<MaterialBrandRecord>(
     { url: Api.MaterialBrand + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ * 批量删除产品品牌
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteMaterialBrandRecord(ids: string) {
+  return defHttp.delete<MaterialBrandRecord>(
+    { url: Api.MaterialBrand + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

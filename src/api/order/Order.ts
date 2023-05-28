@@ -5,10 +5,10 @@
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
-import { ShOrder, ReqShOrder, ShOrderPageModel } from "/@/api/order/model/OrderModel";
+import { Order, ReqOrder, OrderPageModel } from "/@/api/order/model/OrderModel";
 
 enum Api {
-  ShOrder = "/web/order",
+  Order = "/web/order",
 }
 
 /**
@@ -17,8 +17,8 @@ enum Api {
  * @param reqShOrder
  * @return
  */
-export const getShOrderList = (reqShOrder?: ReqShOrder) => {
-  return defHttp.get<ShOrderPageModel>({ url: Api.ShOrder, params: reqShOrder });
+export const getOrderList = (reqOrder?: ReqOrder) => {
+  return defHttp.get<OrderPageModel>({ url: Api.Order, params: reqOrder });
 };
 
 /**
@@ -27,11 +27,8 @@ export const getShOrderList = (reqShOrder?: ReqShOrder) => {
  * @param shOrder
  * @return
  */
-export function insertShOrder(shOrder: ShOrder) {
-  return defHttp.post<ShOrder>(
-    { url: Api.ShOrder, params: shOrder },
-    { successMessageMode: "message" },
-  );
+export function insertShOrder(order: Order) {
+  return defHttp.post<Order>({ url: Api.Order, params: order }, { successMessageMode: "message" });
 }
 
 /**
@@ -40,11 +37,8 @@ export function insertShOrder(shOrder: ShOrder) {
  * @param shOrder
  * @return
  */
-export function updateShOrder(shOrder: ShOrder) {
-  return defHttp.put<ShOrder>(
-    { url: Api.ShOrder, params: shOrder },
-    { successMessageMode: "message" },
-  );
+export function updateShOrder(order: Order) {
+  return defHttp.put<Order>({ url: Api.Order, params: order }, { successMessageMode: "message" });
 }
 
 /**
@@ -53,9 +47,19 @@ export function updateShOrder(shOrder: ShOrder) {
  * @param id 唯一ID
  * @return
  */
-export function deleteShOrder(id: string) {
-  return defHttp.delete<ShOrder>(
-    { url: Api.ShOrder + "/" + id },
+export function deleteOrder(id: string) {
+  return defHttp.delete<Order>({ url: Api.Order + "/" + id }, { successMessageMode: "message" });
+}
+
+/**
+ * 批量删除订单
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteOrder(ids: string) {
+  return defHttp.delete<Order>(
+    { url: Api.Order + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

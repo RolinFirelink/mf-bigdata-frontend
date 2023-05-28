@@ -1,6 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-
+import { h } from "vue";
+import { Tag } from "ant-design-vue";
 /**
  * @description: 产品生产表
  * @author cgli
@@ -9,14 +10,44 @@ import { FormSchema } from "/@/components/general/Table";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "公司id",
+    title: "公司",
     dataIndex: "companyId",
     width: 120,
   },
   {
-    title: "产品id",
-    dataIndex: "materialId",
+    title: "产品",
+    dataIndex: "name",
     width: 120,
+  },
+  {
+    title: "关联产品",
+    dataIndex: "flag",
+    width: 120,
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.flag) {
+        case 1:
+          text = "肉鸡";
+          break;
+        case 2:
+          text = "柑橘";
+          break;
+        case 3:
+          text = "兰花";
+          break;
+        case 4:
+          text = "对虾";
+          break;
+        case 5:
+          text = "菜心";
+          break;
+        case 6:
+          text = "预制菜";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: "生产批次",
@@ -31,21 +62,6 @@ export const columns: BasicColumn[] = [
   {
     title: "规模单位",
     dataIndex: "unit",
-    width: 120,
-  },
-  {
-    title: "产品编号",
-    dataIndex: "number",
-    width: 120,
-  },
-  {
-    title: "产品名称",
-    dataIndex: "name",
-    width: 120,
-  },
-  {
-    title: "产品类型id",
-    dataIndex: "categoryId",
     width: 120,
   },
   {
@@ -64,7 +80,7 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "基地id",
+    title: "基地",
     dataIndex: "baseId",
     width: 120,
   },
@@ -78,29 +94,18 @@ export const columns: BasicColumn[] = [
     dataIndex: "isSell",
     width: 120,
   },
-  {
-    title: "区分字段",
-    dataIndex: "flag",
-    width: 120,
-  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "companyId",
-    label: "公司id",
+    field: "companyName",
+    label: "公司",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
   {
-    field: "materialId",
-    label: "产品id",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "batch",
-    label: "生产批次",
+    field: "materialName",
+    label: "产品",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
@@ -114,23 +119,35 @@ export const materialProduceFormSchema: FormSchema[] = [
   },
   {
     field: "companyId",
-    label: "公司id",
-    component: "Input",
+    label: "公司",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "companyName",
+        value: "id",
+      },
+    },
   },
   {
     field: "materialId",
-    label: "产品id",
-    component: "Input",
+    label: "产品",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
   },
   {
     field: "batch",
     label: "生产批次",
-    component: "Input",
+    component: "InputNumber",
   },
   {
     field: "productionScale",
     label: "生产规模",
-    component: "Input",
+    component: "InputNumber",
   },
   {
     field: "unit",
@@ -138,58 +155,69 @@ export const materialProduceFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "deletedFlag",
-    label: "逻辑删除",
-    component: "Input",
-  },
-  {
-    field: "number",
-    label: "产品编号",
-    component: "Input",
-  },
-  {
-    field: "name",
-    label: "产品名称",
-    component: "Input",
-  },
-  {
-    field: "categoryId",
-    label: "产品类型id",
-    component: "Input",
-  },
-  {
     field: "productEstimate",
     label: "单位产量估算",
-    component: "Input",
+    component: "InputNumber",
   },
   {
     field: "marketEstimate",
     label: "预计上市产量",
-    component: "Input",
+    component: "InputNumber",
   },
   {
     field: "timeEstimate",
     label: "预计上市时间",
-    component: "Input",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: "发布时间",
+      showTime: true,
+    },
+    colProps: { lg: 12, md: 8 },
   },
   {
     field: "baseId",
-    label: "基地id",
-    component: "Input",
+    label: "基地",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "companyName",
+        value: "id",
+      },
+    },
   },
   {
     field: "quantity",
     label: "生产数量",
-    component: "Input",
+    component: "InputNumber",
   },
   {
     field: "isSell",
     label: "是否卖出",
-    component: "Input",
+    component: "RadioButtonGroup",
+    defaultValue: 1,
+    componentProps: {
+      options: [
+        { label: "否", value: 0 },
+        { label: "是", value: 1 },
+      ],
+    },
+    colProps: { span: 12 },
   },
   {
     field: "flag",
-    label: "区分字段",
-    component: "Input",
+    label: "关联产品",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "肉鸡", value: 1 },
+        { label: "柑橘", value: 2 },
+        { label: "兰花", value: 3 },
+        { label: "对虾", value: 4 },
+        { label: "菜心", value: 5 },
+        { label: "预制菜", value: 6 },
+      ],
+    },
+    colProps: { span: 12 },
   },
 ];

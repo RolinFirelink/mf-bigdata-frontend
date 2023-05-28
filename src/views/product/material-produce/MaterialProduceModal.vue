@@ -15,14 +15,18 @@
   import { materialProduceFormSchema } from "./materialProduce.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertMaterialProduce, updateMaterialProduce } from "/@/api/product/MaterialProduce";
-
+  import { getCompanyOptions } from "/@/api/company/Company";
+  import { getMaterialOptions } from "/@/api/product/Material";
+  import { getProductBaseOptions } from "/@/api/company/ProductBase";
   export default {
     name: "MaterialProduceModal",
     components: { BasicModal, BasicForm },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      // 产品列表
+      const materialList: any = ref([]);
       const isUpdate = ref(true);
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: materialProduceFormSchema,
@@ -33,6 +37,7 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
+        setOptions();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -41,8 +46,36 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品生产表" : "编辑产品生产表"));
 
+      async function setOptions() {
+        // 获取供应商列表
+        const companyList = await getCompanyOptions(1);
+        // 获取产品列表
+        materialList.value = await getMaterialOptions();
+        // 获取基地列表
+        const productBaseList = await getProductBaseOptions();
+        updateSchema([
+          {
+            field: "companyId",
+            componentProps: { options: companyList },
+          },
+          {
+            field: "materialId",
+            componentProps: { options: materialList.value },
+          },
+          {
+            field: "baseId",
+            componentProps: { options: productBaseList },
+          },
+        ]);
+      }
+
       async function handleSubmit() {
         let values = await validate();
+        materialList.value.forEach((item) => {
+          if (item.id === values.materialId) {
+            return (values.name = item.name);
+          }
+        });
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
           saveMaterialProduce(updateMaterialProduce, values);
@@ -63,6 +96,8 @@
       }
 
       return {
+        materialList,
+        setOptions,
         registerModal,
         registerForm,
         getTitle,

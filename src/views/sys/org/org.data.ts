@@ -8,12 +8,12 @@ export const columns: BasicColumn[] = [
     title: "组织名称",
     dataIndex: "orgName",
     width: 160,
-    align: "left"
+    align: "left",
   },
   {
     title: "排序",
     dataIndex: "orgSort",
-    width: 50
+    width: 50,
   },
   {
     title: "状态",
@@ -25,32 +25,32 @@ export const columns: BasicColumn[] = [
       const color = enable ? "green" : "red";
       const text = enable ? "启用" : "停用";
       return h(Tag, { color: color }, () => text);
-    }
+    },
   },
   {
     title: "负责人",
     dataIndex: "leader",
-    width: 120
+    width: 120,
   },
   {
     title: "手机号",
     dataIndex: "phone",
-    width: 120
+    width: 120,
   },
   {
     title: "邮箱",
     dataIndex: "email",
-    width: 180
+    width: 180,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
-    width: 180
+    width: 180,
   },
   {
     title: "备注",
-    dataIndex: "remark"
-  }
+    dataIndex: "remark",
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [
@@ -58,19 +58,19 @@ export const searchFormSchema: FormSchema[] = [
     field: "orgName",
     label: "组织名称",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "leader",
     label: "负责人",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "phone",
     label: "手机号",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "status",
@@ -79,11 +79,11 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: "0" },
-        { label: "停用", value: "1" }
-      ]
+        { label: "停用", value: "1" },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 
 export const formSchema: FormSchema[] = [
@@ -91,13 +91,13 @@ export const formSchema: FormSchema[] = [
     field: "id",
     label: "id",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "orgName",
     label: "组织名称",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "parentId",
@@ -107,31 +107,31 @@ export const formSchema: FormSchema[] = [
       fieldNames: {
         label: "orgName",
         key: "id",
-        value: "id"
+        value: "id",
       },
-      getPopupContainer: () => document.body
-    }
+      getPopupContainer: () => document.body,
+    },
   },
   {
     field: "orgSort",
     label: "排序",
     component: "InputNumber",
-    required: true
+    required: true,
   },
   {
     field: "leader",
     label: "负责人",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "phone",
     label: "手机号",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "email",
     label: "邮箱",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "status",
@@ -141,15 +141,15 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    required: true
+    required: true,
   },
   {
     label: "备注",
     field: "remark",
     component: "InputTextArea",
-    colProps: { span: 24 }
-  }
+    colProps: { span: 24 },
+  },
 ];

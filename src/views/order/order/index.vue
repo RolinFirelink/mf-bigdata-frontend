@@ -11,9 +11,16 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:shOrder:insert')"
           >新增订单数据主表
         </a-button>
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:order:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #expandedRowRender="{ record }">
-        <OrderDetail :parentId="record.id" :data="record.orderDetailList" @reload="handleSuccess" />
+        <OrderDetail :orderId="record.id" ref="orderDetail" :data="record.orderDetailList" />
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -41,24 +48,27 @@
         </template>
       </template>
     </BasicTable>
-    <ShOrderModal @register="registerModal" @success="handleSuccess" />
+    <OrderModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
-  import { toRaw } from "vue";
+  import { toRaw, ref } from "vue";
   import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteShOrder, getShOrderList } from "/@/api/order/Order";
+  import { deleteOrder, getOrderList, batchDeleteOrder } from "/@/api/order/Order";
   import { useModal } from "/@/components/general/Modal";
-  import ShOrderModal from "./OrderModal.vue";
+  import OrderModal from "./OrderModal.vue";
   import { columns, searchFormSchema } from "./order.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
   import OrderDetail from "../orderDetail/OrderDetail.vue";
 
   export default {
-    name: "ShOrderManagement",
-    components: { BasicTable, ShOrderModal, TableAction, OrderDetail },
+    name: "OrderManagement",
+    components: { BasicTable, OrderModal, TableAction, OrderDetail },
     setup() {
+      const orderDetail = ref();
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       // 根据路径获取分类id
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
@@ -68,7 +78,7 @@
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "订单数据主表列表",
-        api: getShOrderList,
+        api: getOrderList,
         columns,
         formConfig: {
           labelWidth: 100,
@@ -77,6 +87,16 @@
         // 额外请求参数
         searchInfo: {
           category: category,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -102,8 +122,14 @@
       }
 
       function handleDelete(record: Recordable) {
-        deleteShOrder(record.id).then(() => {
+        deleteOrder(record.id).then(() => {
           handleSuccess();
+        });
+      }
+      function batchDelete() {
+        batchDeleteOrder(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
         });
       }
 
@@ -119,6 +145,9 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        selectedIds,
+        batchDelete,
+        orderDetail,
       };
     },
   };

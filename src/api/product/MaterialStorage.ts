@@ -66,3 +66,16 @@ export function deleteMaterialStorage(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除产品库存
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteMaterialStorage(ids: string) {
+  return defHttp.delete<MaterialStorage>(
+    { url: Api.MaterialStorage + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

@@ -197,15 +197,20 @@ export const companyFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "areaName",
-    label: "行政区域名称",
+    field: "country",
+    label: "",
     component: "Input",
   },
-  {
-    field: "areaCode",
-    label: "行政区域编码",
-    component: "Input",
-  },
+  // {
+  //   field: "areaName",
+  //   label: "行政区域名称",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "areaCode",
+  //   label: "行政区域编码",
+  //   component: "Input",
+  // },
   {
     field: "address",
     label: "公司地址",

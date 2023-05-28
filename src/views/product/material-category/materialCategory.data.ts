@@ -1,3 +1,4 @@
+import { Textarea } from "ant-design-vue";
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 
@@ -64,7 +65,15 @@ export const materialCategoryFormSchema: FormSchema[] = [
   {
     field: "categoryLevel",
     label: "等级",
-    component: "Input",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "1", value: 1 },
+        { label: "2", value: 2 },
+        { label: "3", value: 3 },
+        { label: "4", value: 4 },
+      ],
+    },
   },
   {
     field: "parentId",
@@ -84,20 +93,27 @@ export const materialCategoryFormSchema: FormSchema[] = [
     field: "sort",
     label: "显示顺序",
     component: "Input",
+    defaultValue: 10,
   },
   {
     field: "remark",
     label: "备注",
-    component: "Input",
+    component: "InputTextArea",
+    componentProps: {
+      maxlength: 120,
+      showCount: true,
+      placeholder: "请输入内容",
+    },
+    colProps: { lg: 24, md: 8 },
   },
-  {
-    field: "orgId",
-    label: "归属组织id",
-    component: "Input",
-  },
-  {
-    field: "flag",
-    label: "区分字段",
-    component: "Input",
-  },
+  // {
+  //   field: "orgId",
+  //   label: "归属组织id",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "flag",
+  //   label: "区分字段",
+  //   component: "Input",
+  // },
 ];

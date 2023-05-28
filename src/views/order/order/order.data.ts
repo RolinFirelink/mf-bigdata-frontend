@@ -1,6 +1,5 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { dateUtil } from "/@/utils/DateUtil";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 /**
@@ -11,33 +10,13 @@ import { Tag } from "ant-design-vue";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "供应企业编号",
-    dataIndex: "companyId",
+    title: "供应商",
+    dataIndex: "vendorName",
     width: 120,
   },
   {
-    title: "供应企业编码",
-    dataIndex: "companyNo",
-    width: 120,
-  },
-  {
-    title: "供应企业名称",
-    dataIndex: "companyName",
-    width: 120,
-  },
-  {
-    title: "客户编号",
-    dataIndex: "customerId",
-    width: 120,
-  },
-  {
-    title: "客户名称",
-    dataIndex: "customerName",
-    width: 120,
-  },
-  {
-    title: "订单渠道",
-    dataIndex: "orderChannel",
+    title: "采购商",
+    dataIndex: "buyerName",
     width: 120,
   },
   {
@@ -63,7 +42,7 @@ export const columns: BasicColumn[] = [
           text = "企业退货订单";
           break;
       }
-      const color = "black";
+      const color = "#FF9800";
       return h(Tag, { color: color }, () => text);
     },
   },
@@ -102,40 +81,43 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "订单创建时间",
-    dataIndex: "orderCreateTime",
+    dataIndex: "startTime",
     width: 120,
-  },
-  {
-    title: "订单是否完成",
-    dataIndex: "completeFlag",
-    width: 120,
-    customRender: ({ record }) => {
-      const status = record.contentModel;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "yellow";
-      const text = enable ? "已完成" : "未完成";
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "订单完成时间",
-    dataIndex: "orderCompleteTime",
+    dataIndex: "finishTime",
     width: 120,
   },
   {
-    title: "销售总量",
-    dataIndex: "totalSales",
-    width: 120,
-  },
-  {
-    title: "销售地点",
-    dataIndex: "orderLocation",
-    width: 120,
-  },
-  {
-    title: "产品种类",
+    title: "关联产品",
     dataIndex: "flag",
     width: 120,
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.flag) {
+        case 1:
+          text = "肉鸡";
+          break;
+        case 2:
+          text = "柑橘";
+          break;
+        case 3:
+          text = "兰花";
+          break;
+        case 4:
+          text = "对虾";
+          break;
+        case 5:
+          text = "菜心";
+          break;
+        case 6:
+          text = "预制菜";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: "备注",
@@ -146,32 +128,8 @@ export const columns: BasicColumn[] = [
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "companyId",
-    label: "供应企业编号",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "companyNo",
-    label: "供应企业编码",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "companyName",
-    label: "供应企业名称",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "productId",
-    label: "产品编号",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "productName",
-    label: "产品名称",
+    field: "vendorName",
+    label: "供应企业",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
@@ -184,39 +142,26 @@ export const shOrderFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "companyId",
-    label: "供应企业编号",
-    component: "Input",
+    field: "vendorId",
+    label: "供应商",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        value: "id",
+        label: "companyName",
+      },
+    },
   },
   {
-    field: "companyNo",
-    label: "供应企业编码",
-    component: "Input",
-  },
-  {
-    field: "companyName",
-    label: "供应企业名称",
-    component: "Input",
-  },
-  {
-    field: "customerId",
-    label: "客户编号",
-    component: "Input",
-  },
-  {
-    field: "customerNo",
-    label: "客户编码",
-    component: "Input",
-  },
-  {
-    field: "customerName",
-    label: "客户名称",
-    component: "Input",
-  },
-  {
-    field: "orderChannel",
-    label: "订单渠道",
-    component: "Input",
+    field: "buyerId",
+    label: "采购商",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        value: "id",
+        label: "companyName",
+      },
+    },
   },
   {
     field: "category",
@@ -234,7 +179,7 @@ export const shOrderFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "orderStatus",
+    field: "status",
     label: "订单状态",
     component: "Select",
     defaultValue: 1,
@@ -248,81 +193,30 @@ export const shOrderFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "orderCreateTime",
+    field: "startTime",
     label: "订单创建时间",
     component: "DatePicker",
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
       placeholder: "发布结束时间",
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00")],
-      },
-      ranges: {
-        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
-        ["昨天"]: [
-          dateUtil().startOf("day").subtract(1, "days"),
-          dateUtil().endOf("day").subtract(1, "days"),
-        ],
-        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
-        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
-        ["最近1个月"]: [dateUtil().subtract(1, "months")],
-        ["最近3个月"]: [dateUtil().subtract(3, "months")],
-      },
+      showTime: true,
     },
     colProps: { lg: 12, md: 8 },
   },
   {
-    field: "completeFlag",
-    label: "订单是否完成",
-    component: "RadioButtonGroup",
-    defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: "否", value: 0 },
-        { label: "是", value: 1 },
-      ],
-    },
-    colProps: { span: 12 },
-  },
-  {
-    field: "orderCompleteTime",
+    field: "finishTime",
     label: "订单完成时间",
     component: "DatePicker",
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
       placeholder: "发布结束时间",
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00")],
-      },
-      ranges: {
-        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
-        ["昨天"]: [
-          dateUtil().startOf("day").subtract(1, "days"),
-          dateUtil().endOf("day").subtract(1, "days"),
-        ],
-        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
-        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
-        ["最近1个月"]: [dateUtil().subtract(1, "months")],
-        ["最近3个月"]: [dateUtil().subtract(3, "months")],
-      },
+      showTime: true,
     },
     colProps: { lg: 12, md: 8 },
   },
   {
-    field: "totalSales",
-    label: "销售总量",
-    component: "Input",
-  },
-  {
-    field: "orderLocation",
-    label: "销售地点",
-    component: "Input",
-  },
-  {
     field: "flag",
-    label: "产品类型",
+    label: "关联产品",
     component: "Select",
     defaultValue: 1,
     componentProps: {
@@ -339,24 +233,10 @@ export const shOrderFormSchema: FormSchema[] = [
   {
     field: "remark",
     label: "备注",
-    component: "Input",
-  },
-  {
-    field: "extendField",
-    label: "自定义拓展信息 JSON 结构",
-    component: "Input",
-  },
-  {
-    field: "enableBatchNumber",
-    label: "是否开启批号",
-    component: "RadioButtonGroup",
-    defaultValue: 0,
+    component: "InputTextArea",
     componentProps: {
-      options: [
-        { label: "否", value: 0 },
-        { label: "是", value: 1 },
-      ],
+      rows: 10,
     },
-    colProps: { span: 12 },
+    colProps: { lg: 24, md: 24 },
   },
 ];

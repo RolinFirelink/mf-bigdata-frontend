@@ -65,8 +65,8 @@ export function deleteCompany(id: string) {
  *
  * @return
  */
-export const getCompanyOptions = () => {
-  return defHttp.get<CompanyPageModel>({ url: Api.Company + "?companyType=1" });
+export const getCompanyOptions = (companyType) => {
+  return defHttp.get<CompanyPageModel>({ url: Api.Company + `/options/${companyType}` });
 };
 
 /**

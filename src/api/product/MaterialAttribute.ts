@@ -66,3 +66,16 @@ export function deleteMaterialAttribute(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除产品属性表
+ *
+ * @param idS ID集合字符串
+ * @return
+ */
+export function batchDeleteMaterialAttribute(ids: string) {
+  return defHttp.delete<MaterialAttribute>(
+    { url: Api.MaterialAttribute + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

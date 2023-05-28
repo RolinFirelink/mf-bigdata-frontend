@@ -63,3 +63,25 @@ export function deleteProductBase(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 获取基地列表
+ *
+ * @return
+ */
+export const getProductBaseOptions = () => {
+  return defHttp.get<ProductBasePageModel>({ url: Api.ProductBase + "/options" });
+};
+
+/**
+ * 批量删除产品基地
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteProductBase(ids: string) {
+  return defHttp.delete<ProductBase>(
+    { url: Api.ProductBase + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

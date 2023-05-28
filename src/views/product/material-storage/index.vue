@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:materialStorage:insert')"
           >新增产品库存表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:materialProdcue:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -45,8 +52,13 @@
   </div>
 </template>
 <script lang="ts">
+  import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteMaterialStorage, getMaterialStorageList } from "/@/api/product/MaterialStorage";
+  import {
+    deleteMaterialStorage,
+    getMaterialStorageList,
+    batchDeleteMaterialStorage,
+  } from "/@/api/product/MaterialStorage";
   import { useModal } from "/@/components/general/Modal";
   import MaterialStorageModal from "./MaterialStorageModal.vue";
   import { columns, searchFormSchema } from "./materialStorage.data";
@@ -56,6 +68,8 @@
     name: "MaterialStorageManagement",
     components: { BasicTable, MaterialStorageModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -65,6 +79,16 @@
         formConfig: {
           labelWidth: 100,
           schemas: searchFormSchema,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -100,7 +124,15 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteMaterialStorage(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
       return {
+        selectedIds,
+        batchDelete,
         registerTable,
         registerModal,
         handleCreate,
