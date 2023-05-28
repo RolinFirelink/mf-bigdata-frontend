@@ -11,7 +11,7 @@
         <a-button
           type="primary"
           @click="handleCreate"
-          v-if="hasPermission('sys:materialBrand:insert')"
+          v-if="hasPermission('sys:materialBrandRecord:insert')"
           >新增产品品牌表</a-button
         >
       </template>
@@ -22,7 +22,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialBrand:update',
+                auth: 'sys:materialBrandRecord:update',
                 tooltip: '修改',
               },
               {
@@ -33,7 +33,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialBrand:delete',
+                auth: 'sys:materialBrandRecord:delete',
                 tooltip: '删除',
               },
             ]"
@@ -46,21 +46,24 @@
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteMaterialBrand, getMaterialBrandList } from "/@/api/product/MaterialBrand";
+  import {
+    deleteMaterialBrand,
+    getMaterialBrandRecordList,
+  } from "/@/api/product/MaterialBrandRecord";
   import { useModal } from "/@/components/general/Modal";
-  import MaterialBrandModal from "./MaterialBrandModal.vue";
-  import { columns, searchFormSchema } from "./materialBrand.data";
+  import MaterialBrandModal from "./MaterialBrandModalRecord.vue";
+  import { columns, searchFormSchema } from "./materialBrandRecord.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
 
   export default {
-    name: "MaterialBrandManagement",
+    name: "MaterialBrandRecordManagement",
     components: { BasicTable, MaterialBrandModal, TableAction },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "产品品牌表列表",
-        api: getMaterialBrandList,
+        api: getMaterialBrandRecordList,
         columns,
         formConfig: {
           labelWidth: 100,

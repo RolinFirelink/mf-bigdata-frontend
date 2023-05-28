@@ -206,7 +206,13 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   {
     field: "deliveryTime",
     label: "发货时间",
-    component: "Input",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: "发布时间",
+      showTime: true,
+    },
+    colProps: { lg: 12, md: 8 },
   },
   {
     field: "forwardingUnit",
@@ -236,7 +242,13 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   {
     field: "receivingTime",
     label: "收货时间",
-    component: "Input",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: "发布时间",
+      showTime: true,
+    },
+    colProps: { lg: 12, md: 8 },
   },
   {
     field: "consignee",
@@ -271,7 +283,39 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   {
     field: "modeTransport",
     label: "运输方式",
-    component: "Input",
+    component: "Select",
+    componentProps: {
+      options: [
+        {
+          label: "海洋运输",
+          value: 1,
+        },
+        {
+          label: "铁路运输",
+          value: 2,
+        },
+        {
+          label: "航空运输",
+          value: 3,
+        },
+        {
+          label: "公路运输",
+          value: 4,
+        },
+        {
+          label: "管道运输",
+          value: 5,
+        },
+        {
+          label: "集装箱运输",
+          value: 6,
+        },
+        {
+          label: "国际多式联运",
+          value: 7,
+        },
+      ],
+    },
   },
   {
     field: "transportationPrice",
@@ -286,7 +330,14 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   {
     field: "timeUnit",
     label: "时间单位",
-    component: "Input",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "天", value: "天" },
+        { label: "月", value: "月" },
+        { label: "年", value: "年" },
+      ],
+    },
   },
   {
     field: "transportationQuantity",

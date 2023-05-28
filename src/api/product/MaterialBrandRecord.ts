@@ -6,13 +6,13 @@
  */
 import { defHttp } from "/@/utils/http/axios";
 import {
-  MaterialBrand,
-  ReqMaterialBrand,
-  MaterialBrandPageModel,
-} from "/@/api/product/model/MaterialBrandModel";
+  MaterialBrandRecord,
+  ReqMaterialBrandRecord,
+  MaterialBrandRecordPageModel,
+} from "/@/api/product/model/MaterialBrandRecordModel";
 
 enum Api {
-  MaterialBrand = "/web/materialBrand",
+  MaterialBrand = "/web/materialBrandRecord",
 }
 
 /**
@@ -21,8 +21,11 @@ enum Api {
  * @param reqMaterialBrand
  * @return
  */
-export const getMaterialBrandList = (reqMaterialBrand?: ReqMaterialBrand) => {
-  return defHttp.get<MaterialBrandPageModel>({ url: Api.MaterialBrand, params: reqMaterialBrand });
+export const getMaterialBrandRecordList = (reqMaterialBrand?: ReqMaterialBrandRecord) => {
+  return defHttp.get<MaterialBrandRecordPageModel>({
+    url: Api.MaterialBrand,
+    params: reqMaterialBrand,
+  });
 };
 
 /**
@@ -31,8 +34,8 @@ export const getMaterialBrandList = (reqMaterialBrand?: ReqMaterialBrand) => {
  * @param materialBrand
  * @return
  */
-export function insertMaterialBrand(materialBrand: MaterialBrand) {
-  return defHttp.post<MaterialBrand>(
+export function insertMaterialBrand(materialBrand: MaterialBrandRecord) {
+  return defHttp.post<MaterialBrandRecord>(
     { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
   );
@@ -44,8 +47,8 @@ export function insertMaterialBrand(materialBrand: MaterialBrand) {
  * @param materialBrand
  * @return
  */
-export function updateMaterialBrand(materialBrand: MaterialBrand) {
-  return defHttp.put<MaterialBrand>(
+export function updateMaterialBrand(materialBrand: MaterialBrandRecord) {
+  return defHttp.put<MaterialBrandRecord>(
     { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
   );
@@ -58,7 +61,7 @@ export function updateMaterialBrand(materialBrand: MaterialBrand) {
  * @return
  */
 export function deleteMaterialBrand(id: string) {
-  return defHttp.delete<MaterialBrand>(
+  return defHttp.delete<MaterialBrandRecord>(
     { url: Api.MaterialBrand + "/" + id },
     { successMessageMode: "message" },
   );
