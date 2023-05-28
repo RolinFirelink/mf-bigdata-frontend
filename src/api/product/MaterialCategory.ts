@@ -66,3 +66,15 @@ export function deleteMaterialCategory(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 根据父ID获取列表，一级分类的父ID为0
+ *
+ * @param reqMaterialCategory
+ * @return
+ */
+export const getListByParentId = (parentId) => {
+  return defHttp.get<MaterialCategoryPageModel>({
+    url: Api.MaterialCategory + "/listByParentId/" + parentId,
+  });
+};

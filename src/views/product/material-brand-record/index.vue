@@ -1,5 +1,5 @@
 <!--
- @description: 品牌产品中间表
+ @description: 产品品牌表
  @author: cgli
  @date: 2023-05-21
  @version: V1.0.0
@@ -11,8 +11,8 @@
         <a-button
           type="primary"
           @click="handleCreate"
-          v-if="hasPermission('sys:materialBrandRecord:insert')"
-          >新增品牌产品中间表</a-button
+          v-if="hasPermission('sys:materialBrand:insert')"
+          >新增产品品牌表</a-button
         >
       </template>
       <template #bodyCell="{ column, record }">
@@ -22,7 +22,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:materialBrandRecord:update',
+                auth: 'sys:materialBrand:update',
                 tooltip: '修改',
               },
               {
@@ -33,7 +33,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:materialBrandRecord:delete',
+                auth: 'sys:materialBrand:delete',
                 tooltip: '删除',
               },
             ]"
@@ -41,29 +41,26 @@
         </template>
       </template>
     </BasicTable>
-    <MaterialBrandRecordModal @register="registerModal" @success="handleSuccess" />
+    <MaterialBrandModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import {
-    deleteMaterialBrandRecord,
-    getMaterialBrandRecordList,
-  } from "/@/api/product/MaterialBrandRecord";
+  import { deleteMaterialBrand, getMaterialBrandList } from "/@/api/product/MaterialBrand";
   import { useModal } from "/@/components/general/Modal";
-  import MaterialBrandRecordModal from "./MaterialBrandRecordModal.vue";
-  import { columns, searchFormSchema } from "./materialBrandRecord.data";
+  import MaterialBrandModal from "./MaterialBrandModal.vue";
+  import { columns, searchFormSchema } from "./materialBrand.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
 
   export default {
-    name: "MaterialBrandRecordManagement",
-    components: { BasicTable, MaterialBrandRecordModal, TableAction },
+    name: "MaterialBrandManagement",
+    components: { BasicTable, MaterialBrandModal, TableAction },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: "品牌产品中间表列表",
-        api: getMaterialBrandRecordList,
+        title: "产品品牌表列表",
+        api: getMaterialBrandList,
         columns,
         formConfig: {
           labelWidth: 100,
@@ -94,7 +91,7 @@
       }
 
       function handleDelete(record: Recordable) {
-        deleteMaterialBrandRecord(record.id).then(() => {
+        deleteMaterialBrand(record.id).then(() => {
           handleSuccess();
         });
       }

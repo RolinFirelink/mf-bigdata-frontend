@@ -134,7 +134,7 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "企业（承运商）ID",
+    title: "承运商ID",
     dataIndex: "companyId",
     width: 120,
   },
@@ -144,17 +144,12 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "删除标识",
-    dataIndex: "deleteFlag",
-    width: 120,
-  },
-  {
     title: "订单ID",
     dataIndex: "orderId",
     width: 120,
   },
   {
-    title: "业务类型（生产、销售等）",
+    title: "业务类型",
     dataIndex: "businessType",
     width: 120,
   },
@@ -315,8 +310,8 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   },
   {
     field: "companyId",
-    label: "企业（承运商）ID",
-    component: "Input",
+    label: "承运商",
+    component: "Select",
   },
   {
     field: "extendField",
@@ -330,7 +325,16 @@ export const productCirculationDataFormSchema: FormSchema[] = [
   },
   {
     field: "businessType",
-    label: "业务类型（生产、销售等）",
-    component: "Input",
+    label: "业务类型",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "采购", value: 1 },
+        {
+          label: "销售",
+          value: 2,
+        },
+      ],
+    },
   },
 ];

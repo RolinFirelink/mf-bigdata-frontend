@@ -15,17 +15,14 @@
   import { materialBrandFormSchema } from "./materialBrand.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertMaterialBrand, updateMaterialBrand } from "/@/api/product/MaterialBrand";
-  import { getCompanyOptions } from "/@/api/company/Company";
 
   export default {
     name: "MaterialBrandModal",
     components: { BasicModal, BasicForm },
     emits: ["success", "register"],
     setup(_, { emit }) {
-      // 公司列表
-      const companyList: any = ref([]);
       const isUpdate = ref(true);
-      const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: materialBrandFormSchema,
@@ -35,7 +32,6 @@
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
-        setCompanyOptions();
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
           setFieldsValue({
@@ -45,25 +41,8 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品品牌表" : "编辑产品品牌表"));
 
-      async function setCompanyOptions() {
-        const data = await getCompanyOptions();
-        companyList.value = data.list;
-        updateSchema([
-          {
-            field: "companyId",
-            componentProps: { options: companyList },
-          },
-        ]).then();
-      }
-
       async function handleSubmit() {
         let values = await validate();
-        companyList.value.forEach((item) => {
-          if (item.id === values.companyId) {
-            values.companyName = item.companyName;
-            return;
-          }
-        });
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
           saveMaterialBrand(updateMaterialBrand, values);
@@ -84,8 +63,6 @@
       }
 
       return {
-        companyList,
-        setCompanyOptions,
         registerModal,
         registerForm,
         getTitle,

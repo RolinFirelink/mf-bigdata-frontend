@@ -11,6 +11,13 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:customer:insert')"
           >新增客户表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:customer:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -42,8 +49,9 @@
   </div>
 </template>
 <script lang="ts">
+  import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteCustomer, getCustomerList } from "/@/api/customer/Customer";
+  import { deleteCustomer, getCustomerList, batchDeleteCustomer } from "/@/api/customer/Customer";
   import { useModal } from "/@/components/general/Modal";
   import CustomerModal from "./CustomerModal.vue";
   import { columns, searchFormSchema } from "./customer.data";
@@ -53,6 +61,8 @@
     name: "CustomerManagement",
     components: { BasicTable, CustomerModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -67,6 +77,16 @@
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         actionColumn: {
           width: 80,
           title: "操作",
@@ -93,11 +113,20 @@
         });
       }
 
+      function batchDelete() {
+        batchDeleteCustomer(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
 
       return {
+        selectedIds,
+        batchDelete,
         registerTable,
         registerModal,
         handleCreate,

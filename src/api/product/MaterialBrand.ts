@@ -63,3 +63,16 @@ export function deleteMaterialBrand(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除品牌
+ *
+ * @param ids ID列表字符串
+ * @return
+ */
+export function batchDeleteMaterialBrand(ids: string) {
+  return defHttp.delete<MaterialBrand>(
+    { url: Api.MaterialBrand + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

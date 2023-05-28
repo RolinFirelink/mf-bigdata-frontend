@@ -1,68 +1,65 @@
 /**
- * @description: 品牌产品中间表
+ * @description: 产品品牌表
  * @author cgli
  * @date: 2023-05-21
  * @version: V1.0.0
  */
 import { defHttp } from "/@/utils/http/axios";
 import {
-  MaterialBrandRecord,
-  ReqMaterialBrandRecord,
-  MaterialBrandRecordPageModel,
-} from "/@/api/product/model/MaterialBrandRecordModel";
+  MaterialBrand,
+  ReqMaterialBrand,
+  MaterialBrandPageModel,
+} from "/@/api/product/model/MaterialBrandModel";
 
 enum Api {
-  MaterialBrandRecord = "/web/materialBrandRecord",
+  MaterialBrand = "/web/materialBrand",
 }
 
 /**
  * 分页列表查询
  *
- * @param reqMaterialBrandRecord
+ * @param reqMaterialBrand
  * @return
  */
-export const getMaterialBrandRecordList = (reqMaterialBrandRecord?: ReqMaterialBrandRecord) => {
-  return defHttp.get<MaterialBrandRecordPageModel>({
-    url: Api.MaterialBrandRecord,
-    params: reqMaterialBrandRecord,
-  });
+export const getMaterialBrandList = (reqMaterialBrand?: ReqMaterialBrand) => {
+  return defHttp.get<MaterialBrandPageModel>({ url: Api.MaterialBrand, params: reqMaterialBrand });
 };
 
 /**
- * 新增品牌产品中间表
+ * 新增产品品牌表
  *
- * @param materialBrandRecord
+ * @param materialBrand
  * @return
  */
-export function insertMaterialBrandRecord(materialBrandRecord: MaterialBrandRecord) {
-  return defHttp.post<MaterialBrandRecord>(
-    { url: Api.MaterialBrandRecord, params: materialBrandRecord },
+export function insertMaterialBrand(materialBrand: MaterialBrand) {
+  return defHttp.post<MaterialBrand>(
+    { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
   );
 }
 
 /**
- * 修改品牌产品中间表
+ * 修改产品品牌表
  *
- * @param materialBrandRecord
+ * @param materialBrand
  * @return
  */
-export function updateMaterialBrandRecord(materialBrandRecord: MaterialBrandRecord) {
-  return defHttp.put<MaterialBrandRecord>(
-    { url: Api.MaterialBrandRecord, params: materialBrandRecord },
+export function updateMaterialBrand(materialBrand: MaterialBrand) {
+  return defHttp.put<MaterialBrand>(
+    { url: Api.MaterialBrand, params: materialBrand },
     { successMessageMode: "message" },
   );
 }
 
 /**
- * 删除品牌产品中间表
+ * 删除产品品牌表
  *
  * @param id 唯一ID
  * @return
  */
-export function deleteMaterialBrandRecord(id: string) {
-  return defHttp.delete<MaterialBrandRecord>(
-    { url: Api.MaterialBrandRecord + "/" + id },
+export function deleteMaterialBrand(id: string) {
+  return defHttp.delete<MaterialBrand>(
+    { url: Api.MaterialBrand + "/" + id },
     { successMessageMode: "message" },
   );
 }

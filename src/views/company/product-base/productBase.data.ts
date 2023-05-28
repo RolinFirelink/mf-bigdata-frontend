@@ -75,19 +75,9 @@ export const columns: BasicColumn[] = [
           text = "预制菜";
           break;
       }
-      const color = "black";
+      const color = "#FF9800";
       return h(Tag, { color: color }, () => text);
     },
-  },
-  {
-    title: "启动状态",
-    dataIndex: "enabled",
-    width: 120,
-  },
-  {
-    title: "备注",
-    dataIndex: "remark",
-    width: 120,
   },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版

@@ -8,7 +8,6 @@ import { FormSchema } from "/@/components/general/Table";
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
-  
   {
     title: "客户ID",
     dataIndex: "customerId",
@@ -30,10 +29,10 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "产品分类",
+    title: "关联产品",
     dataIndex: "flag",
     width: 120,
-  }
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -49,7 +48,6 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    
     field: "type",
     label: "行为类型",
     component: "Input",
@@ -99,5 +97,5 @@ export const customerBehaviorFormSchema: FormSchema[] = [
     field: "flag",
     label: "产品分类",
     component: "Input",
-  }
+  },
 ];

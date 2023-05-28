@@ -59,3 +59,16 @@ export function deleteCustomer(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除客户
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteCustomer(ids: string) {
+  return defHttp.delete<Customer>(
+    { url: Api.Customer + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

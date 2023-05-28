@@ -61,10 +61,23 @@ export function deleteCompany(id: string) {
 }
 
 /**
- * 获取企业列表选项
+ * 获取供应商列表选项
  *
  * @return
  */
 export const getCompanyOptions = () => {
   return defHttp.get<CompanyPageModel>({ url: Api.Company + "?companyType=1" });
 };
+
+/**
+ * 批量删除
+ *
+ * @param ids id列表字符串
+ * @return
+ */
+export function bastchdeleteCompany(ids: string) {
+  return defHttp.delete<Company>(
+    { url: Api.Company + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

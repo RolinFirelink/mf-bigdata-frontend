@@ -10,6 +10,7 @@ export interface ReqPage {
  * 分页查询结果包装类
  */
 export interface PageResult<T> {
+  length: number;
   pageNum: number;
   pageSize: number;
   pages: number;

@@ -59,3 +59,16 @@ export function deleteMaterial(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除产品
+ *
+ * @param ids
+ * @return
+ */
+export function batchDeleteMaterial(ids: string) {
+  return defHttp.delete<Material>(
+    { url: Api.Material + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

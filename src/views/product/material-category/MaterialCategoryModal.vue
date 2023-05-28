@@ -17,7 +17,7 @@
   import {
     insertMaterialCategory,
     updateMaterialCategory,
-    getMaterialCategoryList,
+    getListByParentId,
   } from "/@/api/product/MaterialCategory";
 
   export default {
@@ -25,6 +25,8 @@
     components: { BasicModal, BasicForm },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      // 产品分类树形列表
+      let categoryTreeData: any = [];
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
@@ -37,7 +39,7 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
-        setTreeData();
+        setTreeData(0);
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -46,12 +48,21 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品类型表" : "编辑产品类型表"));
 
-      async function setTreeData() {
-        const treeData = await getMaterialCategoryList();
+      //产品分类树数据
+      async function setTreeData(parentId) {
+        const data = await getListByParentId(parentId);
+        categoryTreeData = data;
+        updateTreeData();
+      }
+
+      function updateTreeData() {
         updateSchema([
           {
             field: "parentId",
-            componentProps: { treeData: treeData.list },
+            componentProps: {
+              treeData: categoryTreeData,
+              "load-data": getChildrenData,
+            },
           },
         ]).then();
       }
@@ -80,7 +91,34 @@
           });
       }
 
+      async function getChildrenData(value) {
+        const data = await getListByParentId(value.id);
+        if (data.length > 0) {
+          categoryTreeData.forEach((item) => {
+            if (pushData(value.id, item, data)) {
+              return;
+            }
+          });
+        }
+        updateTreeData();
+      }
+
+      function pushData(id, node, data) {
+        if (node.id === id) {
+          node.children = data;
+          return true;
+        }
+        node.children.forEach((item) => {
+          if (pushData(id, item, data)) {
+            return;
+          }
+        });
+      }
+
       return {
+        categoryTreeData,
+        updateTreeData,
+        getChildrenData,
         registerModal,
         registerForm,
         getTitle,

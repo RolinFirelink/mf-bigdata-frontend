@@ -45,10 +45,22 @@ export const columns: BasicColumn[] = [
     dataIndex: "status",
     width: 120,
     customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "grey";
-      const text = enable ? "发布" : "草稿箱";
+      let text = "";
+      let color = "";
+      switch (record.status) {
+        case 0:
+          text = "草稿箱";
+          color = "grey";
+          break;
+        case 1:
+          text = "审核中";
+          color = "yellow";
+          break;
+        case 2:
+          text = "发布";
+          color = "green";
+          break;
+      }
       return h(Tag, { color: color }, () => text);
     },
   },
@@ -208,7 +220,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "title",
     label: "标题",
     component: "Input",
-    required: false,
+    required: true,
   },
   {
     field: "summary",
@@ -220,15 +232,17 @@ export const articleFormSchema: FormSchema[] = [
     field: "author",
     label: "作者",
     component: "Input",
+    required: true,
   },
   {
     field: "source",
     label: "来源",
     component: "Input",
+    required: true,
   },
   {
     field: "categoryId",
-    label: "分类id",
+    label: "分类",
     component: "TreeSelect",
     required: true,
     componentProps: {
@@ -249,15 +263,17 @@ export const articleFormSchema: FormSchema[] = [
   {
     field: "status",
     label: "状态",
-    component: "RadioButtonGroup",
+    component: "Select",
     defaultValue: 1,
     componentProps: {
       options: [
         { label: "草稿箱", value: 0 },
-        { label: "发布", value: 1 },
+        { label: "审核中", value: 1 },
+        { label: "发布", value: 2 },
       ],
     },
     colProps: { span: 12 },
+    required: true,
   },
   {
     field: "isTop",
@@ -271,6 +287,7 @@ export const articleFormSchema: FormSchema[] = [
       ],
     },
     colProps: { span: 12 },
+    required: true,
   },
   {
     field: "contentModel",
@@ -332,6 +349,7 @@ export const articleFormSchema: FormSchema[] = [
       ],
     },
     colProps: { span: 12 },
+    required: true,
   },
   {
     field: "allowSubscribe",
@@ -359,23 +377,10 @@ export const articleFormSchema: FormSchema[] = [
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
       placeholder: "发布时间",
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00")],
-      },
-      ranges: {
-        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
-        ["昨天"]: [
-          dateUtil().startOf("day").subtract(1, "days"),
-          dateUtil().endOf("day").subtract(1, "days"),
-        ],
-        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
-        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
-        ["最近1个月"]: [dateUtil().subtract(1, "months")],
-        ["最近3个月"]: [dateUtil().subtract(3, "months")],
-      },
+      showTime: true,
     },
     colProps: { lg: 12, md: 8 },
+    required: true,
   },
   {
     field: "endTime",
@@ -383,22 +388,8 @@ export const articleFormSchema: FormSchema[] = [
     component: "DatePicker",
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
-      placeholder: "发布结束时间",
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00")],
-      },
-      ranges: {
-        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
-        ["昨天"]: [
-          dateUtil().startOf("day").subtract(1, "days"),
-          dateUtil().endOf("day").subtract(1, "days"),
-        ],
-        ["最近一周"]: [dateUtil().subtract(1, "weeks")],
-        ["最近两周"]: [dateUtil().subtract(2, "weeks")],
-        ["最近1个月"]: [dateUtil().subtract(1, "months")],
-        ["最近3个月"]: [dateUtil().subtract(3, "months")],
-      },
+      placeholder: "发布时间",
+      showTime: true,
     },
     colProps: { lg: 12, md: 8 },
   },

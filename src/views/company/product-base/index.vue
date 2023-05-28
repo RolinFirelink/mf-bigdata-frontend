@@ -12,7 +12,7 @@
           type="primary"
           @click="handleCreate"
           v-if="hasPermission('sys:productBase:insert')"
-          >新增产品基地</a-button
+          >新增农业基地</a-button
         >
       </template>
       <template #bodyCell="{ column, record }">

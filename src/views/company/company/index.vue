@@ -9,7 +9,14 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:company:insert')"
-          >新增企业、供货商、销售商和承运商</a-button
+          >新增企业</a-button
+        >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:company:delete')"
+          >批量删除</a-button
         >
       </template>
       <template #bodyCell="{ column, record }">
@@ -42,10 +49,10 @@
   </div>
 </template>
 <script lang="ts">
-  import { toRaw } from "vue";
+  import { toRaw, ref } from "vue";
   import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteCompany, getCompanyList } from "/@/api/company/Company";
+  import { deleteCompany, getCompanyList, bastchdeleteCompany } from "/@/api/company/Company";
   import { useModal } from "/@/components/general/Modal";
   import CompanyModal from "./CompanyModal.vue";
   import { columns, searchFormSchema } from "./company.data";
@@ -55,6 +62,8 @@
     name: "CompanyManagement",
     components: { BasicTable, CompanyModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       // 根据路径获取公司类型
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
@@ -62,7 +71,7 @@
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: "企业、供货商、销售商和承运商列表",
+        title: "企业列表",
         api: getCompanyList,
         columns,
         formConfig: {
@@ -72,6 +81,16 @@
         // 额外请求参数
         searchInfo: {
           companyType: companyType,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -103,6 +122,13 @@
         });
       }
 
+      function batchDelete() {
+        bastchdeleteCompany(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
@@ -115,6 +141,8 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        selectedIds,
+        batchDelete,
       };
     },
   };

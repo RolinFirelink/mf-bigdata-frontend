@@ -24,11 +24,6 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "上级分类",
-    dataIndex: "name",
-    width: 120,
-  },
-  {
     title: "显示顺序",
     dataIndex: "sort",
     width: 120,
@@ -47,18 +42,6 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "serialNo",
-    label: "编号",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  // {
-  //   field: "categoryLevel",
-  //   label: "等级",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
 ];
 export const materialCategoryFormSchema: FormSchema[] = [
   {
@@ -88,8 +71,8 @@ export const materialCategoryFormSchema: FormSchema[] = [
     field: "parentId",
     label: "上级分类",
     component: "TreeSelect",
-    required: true,
     componentProps: {
+      placeholder: "请选择上级分类",
       fieldNames: {
         label: "name",
         key: "id",
@@ -113,9 +96,9 @@ export const materialCategoryFormSchema: FormSchema[] = [
     label: "归属组织id",
     component: "Input",
   },
-  // {
-  //   field: "flag",
-  //   label: "区分字段",
-  //   component: "Input",
-  // },
+  {
+    field: "flag",
+    label: "区分字段",
+    component: "Input",
+  },
 ];

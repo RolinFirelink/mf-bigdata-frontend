@@ -66,3 +66,16 @@ export function deleteCustomerBehavior(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量客户消费行为表
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteCustomerBehavior(ids: string) {
+  return defHttp.delete<CustomerBehavior>(
+    { url: Api.CustomerBehavior + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}
