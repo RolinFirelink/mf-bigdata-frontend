@@ -65,7 +65,6 @@ export const materialCategoryFormSchema: FormSchema[] = [
     field: "categoryLevel",
     label: "等级",
     component: "Input",
-    required: true,
   },
   {
     field: "parentId",
