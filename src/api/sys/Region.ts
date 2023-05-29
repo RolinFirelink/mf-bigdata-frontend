@@ -8,7 +8,7 @@ import { defHttp } from "/@/utils/http/axios";
 import { Region, ReqRegion, RegionPageModel } from "/@/api/sys/model/RegionModel";
 
 enum Api {
-  Region = "/sys/region"
+  Region = "/sys/region",
 }
 
 /**
@@ -28,8 +28,11 @@ export const getRegionList = (reqRegion?: ReqRegion) => {
  * @return
  */
 export function insertRegion(region: Region) {
-  return defHttp.post<Region>({ url: Api.Region, params: region }, { successMessageMode: "message" });
-};
+  return defHttp.post<Region>(
+    { url: Api.Region, params: region },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改行政区域
@@ -38,8 +41,11 @@ export function insertRegion(region: Region) {
  * @return
  */
 export function updateRegion(region: Region) {
-  return defHttp.put<Region>({ url: Api.Region, params: region }, { successMessageMode: "message" });
-};
+  return defHttp.put<Region>(
+    { url: Api.Region, params: region },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除行政区域
@@ -49,4 +55,14 @@ export function updateRegion(region: Region) {
  */
 export function deleteRegion(id: string) {
   return defHttp.delete<Region>({ url: Api.Region + "/" + id }, { successMessageMode: "message" });
+}
+
+/**
+ * 根据上级ID查询列表
+ *
+ * @param pid
+ * @return
+ */
+export const listRegionByPid = (pid) => {
+  return defHttp.get<Array<Region>>({ url: Api.Region + `/listByPid/${pid}` });
 };

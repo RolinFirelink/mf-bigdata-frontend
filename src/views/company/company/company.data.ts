@@ -196,11 +196,6 @@ export const companyFormSchema: FormSchema[] = [
     label: "电子邮箱",
     component: "Input",
   },
-  {
-    field: "country",
-    label: "",
-    component: "Input",
-  },
   // {
   //   field: "areaName",
   //   label: "行政区域名称",
@@ -214,7 +209,21 @@ export const companyFormSchema: FormSchema[] = [
   {
     field: "address",
     label: "公司地址",
+    component: "Cascader",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+        children: "children",
+      },
+    },
+    colProps: { span: 24 },
+  },
+  {
+    field: "detail",
+    label: "详细地址",
     component: "Input",
+    colProps: { span: 24 },
   },
   {
     field: "companyType",

@@ -46,12 +46,11 @@
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品品牌表" : "编辑产品品牌表"));
 
       async function setCompanyOptions() {
-        const data = await getCompanyOptions();
-        companyList.value = data.list;
+        companyList.value = await getCompanyOptions(1);
         updateSchema([
           {
             field: "companyId",
-            componentProps: { options: companyList },
+            componentProps: { options: companyList.value },
           },
         ]).then();
       }

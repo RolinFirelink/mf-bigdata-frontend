@@ -9,6 +9,11 @@ import { FormSchema } from "/@/components/general/Table";
  */
 export const columns: BasicColumn[] = [
   {
+    title: "货运ID",
+    dataIndex: "freightNumber",
+    width: 120,
+  },
+  {
     title: "运输状态",
     dataIndex: "transportState",
     width: 120,
@@ -16,11 +21,6 @@ export const columns: BasicColumn[] = [
   {
     title: "运输路线",
     dataIndex: "transportLocation",
-    width: 120,
-  },
-  {
-    title: "货运编号",
-    dataIndex: "freightNumber",
     width: 120,
   },
 ];
@@ -55,12 +55,32 @@ export const freightProgressFormSchema: FormSchema[] = [
   {
     field: "transportState",
     label: "运输状态",
-    component: "Input",
+    component: "Select",
     required: true,
+    componentProps: {
+      options: [
+        {
+          label: "待运输",
+          value: 1,
+        },
+        {
+          label: "运输中",
+          value: 2,
+        },
+        {
+          label: "转运中",
+          value: 3,
+        },
+        {
+          label: "完成",
+          value: 4,
+        },
+      ],
+    },
   },
   {
     field: "transportLocation",
-    label: "进度地点,各个地点之间用,分隔",
+    label: "运输路线",
     component: "Input",
   },
   {

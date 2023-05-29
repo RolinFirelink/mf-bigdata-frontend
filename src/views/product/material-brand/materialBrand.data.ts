@@ -12,11 +12,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "name",
     width: 120,
   },
-  // {
-  //   title: "品牌描述",
-  //   dataIndex: "description",
-  //   width: 120,
-  // },
+  {
+    title: "品牌描述",
+    dataIndex: "description",
+    width: 120,
+  },
   // {
   //   title: "品牌价值观",
   //   dataIndex: "companyValue",

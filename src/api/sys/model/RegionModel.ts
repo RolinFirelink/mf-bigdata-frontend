@@ -7,6 +7,7 @@ import { BaseEntity, PageResult } from "/@/api/model/BaseModel";
  * @version: V1.0.0
  */
 export interface Region extends BaseEntity<string> {
+  length: number;
   pid: string;
   pids: string;
   pidsName: string;
@@ -18,10 +19,9 @@ export interface Region extends BaseEntity<string> {
   countryId: string;
   remarks: string;
   deletedFlag: number;
+  children: Array<Region>;
 }
 
-export interface ReqRegion {
-
-}
+export interface ReqRegion {}
 
 export type RegionPageModel = PageResult<Region>;

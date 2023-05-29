@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:productCirculationData:insert')"
           >新增货运表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:freightProgress:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -45,10 +52,12 @@
   </div>
 </template>
 <script lang="ts">
+  import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import {
     deleteProductCirculationData,
     getProductCirculationDataList,
+    batchDeleteProductCirculationData,
   } from "/@/api/cargo/ProductCirculationData";
   import { useModal } from "/@/components/general/Modal";
   import ProductCirculationDataModal from "./ProductCirculationDataModal.vue";
@@ -59,6 +68,8 @@
     name: "ProductCirculationDataManagement",
     components: { BasicTable, ProductCirculationDataModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -68,6 +79,16 @@
         formConfig: {
           labelWidth: 100,
           schemas: searchFormSchema,
+        },
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
         },
         useSearchForm: true,
         showTableSetting: true,
@@ -99,11 +120,20 @@
         });
       }
 
+      function batchDelete() {
+        batchDeleteProductCirculationData(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
 
       return {
+        selectedIds,
+        batchDelete,
         registerTable,
         registerModal,
         handleCreate,

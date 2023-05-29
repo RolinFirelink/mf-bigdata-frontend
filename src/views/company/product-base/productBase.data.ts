@@ -136,17 +136,20 @@ export const productBaseFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "areaName",
-    label: "行政区域名称",
-    component: "Input",
-  },
-  {
-    field: "areaCode",
-    label: "行政区域编码",
-    component: "Input",
-  },
-  {
     field: "address",
+    label: "地址",
+    component: "Cascader",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+        children: "children",
+      },
+    },
+    colProps: { span: 24 },
+  },
+  {
+    field: "detail",
     label: "基地详细地址",
     component: "Input",
   },

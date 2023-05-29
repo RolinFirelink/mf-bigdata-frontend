@@ -1,6 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-
+import { h } from "vue";
+import { Tag } from "ant-design-vue";
 /**
  * @description: 货运表
  * @author cgli
@@ -9,53 +10,59 @@ import { FormSchema } from "/@/components/general/Table";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "产品编号",
-    dataIndex: "materialId",
+    title: "货运ID",
+    dataIndex: "id",
     width: 120,
   },
   {
-    title: "生产日期",
-    dataIndex: "dateManufacture",
+    title: "订单号",
+    dataIndex: "orderId",
     width: 120,
   },
   {
-    title: "生产批次",
-    dataIndex: "productionBatch",
+    title: "订单类型",
+    dataIndex: "businessType",
     width: 120,
-  },
-  {
-    title: "生产厂家",
-    dataIndex: "manufacturer",
-    width: 120,
+    customRender: ({ record }) => {
+      const color = "#FF9800";
+      let text = "";
+      switch (record.businessType) {
+        case 1:
+          text = "采购订单";
+          break;
+        case 2:
+          text = "销售订单";
+          break;
+        case 3:
+          text = "退货订单";
+          break;
+      }
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: "发货时间",
     dataIndex: "deliveryTime",
     width: 120,
   },
-  {
-    title: "发货单位",
-    dataIndex: "forwardingUnit",
-    width: 120,
-  },
-  {
-    title: "发货人",
-    dataIndex: "shipper",
-    width: 120,
-  },
-  {
-    title: "发货人电话",
-    dataIndex: "shipperPhoneNumber",
-    width: 120,
-  },
+  // {
+  //   title: "发货单位",
+  //   dataIndex: "forwardingUnit",
+  //   width: 120,
+  // },
+  // {
+  //   title: "发货人",
+  //   dataIndex: "shipper",
+  //   width: 120,
+  // },
+  // {
+  //   title: "发货人电话",
+  //   dataIndex: "shipperPhoneNumber",
+  //   width: 120,
+  // },
   {
     title: "发货地点",
     dataIndex: "shippingLocation",
-    width: 120,
-  },
-  {
-    title: "发货区域编码",
-    dataIndex: "shippingAreaCode",
     width: 120,
   },
   {
@@ -63,34 +70,24 @@ export const columns: BasicColumn[] = [
     dataIndex: "receivingTime",
     width: 120,
   },
-  {
-    title: "收货单位",
-    dataIndex: "consignee",
-    width: 120,
-  },
-  {
-    title: "收货人",
-    dataIndex: "receiver",
-    width: 120,
-  },
-  {
-    title: "收货人电话",
-    dataIndex: "recieverPhone",
-    width: 120,
-  },
+  // {
+  //   title: "收货单位",
+  //   dataIndex: "consignee",
+  //   width: 120,
+  // },
+  // {
+  //   title: "收货人",
+  //   dataIndex: "receiver",
+  //   width: 120,
+  // },
+  // {
+  //   title: "收货人电话",
+  //   dataIndex: "recieverPhone",
+  //   width: 120,
+  // },
   {
     title: "收货地点",
     dataIndex: "receivingLocation",
-    width: 120,
-  },
-  {
-    title: "收货区域编码",
-    dataIndex: "receivingAreaCode",
-    width: 120,
-  },
-  {
-    title: "货运物流中转信息",
-    dataIndex: "freightLogisticsTransferInformation",
     width: 120,
   },
   {
@@ -108,72 +105,50 @@ export const columns: BasicColumn[] = [
     dataIndex: "transportationTime",
     width: 120,
   },
+  // {
+  //   title: "时间单位",
+  //   dataIndex: "timeUnit",
+  //   width: 120,
+  // },
+  // {
+  //   title: "运输数量",
+  //   dataIndex: "transportationQuantity",
+  //   width: 120,
+  // },
+  // {
+  //   title: "货运批次号",
+  //   dataIndex: "batchNumber",
+  //   width: 120,
+  // },
+  // {
+  //   title: "货运单位",
+  //   dataIndex: "shippingUnit",
+  //   width: 120,
+  // },
+  // {
+  //   title: "货运单号",
+  //   dataIndex: "oddNumbers",
+  //   width: 120,
+  // },
   {
-    title: "时间单位",
-    dataIndex: "timeUnit",
-    width: 120,
-  },
-  {
-    title: "运输数量",
-    dataIndex: "transportationQuantity",
-    width: 120,
-  },
-  {
-    title: "货运批次号",
-    dataIndex: "batchNumber",
-    width: 120,
-  },
-  {
-    title: "货运单位",
-    dataIndex: "shippingUnit",
-    width: 120,
-  },
-  {
-    title: "货运单号",
-    dataIndex: "oddNumbers",
-    width: 120,
-  },
-  {
-    title: "承运商ID",
+    title: "承运商",
     dataIndex: "companyId",
     width: 120,
   },
-  {
-    title: "自定义拓展字段JSON结构",
-    dataIndex: "extendField",
-    width: 120,
-  },
-  {
-    title: "订单ID",
-    dataIndex: "orderId",
-    width: 120,
-  },
-  {
-    title: "业务类型",
-    dataIndex: "businessType",
-    width: 120,
-  },
+  // {
+  //   title: "自定义拓展字段JSON结构",
+  //   dataIndex: "extendField",
+  //   width: 120,
+  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: "materialId",
-    label: "产品编号",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "dateManufacture",
-    label: "生产日期",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "productionBatch",
-    label: "生产批次",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "materialName",
+  //   label: "产品",
+  //   component: "Input",
+  //   colProps: { lg: 8, md: 5 },
+  // },
 ];
 export const productCirculationDataFormSchema: FormSchema[] = [
   {
@@ -183,61 +158,80 @@ export const productCirculationDataFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "materialId",
-    label: "产品编号",
-    component: "Input",
-    required: true,
-  },
-  {
-    field: "dateManufacture",
-    label: "生产日期",
+    field: "orderId",
+    label: "订单号",
     component: "Input",
   },
-  {
-    field: "productionBatch",
-    label: "生产批次",
-    component: "Input",
-  },
-  {
-    field: "manufacturer",
-    label: "生产厂家",
-    component: "Input",
-  },
+  // {
+  //   field: "materialId",
+  //   label: "产品",
+  //   component: "Select",
+  //   required: true,
+  //   componentProps: {
+  //     fieldNames: {
+  //       label: "name",
+  //       value: "id",
+  //     },
+  //   },
+  // },
+  // {
+  //   field: "dateManufacture",
+  //   label: "生产日期",
+  //   component: "DatePicker",
+  //   componentProps: {
+  //     format: "YYYY-MM-DD HH:mm:ss",
+  //     placeholder: "生产日期",
+  //     showTime: true,
+  //   },
+  // },
+  // {
+  //   field: "manufacturer",
+  //   label: "供应商",
+  //   component: "Select",
+  // },
   {
     field: "deliveryTime",
     label: "发货时间",
     component: "DatePicker",
     componentProps: {
       format: "YYYY-MM-DD HH:mm:ss",
-      placeholder: "发布时间",
+      placeholder: "发货时间",
       showTime: true,
     },
     colProps: { lg: 12, md: 8 },
   },
-  {
-    field: "forwardingUnit",
-    label: "发货单位",
-    component: "Input",
-  },
-  {
-    field: "shipper",
-    label: "发货人",
-    component: "Input",
-  },
-  {
-    field: "shipperPhoneNumber",
-    label: "发货人电话",
-    component: "Input",
-  },
+  // {
+  //   field: "forwardingUnit",
+  //   label: "发货单位",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "shipper",
+  //   label: "发货人",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "shipperPhoneNumber",
+  //   label: "发货人电话",
+  //   component: "Input",
+  // },
   {
     field: "shippingLocation",
     label: "发货地点",
-    component: "Input",
+    component: "Cascader",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 24, md: 8 },
   },
   {
-    field: "shippingAreaCode",
-    label: "发货区域编码",
+    field: "detail1",
+    label: "发货详细地址",
     component: "Input",
+    colProps: { lg: 24, md: 8 },
   },
   {
     field: "receivingTime",
@@ -250,35 +244,38 @@ export const productCirculationDataFormSchema: FormSchema[] = [
     },
     colProps: { lg: 12, md: 8 },
   },
-  {
-    field: "consignee",
-    label: "收货单位",
-    component: "Input",
-  },
-  {
-    field: "receiver",
-    label: "收货人",
-    component: "Input",
-  },
-  {
-    field: "recieverPhone",
-    label: "收货人电话",
-    component: "Input",
-  },
+  // {
+  //   field: "consignee",
+  //   label: "收货单位",
+  //   component: "Select",
+  // },
+  // {
+  //   field: "receiver",
+  //   label: "收货人",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "recieverPhone",
+  //   label: "收货人电话",
+  //   component: "Input",
+  // },
   {
     field: "receivingLocation",
     label: "收货地点",
-    component: "Input",
+    component: "Cascader",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 24, md: 8 },
   },
   {
-    field: "receivingAreaCode",
-    label: "收货区域编码",
+    field: "detail2",
+    label: "收货详细地址",
     component: "Input",
-  },
-  {
-    field: "freightLogisticsTransferInformation",
-    label: "货运物流中转信息",
-    component: "Input",
+    colProps: { lg: 24, md: 8 },
   },
   {
     field: "modeTransport",
@@ -288,101 +285,93 @@ export const productCirculationDataFormSchema: FormSchema[] = [
       options: [
         {
           label: "海洋运输",
-          value: 1,
+          value: "海洋运输",
         },
         {
           label: "铁路运输",
-          value: 2,
+          value: "铁路运输",
         },
         {
           label: "航空运输",
-          value: 3,
+          value: "航空运输",
         },
         {
           label: "公路运输",
-          value: 4,
+          value: "公路运输",
         },
         {
           label: "管道运输",
-          value: 5,
+          value: "管道运输",
         },
         {
           label: "集装箱运输",
-          value: 6,
+          value: "集装箱运输",
         },
         {
           label: "国际多式联运",
-          value: 7,
+          value: "国际多式联运",
         },
       ],
     },
   },
   {
     field: "transportationPrice",
-    label: "运输价格",
-    component: "Input",
+    label: "运输价格（元）",
+    component: "InputNumber",
   },
   {
     field: "transportationTime",
-    label: "运输时间",
-    component: "Input",
+    label: "运输天数",
+    component: "InputNumber",
   },
-  {
-    field: "timeUnit",
-    label: "时间单位",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "天", value: "天" },
-        { label: "月", value: "月" },
-        { label: "年", value: "年" },
-      ],
-    },
-  },
-  {
-    field: "transportationQuantity",
-    label: "运输数量",
-    component: "Input",
-  },
-  {
-    field: "batchNumber",
-    label: "货运批次号",
-    component: "Input",
-  },
-  {
-    field: "shippingUnit",
-    label: "货运单位",
-    component: "Input",
-  },
-  {
-    field: "oddNumbers",
-    label: "货运单号",
-    component: "Input",
-  },
+  // {
+  //   field: "timeUnit",
+  //   label: "时间单位",
+  //   component: "Select",
+  //   componentProps: {
+  //     options: [
+  //       { label: "天", value: "天" },
+  //       { label: "月", value: "月" },
+  //       { label: "年", value: "年" },
+  //     ],
+  //   },
+  // },
+  // {
+  //   field: "transportationQuantity",
+  //   label: "运输数量",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "shippingUnit",
+  //   label: "货运单位",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "oddNumbers",
+  //   label: "货运单号",
+  //   component: "Input",
+  // },
   {
     field: "companyId",
     label: "承运商",
     component: "Select",
-  },
-  {
-    field: "extendField",
-    label: "自定义拓展字段JSON结构",
-    component: "Input",
-  },
-  {
-    field: "orderId",
-    label: "订单ID",
-    component: "Input",
+    componentProps: {
+      fieldNames: { label: "companyName", value: "id" },
+    },
   },
   {
     field: "businessType",
-    label: "业务类型",
+    label: "订单类型",
     component: "Select",
     componentProps: {
       options: [
-        { label: "采购", value: 1 },
+        { label: "采购订单", value: 1 },
         {
-          label: "销售",
+          label: "销售订单",
+          value: 2,
+        },
+        {
+          label: "退货订单",
           value: 2,
         },
       ],

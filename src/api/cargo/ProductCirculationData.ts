@@ -68,3 +68,16 @@ export function deleteProductCirculationData(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除货运表
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteProductCirculationData(ids: string) {
+  return defHttp.delete<ProductCirculationData>(
+    { url: Api.ProductCirculationData + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

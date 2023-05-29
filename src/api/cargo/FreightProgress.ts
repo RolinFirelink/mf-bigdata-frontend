@@ -66,3 +66,16 @@ export function deleteFreightProgress(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除货运进度
+ *
+ * @param ids ID集合字符串
+ * @return
+ */
+export function batchDeleteFreightProgress(ids: string) {
+  return defHttp.delete<FreightProgress>(
+    { url: Api.FreightProgress + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}
