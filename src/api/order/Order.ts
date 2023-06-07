@@ -63,3 +63,18 @@ export function batchDeleteOrder(ids: string) {
     { successMessageMode: "message" },
   );
 }
+/**
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadOrderExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.Order + "/excelUpload",
+      params,
+    },
+    { successMessageMode: "message" },
+  );
+}

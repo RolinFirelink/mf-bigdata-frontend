@@ -18,6 +18,9 @@
           v-if="hasPermission('sys:company:delete')"
           >批量删除</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -57,10 +60,12 @@
   import CompanyModal from "./CompanyModal.vue";
   import { columns, searchFormSchema } from "./company.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { uploadExcel } from "/@/api/company/Company";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "CompanyManagement",
-    components: { BasicTable, CompanyModal, TableAction },
+    components: { BasicTable, CompanyModal, TableAction, Upload },
     setup() {
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
@@ -133,7 +138,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,

@@ -9,7 +9,7 @@ import { SysFile, ReqSysFile, SysFilePageModel } from "/@/api/storage/model/SysF
 
 enum Api {
   SysFile = "/storage/sysFile",
-  SetStatus = "/storage/sysFile/status"
+  SetStatus = "/storage/sysFile/status",
 }
 
 /**
@@ -37,8 +37,11 @@ export const getSysFileList = (reqSysFile?: ReqSysFile) => {
  * @return
  */
 export function insertSysFile(sysFile: SysFile) {
-  return defHttp.post<SysFile>({ url: Api.SysFile, params: sysFile }, { successMessageMode: "message" });
-};
+  return defHttp.post<SysFile>(
+    { url: Api.SysFile, params: sysFile },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 修改文件存储
@@ -47,8 +50,11 @@ export function insertSysFile(sysFile: SysFile) {
  * @return
  */
 export function updateSysFile(sysFile: SysFile) {
-  return defHttp.put<SysFile>({ url: Api.SysFile, params: sysFile }, { successMessageMode: "message" });
-};
+  return defHttp.put<SysFile>(
+    { url: Api.SysFile, params: sysFile },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 删除文件存储
@@ -57,8 +63,11 @@ export function updateSysFile(sysFile: SysFile) {
  * @return
  */
 export function deleteSysFile(id: string) {
-  return defHttp.delete<SysFile>({ url: Api.SysFile + "/" + id }, { successMessageMode: "message" });
-};
+  return defHttp.delete<SysFile>(
+    { url: Api.SysFile + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
 
 /**
  * 设置文件状态
@@ -66,5 +75,5 @@ export function deleteSysFile(id: string) {
  * @param status 状态 0 公开， 1 私密
  */
 export const setFileStatus = (fileId: string, status: number) => {
-  return defHttp.put<Boolean>({ url: Api.SetStatus, params: { "id": fileId, "isPrivate": status } });
+  return defHttp.put<Boolean>({ url: Api.SetStatus, params: { id: fileId, isPrivate: status } });
 };

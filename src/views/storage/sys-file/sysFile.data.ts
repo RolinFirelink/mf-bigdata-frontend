@@ -24,21 +24,25 @@ export const columns: BasicColumn[] = [
       }
       return getFileIcon(record.fileName);
     },
-    width: 60
+    width: 60,
   },
   {
     title: "文件名",
     dataIndex: "fileName",
     customRender: ({ record }) => {
       //超链接访问文件，直接访问后台存储文件地址
-      return h("a", { href: record.fileUrl + "?access_token=" + getToken(), target: "_blank" }, record.fileName);
+      return h(
+        "a",
+        { href: record.fileUrl + "?access_token=" + getToken(), target: "_blank" },
+        record.fileName,
+      );
     },
-    width: 260
+    width: 260,
   },
   {
     title: "文件类型",
     dataIndex: "fileType",
-    width: 200
+    width: 200,
   },
   {
     title: "文件大小",
@@ -49,17 +53,17 @@ export const columns: BasicColumn[] = [
         return calcSize(record.fileSize, 1);
       }
       return "";
-    }
+    },
   },
   {
     title: "上传时间",
     dataIndex: "createTime",
-    width: 120
+    width: 120,
   },
   {
     title: "存储路径",
     dataIndex: "filePath",
-    width: 150
+    width: 150,
   },
   {
     title: "文件公开",
@@ -77,72 +81,74 @@ export const columns: BasicColumn[] = [
         onChange(checked: boolean) {
           record.pendingStatus = true;
           const newStatus = checked ? 0 : 1;
-          setFileStatus(record.id, newStatus).then(() => {
-            record.isPrivate = newStatus;
-          }).finally(() => {
-            record.pendingStatus = false;
-          });
-        }
+          setFileStatus(record.id, newStatus)
+            .then(() => {
+              record.isPrivate = newStatus;
+            })
+            .finally(() => {
+              record.pendingStatus = false;
+            });
+        },
       });
-    }
-  }
+    },
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "fileName",
     label: "文件名",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "fileType",
     label: "文件类型",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 export const sysFileFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "fileName",
     label: "文件名",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "fileType",
     label: "文件类型",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "fileSize",
     label: "文件大小",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "fileUrl",
     label: "文件访问链接",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "filePath",
     label: "存储路径",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "isPrivate",
     label: "是否私密文件 0为公开的  1为私密文件",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "delFlag",
     label: "删除标记(0未删除1删除)",
-    component: "Input"
-  }
+    component: "Input",
+  },
 ];

@@ -59,3 +59,19 @@ export function deleteOrderDetail(id: string) {
 export function listByOrderId(orderId: string) {
   return defHttp.get<OrderDetail>({ url: Api.OrderDetail + "/listByOrderId/" + orderId });
 }
+
+/**
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadOrderDetailExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.OrderDetail + "/excelUpload",
+      params,
+    },
+    { successMessageMode: "message" },
+  );
+}

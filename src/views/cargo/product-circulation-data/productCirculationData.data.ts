@@ -225,6 +225,7 @@ export const productCirculationDataFormSchema: FormSchema[] = [
         value: "id",
       },
     },
+    required: true,
     colProps: { lg: 24, md: 8 },
   },
   {
@@ -269,6 +270,7 @@ export const productCirculationDataFormSchema: FormSchema[] = [
         value: "id",
       },
     },
+    required: true,
     colProps: { lg: 24, md: 8 },
   },
   {

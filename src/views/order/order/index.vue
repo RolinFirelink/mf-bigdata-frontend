@@ -15,9 +15,15 @@
           :disabled="!selectedIds"
           type="danger"
           @click="batchDelete"
-          v-if="hasPermission('sys:order:delete')"
+          v-if="hasPermission('web:order:save')"
           >批量删除</a-button
         >
+        <Upload :customRequest="uploadOrder" :showUploadList="false">
+          <a-button type="primary"> 上传订单数据 </a-button>
+        </Upload>
+        <Upload :customRequest="uploadOrderDetail" :showUploadList="false">
+          <a-button type="primary"> 上传订单产品数据 </a-button>
+        </Upload>
       </template>
       <template #expandedRowRender="{ record }">
         <OrderDetail :orderId="record.id" ref="orderDetail" :data="record.orderDetailList" />
@@ -61,10 +67,13 @@
   import { columns, searchFormSchema } from "./order.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
   import OrderDetail from "../orderDetail/OrderDetail.vue";
+  import { uploadOrderExcel } from "/@/api/order/Order";
+  import { uploadOrderDetailExcel } from "/@/api/order/OrderDetail";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "OrderManagement",
-    components: { BasicTable, OrderModal, TableAction, OrderDetail },
+    components: { BasicTable, OrderModal, TableAction, OrderDetail, Upload },
     setup() {
       const orderDetail = ref();
       // 多选ID数组字符串（逗号隔开）
@@ -137,7 +146,35 @@
         reload();
       }
 
+      function uploadOrder(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadOrderExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
+      function uploadOrderDetail(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadOrderDetailExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        uploadOrder,
+        uploadOrderDetail,
         registerTable,
         registerModal,
         handleCreate,

@@ -85,3 +85,19 @@ export function batchDeleteProductBase(ids: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.ProductBase + "/excelUpload",
+      params,
+    },
+    { successMessageMode: "message" },
+  );
+}

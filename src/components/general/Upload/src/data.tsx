@@ -22,7 +22,7 @@ export function createTableColumns(): BasicColumn[] {
           return <ThumbUrl fileUrl={thumbUrl} />;
         }
         return getFileIcon(record.name);
-      }
+      },
     },
     {
       title: "文件公开",
@@ -34,8 +34,15 @@ export function createTableColumns(): BasicColumn[] {
           record.isPrivate = checked ? 0 : 1;
         }
 
-        return <Switch checked={record.isPrivate === 0} checkedChildren="已公开" unCheckedChildren="已私密" onChange={onChange} />;
-      }
+        return (
+          <Switch
+            checked={record.isPrivate === 0}
+            checkedChildren="已公开"
+            unCheckedChildren="已私密"
+            onChange={onChange}
+          />
+        );
+      },
     },
     {
       dataIndex: "name",
@@ -60,7 +67,7 @@ export function createTableColumns(): BasicColumn[] {
             <Progress percent={percent} size="small" status={status} />
           </span>
         );
-      }
+      },
     },
     {
       title: "文件目录",
@@ -73,7 +80,7 @@ export function createTableColumns(): BasicColumn[] {
         }
 
         return <Input placeholder={"为空采用默认路径"} onChange={onChange} />;
-      }
+      },
     },
     {
       dataIndex: "size",
@@ -82,14 +89,14 @@ export function createTableColumns(): BasicColumn[] {
       align: "center",
       customRender: ({ text = 0 }) => {
         return text && calcSize(text, 1);
-      }
+      },
     },
     {
       dataIndex: "type",
       title: "文件类型",
       width: 80,
-      align: "center"
-    }
+      align: "center",
+    },
   ];
 }
 
@@ -105,10 +112,10 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
         {
           icon: "ant-design:delete-outlined",
           color: "error",
-          onClick: handleRemove.bind(null, record)
-        }
+          onClick: handleRemove.bind(null, record),
+        },
       ];
       return <TableAction actions={actions} outside={true} />;
-    }
+    },
   };
 }

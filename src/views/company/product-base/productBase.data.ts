@@ -146,6 +146,7 @@ export const productBaseFormSchema: FormSchema[] = [
         children: "children",
       },
     },
+    required: true,
     colProps: { span: 24 },
   },
   {

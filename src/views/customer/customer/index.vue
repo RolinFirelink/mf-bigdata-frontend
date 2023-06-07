@@ -18,6 +18,9 @@
           v-if="hasPermission('sys:customer:delete')"
           >批量删除</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -51,15 +54,20 @@
 <script lang="ts">
   import { ref } from "vue";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteCustomer, getCustomerList, batchDeleteCustomer } from "/@/api/customer/Customer";
+  import {
+    deleteCustomer,
+    getCustomerList,
+    batchDeleteCustomer,
+    uploadExcel,
+  } from "/@/api/customer/Customer";
   import { useModal } from "/@/components/general/Modal";
   import CustomerModal from "./CustomerModal.vue";
   import { columns, searchFormSchema } from "./customer.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
-
+  import { Upload } from "ant-design-vue";
   export default {
     name: "CustomerManagement",
-    components: { BasicTable, CustomerModal, TableAction },
+    components: { BasicTable, CustomerModal, TableAction, Upload },
     setup() {
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
@@ -120,11 +128,25 @@
         });
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
 
       return {
+        upload,
         selectedIds,
         batchDelete,
         registerTable,

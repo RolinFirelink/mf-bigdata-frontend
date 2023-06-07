@@ -217,6 +217,7 @@ export const companyFormSchema: FormSchema[] = [
         children: "children",
       },
     },
+    required: true,
     colProps: { span: 24 },
   },
   {

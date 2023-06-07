@@ -15,7 +15,6 @@
   import { customerFormSchema } from "./customer.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertCustomer, updateCustomer } from "/@/api/customer/Customer";
-
   export default {
     name: "CustomerModal",
     components: { BasicModal, BasicForm },

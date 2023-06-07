@@ -21,6 +21,9 @@
           v-if="hasPermission('sys:customer:delete')"
           >批量删除</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -58,15 +61,16 @@
     deleteCustomerBehavior,
     getCustomerBehaviorList,
     batchDeleteCustomerBehavior,
+    uploadExcel,
   } from "/@/api/customer/CustomerBehavior";
   import { useModal } from "/@/components/general/Modal";
   import CustomerBehaviorModal from "./CustomerBehaviorModal.vue";
   import { columns, searchFormSchema } from "./customerBehavior.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
-
+  import { Upload } from "ant-design-vue";
   export default {
     name: "CustomerBehaviorManagement",
-    components: { BasicTable, CustomerBehaviorModal, TableAction },
+    components: { BasicTable, CustomerBehaviorModal, TableAction, Upload },
     setup() {
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
@@ -127,11 +131,25 @@
         });
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       function handleSuccess() {
         reload();
       }
 
       return {
+        upload,
         selectedIds,
         batchDelete,
         registerTable,

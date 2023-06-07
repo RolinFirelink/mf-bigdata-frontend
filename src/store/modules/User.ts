@@ -37,7 +37,7 @@ export const useUserStore = defineStore({
     // 角色code列表
     roleList: new Set<string>(),
     // token时长
-    sessionTimeout: false
+    sessionTimeout: false,
   }),
   getters: {
     getUserInfo(): Nullable<SsoUser> {
@@ -57,7 +57,7 @@ export const useUserStore = defineStore({
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
-    }
+    },
   },
   actions: {
     setToken(info: string | undefined) {
@@ -90,7 +90,9 @@ export const useUserStore = defineStore({
      * 登录
      * @param params  route_redirect //路由重定向地址，统一认证后跳转
      */
-    async login(params: LoginParams & { mode?: MessageMode; route_redirect?: string; }): Promise<SsoUser | null> {
+    async login(
+      params: LoginParams & { mode?: MessageMode; route_redirect?: string },
+    ): Promise<SsoUser | null> {
       try {
         const { mode, route_redirect, ...loginParams } = params;
         const result = await loginApi(loginParams, mode);
@@ -113,7 +115,9 @@ export const useUserStore = defineStore({
       // 获取用户信息
       const userInfo = await this.getUserInfoAction();
       const permissionStore = usePermissionStore();
-      permissionStore.setPermissions(userInfo?.permissions ? new Set(userInfo?.permissions) : new Set());
+      permissionStore.setPermissions(
+        userInfo?.permissions ? new Set(userInfo?.permissions) : new Set(),
+      );
       if (!permissionStore.isDynamicAddedRoute) {
         await permissionStore.addRouter(router);
       }
@@ -168,10 +172,10 @@ export const useUserStore = defineStore({
         content: () => h("span", t("sys.app.logoutMessage")),
         onOk: async () => {
           await this.logout(true);
-        }
+        },
       });
-    }
-  }
+    },
+  },
 });
 
 // Need to be used outside the setup
