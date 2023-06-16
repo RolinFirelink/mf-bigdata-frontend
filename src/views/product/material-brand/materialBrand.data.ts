@@ -13,20 +13,10 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "品牌描述",
+    title: "描述",
     dataIndex: "description",
     width: 120,
   },
-  // {
-  //   title: "品牌价值观",
-  //   dataIndex: "companyValue",
-  //   width: 120,
-  // },
-  // {
-  //   title: "品牌官网",
-  //   dataIndex: "companyWebsite",
-  //   width: 120,
-  // },
   {
     title: "品牌创立时间",
     dataIndex: "establishedDate",
@@ -47,8 +37,8 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 4, md: 5 },
   },
   {
-    field: "description",
-    label: "品牌描述",
+    field: "companyName",
+    label: "归属公司",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
@@ -71,16 +61,6 @@ export const materialBrandFormSchema: FormSchema[] = [
     label: "品牌描述",
     component: "Input",
   },
-  // {
-  //   field: "companyValue",
-  //   label: "品牌价值观",
-  //   component: "Input",
-  // },
-  // {
-  //   field: "companyWebsite",
-  //   label: "品牌官网",
-  //   component: "Input",
-  // },
   {
     field: "establishedDate",
     label: "品牌创立时间",

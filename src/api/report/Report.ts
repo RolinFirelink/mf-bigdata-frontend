@@ -8,7 +8,7 @@ import { defHttp } from "/@/utils/http/axios";
 import { Report, ReqReport, ReportPageModel } from "/@/api/report/model/ReportModel";
 
 enum Api {
-  Report = "/web/report",
+  Report = "/report/report",
 }
 
 /**

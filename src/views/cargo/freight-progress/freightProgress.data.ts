@@ -1,6 +1,5 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-
 /**
  * @description: 货运进度表
  * @author cgli
@@ -9,7 +8,7 @@ import { FormSchema } from "/@/components/general/Table";
  */
 export const columns: BasicColumn[] = [
   {
-    title: "货运ID",
+    title: "货运编号",
     dataIndex: "freightNumber",
     width: 120,
   },
@@ -27,21 +26,35 @@ export const columns: BasicColumn[] = [
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "transportState",
-    label: "运输状态",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "transportLocation",
-    label: "进度地点",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
     field: "freightNumber",
     label: "货运编号",
     component: "Input",
+    colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "transportState",
+    label: "运输状态",
+    component: "Select",
+    componentProps: {
+      options: [
+        {
+          label: "待运输",
+          value: "待运输",
+        },
+        {
+          label: "运输中",
+          value: "运输中",
+        },
+        {
+          label: "转运中",
+          value: "转运中",
+        },
+        {
+          label: "完成",
+          value: "完成",
+        },
+      ],
+    },
     colProps: { lg: 4, md: 5 },
   },
 ];
@@ -61,19 +74,19 @@ export const freightProgressFormSchema: FormSchema[] = [
       options: [
         {
           label: "待运输",
-          value: 1,
+          value: "待运输",
         },
         {
           label: "运输中",
-          value: 2,
+          value: "运输中",
         },
         {
           label: "转运中",
-          value: 3,
+          value: "转运中",
         },
         {
           label: "完成",
-          value: 4,
+          value: "完成",
         },
       ],
     },

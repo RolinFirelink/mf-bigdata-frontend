@@ -21,6 +21,11 @@
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          >下载导入模板</a
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">

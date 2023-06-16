@@ -18,7 +18,7 @@ export function useForm(props?: Props): UseFormReturnType {
     const form = unref(formRef);
     if (!form) {
       error(
-        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!"
+        "The form instance has not been obtained, please make sure that the form has been rendered when performing the form operation!",
       );
     }
     await nextTick();
@@ -27,10 +27,10 @@ export function useForm(props?: Props): UseFormReturnType {
 
   function register(instance: FormActionType) {
     isProdMode() &&
-    onUnmounted(() => {
-      formRef.value = null;
-      loadedRef.value = null;
-    });
+      onUnmounted(() => {
+        formRef.value = null;
+        loadedRef.value = null;
+      });
     if (unref(loadedRef) && isProdMode() && instance === unref(formRef)) return;
 
     formRef.value = instance;
@@ -43,8 +43,8 @@ export function useForm(props?: Props): UseFormReturnType {
       },
       {
         immediate: true,
-        deep: true
-      }
+        deep: true,
+      },
     );
   }
 
@@ -96,7 +96,7 @@ export function useForm(props?: Props): UseFormReturnType {
     appendSchemaByField: async (
       schema: FormSchema,
       prefixField: string | undefined,
-      first: boolean
+      first: boolean,
     ) => {
       const form = await getForm();
       form.appendSchemaByField(schema, prefixField, first).then();
@@ -115,7 +115,7 @@ export function useForm(props?: Props): UseFormReturnType {
     validateFields: async (nameList?: NamePath[]): Promise<Recordable> => {
       const form = await getForm();
       return form.validateFields(nameList);
-    }
+    },
   };
 
   return [register, methods];

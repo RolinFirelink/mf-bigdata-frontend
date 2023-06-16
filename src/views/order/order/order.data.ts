@@ -1,6 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
+import { dateUtil } from "/@/utils/DateUtil";
 import { Tag } from "ant-design-vue";
 /**
  * @description: 订单数据主表
@@ -129,9 +130,95 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: "vendorName",
-    label: "供应企业",
+    label: "供应商",
     component: "Input",
     colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "buyerName",
+    label: "采购商",
+    component: "Input",
+    colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "status",
+    label: "订单状态",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "企业待发货", value: 1 },
+        { label: "企业送货送货中", value: 2 },
+        { label: "客户待收货", value: 3 },
+        { label: "客户已收货", value: 4 },
+      ],
+    },
+    colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "[createStartTime, createEndTime]",
+    label: "创建时间",
+    component: "RangePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: ["开始时间", "结束时间"],
+      showTime: {
+        hideDisabledOptions: true,
+        defaultValue: [dateUtil("00:00:00", "HH:mm:ss"), dateUtil("23:59:59", "HH:mm:ss")],
+      },
+      ranges: {
+        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
+        ["昨天"]: [
+          dateUtil().startOf("day").subtract(1, "days"),
+          dateUtil().endOf("day").subtract(1, "days"),
+        ],
+        ["最近一周"]: [dateUtil().subtract(1, "weeks"), dateUtil()],
+        ["最近两周"]: [dateUtil().subtract(2, "weeks"), dateUtil()],
+        ["最近1个月"]: [dateUtil().subtract(1, "months"), dateUtil()],
+        ["最近3个月"]: [dateUtil().subtract(3, "months"), dateUtil()],
+      },
+    },
+    colProps: { lg: 12, md: 8 },
+  },
+  {
+    field: "[finishStartTime, finishEndTime]",
+    label: "完成时间",
+    component: "RangePicker",
+    componentProps: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      placeholder: ["开始时间", "结束时间"],
+      showTime: {
+        hideDisabledOptions: true,
+        defaultValue: [dateUtil("00:00:00", "HH:mm:ss"), dateUtil("23:59:59", "HH:mm:ss")],
+      },
+      ranges: {
+        ["今天"]: [dateUtil().startOf("day"), dateUtil()],
+        ["昨天"]: [
+          dateUtil().startOf("day").subtract(1, "days"),
+          dateUtil().endOf("day").subtract(1, "days"),
+        ],
+        ["最近一周"]: [dateUtil().subtract(1, "weeks"), dateUtil()],
+        ["最近两周"]: [dateUtil().subtract(2, "weeks"), dateUtil()],
+        ["最近1个月"]: [dateUtil().subtract(1, "months"), dateUtil()],
+        ["最近3个月"]: [dateUtil().subtract(3, "months"), dateUtil()],
+      },
+    },
+    colProps: { lg: 12, md: 8 },
+  },
+  {
+    field: "flag",
+    label: "关联产品",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "肉鸡", value: 1 },
+        { label: "柑橘", value: 2 },
+        { label: "兰花", value: 3 },
+        { label: "对虾", value: 4 },
+        { label: "菜心", value: 5 },
+        { label: "预制蔡", value: 6 },
+      ],
+    },
+    colProps: { lg: 5, md: 5 },
   },
 ];
 export const shOrderFormSchema: FormSchema[] = [

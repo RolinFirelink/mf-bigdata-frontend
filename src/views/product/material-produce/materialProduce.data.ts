@@ -11,7 +11,7 @@ import { Tag } from "ant-design-vue";
 export const columns: BasicColumn[] = [
   {
     title: "公司",
-    dataIndex: "companyId",
+    dataIndex: "companyName",
     width: 120,
   },
   {
@@ -81,7 +81,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "基地",
-    dataIndex: "baseId",
+    dataIndex: "productBaseName",
     width: 120,
   },
   {
@@ -98,13 +98,7 @@ export const columns: BasicColumn[] = [
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "companyName",
-    label: "公司",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
-  {
-    field: "materialName",
+    field: "name",
     label: "产品",
     component: "Input",
     colProps: { lg: 4, md: 5 },

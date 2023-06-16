@@ -18,7 +18,9 @@ export interface MaterialBrand extends BaseEntity<number> {
   companyId: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ReqMaterialBrand {}
+export interface ReqMaterialBrand {
+  name: string;
+  companyName: string;
+}
 
 export type MaterialBrandPageModel = PageResult<MaterialBrand>;

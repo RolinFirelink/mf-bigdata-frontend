@@ -24,6 +24,11 @@
         <Upload :customRequest="uploadOrderDetail" :showUploadList="false">
           <a-button type="primary"> 上传订单产品数据 </a-button>
         </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/5d04831ff383443cb99985351de1df81.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          >下载导入模板</a
+        >
       </template>
       <template #expandedRowRender="{ record }">
         <OrderDetail :orderId="record.id" ref="orderDetail" :data="record.orderDetailList" />

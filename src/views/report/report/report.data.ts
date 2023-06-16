@@ -11,7 +11,7 @@ import { Tag } from "ant-design-vue";
 export const columns: BasicColumn[] = [
   {
     title: "名称",
-    dataIndex: "pageName",
+    dataIndex: "name",
     width: 120,
   },
   {
@@ -50,8 +50,28 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "访问地址",
-    dataIndex: "url",
+    title: "类型",
+    dataIndex: "type",
+    width: 120,
+    customRender: ({ record }) => {
+      let color = "";
+      let text = "";
+      switch (record.type) {
+        case 0:
+          color = "green";
+          text = "代码";
+          break;
+        case 1:
+          color = "blue";
+          text = "goView";
+          break;
+      }
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
+    title: "路由/地址",
+    dataIndex: "path",
     width: 120,
   },
 ];
@@ -65,7 +85,7 @@ export const reportFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "pageName",
+    field: "name",
     label: "页面名称",
     component: "Input",
   },
@@ -91,8 +111,20 @@ export const reportFormSchema: FormSchema[] = [
     component: "Input",
   },
   {
-    field: "url",
-    label: "访问地址",
+    field: "type",
+    label: "类型",
+    component: "RadioButtonGroup",
+    defaultValue: 0,
+    componentProps: {
+      options: [
+        { label: "代码", value: 0 },
+        { label: "goView", value: 1 },
+      ],
+    },
+  },
+  {
+    field: "path",
+    label: "路由/地址",
     component: "Input",
   },
 ];

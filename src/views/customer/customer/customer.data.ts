@@ -26,7 +26,7 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       let text = "";
       let color = "";
-      switch (record.flag) {
+      switch (record.gender) {
         case 0:
           text = "女";
           color = "red";
@@ -88,6 +88,24 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
+  {
+    field: "gender",
+    label: "性别",
+    component: "Select",
+    componentProps: {
+      options: [
+        {
+          label: "女",
+          value: 0,
+        },
+        {
+          label: "男",
+          value: 1,
+        },
+      ],
+    },
+    colProps: { lg: 4, md: 5 },
+  },
 ];
 export const customerFormSchema: FormSchema[] = [
   {
@@ -113,8 +131,8 @@ export const customerFormSchema: FormSchema[] = [
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: "男", value: 0 },
-        { label: "女", value: 1 },
+        { label: "女", value: 0 },
+        { label: "男", value: 1 },
       ],
     },
     colProps: { span: 12 },

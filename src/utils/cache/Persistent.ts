@@ -10,7 +10,8 @@ import {
   PROJ_CFG_KEY,
   APP_LOCAL_CACHE_KEY,
   APP_SESSION_CACHE_KEY,
-  MULTIPLE_TABS_KEY, REFRESH_TOKEN_KEY
+  MULTIPLE_TABS_KEY,
+  REFRESH_TOKEN_KEY,
 } from "/@/enums/CacheEnum";
 import { DEFAULT_CACHE_TIME } from "/@/settings/EncryptionSetting";
 import { toRaw } from "vue";
@@ -94,16 +95,16 @@ export class Persistent {
   }
 }
 
-window.addEventListener("beforeunload", function() {
+window.addEventListener("beforeunload", function () {
   // TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
   // LOCK_INFO_KEY 在锁屏和解锁时写入，此处也不应修改
   ls.set(APP_LOCAL_CACHE_KEY, {
     ...omit(localMemory.getCache, LOCK_INFO_KEY),
-    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, LOCK_INFO_KEY])
+    ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, LOCK_INFO_KEY]),
   });
   ss.set(APP_SESSION_CACHE_KEY, {
     ...omit(sessionMemory.getCache, LOCK_INFO_KEY),
-    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, LOCK_INFO_KEY])
+    ...pick(ss.get(APP_SESSION_CACHE_KEY), [TOKEN_KEY, LOCK_INFO_KEY]),
   });
 });
 
