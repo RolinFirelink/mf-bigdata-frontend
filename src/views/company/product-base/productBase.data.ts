@@ -9,12 +9,12 @@ import { FormSchema } from "/@/components/general/Table";
 export const columns: BasicColumn[] = [
   {
     title: "基地名称",
-    dataIndex: "companyName",
+    dataIndex: "baseName",
     width: 120,
   },
   {
     title: "基地编码",
-    dataIndex: "companyNo",
+    dataIndex: "baseNo",
     width: 120,
   },
   {
@@ -47,6 +47,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "address",
     width: 120,
   },
+  {
+    title: "官网地址",
+    dataIndex: "websiteAddress",
+    width: 120,
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -65,13 +70,13 @@ export const productBaseFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "companyName",
+    field: "baseName",
     label: "基地名称",
     component: "Input",
     required: true,
   },
   {
-    field: "companyNo",
+    field: "baseNo",
     label: "基地编码",
     component: "Input",
     required: true,
@@ -108,6 +113,11 @@ export const productBaseFormSchema: FormSchema[] = [
   {
     field: "detail",
     label: "基地详细地址",
+    component: "Input",
+  },
+  {
+    field: "websiteAddress",
+    label: "官网地址",
     component: "Input",
   },
   {
