@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-10 20:24:00
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-12 14:34:21
+ * @LastEditTime: 2023-07-15 19:11:07
  * @FilePath: \mf-bigdata-frontend\src\views\price\originPrice\originPrice.data.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8
  */
@@ -87,7 +87,8 @@ export const searchFormSchema: FormSchema[] = [
         { label: "兰花", value: 3 },
         { label: "对虾", value: 4 },
         { label: "菜心", value: 5 },
-        { label: "预制蔡", value: 6 },
+        { label: "预制菜", value: 6 },
+        { label: "鸽子", value: 7 },
       ],
     },
     colProps: { lg: 4, md: 5 },
@@ -129,6 +130,7 @@ export const originPriceFormSchema: FormSchema[] = [
         { label: "对虾", value: 4 },
         { label: "菜心", value: 5 },
         { label: "预制菜", value: 6 },
+        { label: "鸽子", value: 7 },
       ],
     },
   },
