@@ -5,29 +5,14 @@ import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
 
 /**
- * @description: 生产统计
+ * @description: 城市产品生产统计表
  * @author cgli
- * @date: 2023-07-15
+ * @date: 2023-07-16
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
   {
-    title: "生产规模(亩)",
-    dataIndex: "produceScale",
-    width: 120,
-  },
-  {
-    title: "产量",
-    dataIndex: "yield",
-    width: 120,
-  },
-  {
-    title: "统计时间",
-    dataIndex: "statisticalTime",
-    width: 120,
-  },
-  {
-    title: "产量类型",
+    title: "产品类型",
     dataIndex: "flag",
     width: 120,
     customRender: ({ record }) => {
@@ -60,44 +45,36 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: "月份",
-    dataIndex: "month",
+    title: "产品名称",
+    dataIndex: "produce",
     width: 120,
   },
   {
-    title: "年份",
-    dataIndex: "year",
+    title: "城市",
+    dataIndex: "city",
     width: 120,
   },
   {
-    title: "产量单位",
-    dataIndex: "yieldUnit",
+    title: "生产规模",
+    dataIndex: "productionScale",
+    width: 120,
+  },
+  {
+    title: "规模单位",
+    dataIndex: "unit",
+    width: 120,
+  },
+  {
+    title: "统计时间",
+    dataIndex: "time",
     width: 120,
   },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
-  // {
-  //   field: "produceScale",
-  //   label: "生产规模(亩)",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
-  // {
-  //   field: "yield",
-  //   label: "产量",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
-  // {
-  //   field: "statisticalTime",
-  //   label: "统计时间",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
   {
     field: "flag",
-    label: "产量类型",
+    label: "产品类型",
     component: "Select",
     componentProps: {
       options: [
@@ -110,7 +87,19 @@ export const searchFormSchema: FormSchema[] = [
         { label: "鸽子", value: 7 },
       ],
     },
-    colProps: { lg: 5, md: 3 },
+    colProps: { lg: 4, md: 5 },
+  },
+  // {
+  //   field: "produce",
+  //   label: "产品名称",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
+  {
+    field: "city",
+    label: "城市",
+    component: "Input",
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "[startTime, endTime]",
@@ -138,7 +127,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 10, md: 8 },
   },
 ];
-export const productionStatisticsFormSchema: FormSchema[] = [
+export const productCountFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
@@ -146,28 +135,8 @@ export const productionStatisticsFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "produceScale",
-    label: "生产规模(亩)",
-    component: "Input",
-  },
-  {
-    field: "yield",
-    label: "产量",
-    component: "Input",
-  },
-  {
-    field: "statisticalTime",
-    label: "统计时间",
-    component: "DatePicker",
-    componentProps: {
-      format: "YYYY-MM-DD",
-      placeholder: "记录日期",
-      showTime: true,
-    },
-  },
-  {
     field: "flag",
-    label: "产量类型",
+    label: "产品类型",
     component: "Select",
     componentProps: {
       options: [
@@ -182,18 +151,33 @@ export const productionStatisticsFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "month",
-    label: "月份",
+    field: "produce",
+    label: "产品名称",
     component: "Input",
   },
   {
-    field: "year",
-    label: "年份",
+    field: "city",
+    label: "城市",
     component: "Input",
   },
   {
-    field: "yieldUnit",
-    label: "产量单位",
+    field: "productionScale",
+    label: "生产规模",
     component: "Input",
+  },
+  {
+    field: "unit",
+    label: "规模单位",
+    component: "Input",
+  },
+  {
+    field: "time",
+    label: "统计时间",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD",
+      placeholder: "记录日期",
+      showTime: true,
+    },
   },
 ];

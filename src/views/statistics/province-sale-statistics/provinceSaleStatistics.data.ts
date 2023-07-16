@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-15 18:53:54
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-15 20:14:03
+ * @LastEditTime: 2023-07-16 13:36:46
  * @FilePath: \mf-bigdata-frontend\src\views\order\province-sale-statistics\provinceSaleStatistics.data.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -205,6 +205,11 @@ export const provinceSaleStatisticsFormSchema: FormSchema[] = [
   {
     field: "statisticalTime",
     label: "统计时间",
-    component: "Input",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD",
+      placeholder: "记录日期",
+      showTime: true,
+    },
   },
 ];
