@@ -1,51 +1,49 @@
-/*
- * @Author: DuoLaAMeng Czf141931
- * @Date: 2023-07-15 18:53:54
- * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-20 17:51:02
- * @FilePath: \mf-bigdata-frontend\src\views\order\province-sale-statistics\provinceSaleStatistics.data.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { dateUtil } from "/@/utils/DateUtil";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
+import { dateUtil } from "/@/utils/DateUtil";
 
 /**
- * @description: 省份销售数据
+ * @description: 热词表
  * @author cgli
- * @date: 2023-07-15
+ * @date: 2023-07-16
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
   {
-    title: "省份",
-    dataIndex: "province",
+    title: "热词",
+    dataIndex: "name",
     width: 120,
   },
   {
-    title: "平均价格",
-    dataIndex: "averagePrice",
+    title: "提及次数",
+    dataIndex: "count",
     width: 120,
   },
   {
-    title: "价格单位",
-    dataIndex: "priceUnit",
+    title: "情绪",
+    dataIndex: "sentiment",
     width: 120,
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.sentiment) {
+        case -1:
+          text = "负面";
+          break;
+        case 0:
+          text = "中性";
+          break;
+        case 1:
+          text = "正面";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
-    title: "销售量",
-    dataIndex: "sales",
-    width: 120,
-  },
-  {
-    title: "销售量单位",
-    dataIndex: "saleUnit",
-    width: 120,
-  },
-  {
-    title: "产量类型",
+    title: "产品类型",
     dataIndex: "flag",
     width: 120,
     customRender: ({ record }) => {
@@ -77,11 +75,6 @@ export const columns: BasicColumn[] = [
       return h(Tag, { color: color }, () => text);
     },
   },
-  // {
-  //   title: "逻辑删除",
-  //   dataIndex: "deleteFlag",
-  //   width: 120,
-  // },
   {
     title: "统计时间",
     dataIndex: "statisticalTime",
@@ -91,14 +84,14 @@ export const columns: BasicColumn[] = [
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "province",
-    label: "省份",
+    field: "name",
+    label: "热词",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
   {
     field: "flag",
-    label: "产量类型",
+    label: "产品类型",
     component: "Select",
     componentProps: {
       options: [
@@ -112,18 +105,19 @@ export const searchFormSchema: FormSchema[] = [
       ],
     },
   },
-  // {
-  //   field: "averagePrice",
-  //   label: "平均价格",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
-  // {
-  //   field: "sales",
-  //   label: "销售量",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
+  {
+    field: "sentiment",
+    label: "情绪",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "负面", value: -1 },
+        { label: "中性", value: 0 },
+        { label: "正面", value: 1 },
+      ],
+    },
+    colProps: { lg: 4, md: 5 },
+  },
   {
     field: "[startTime, endTime]",
     label: "统计时间",
@@ -150,7 +144,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 10, md: 8 },
   },
 ];
-export const provinceSaleStatisticsFormSchema: FormSchema[] = [
+export const hotWordFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
@@ -158,37 +152,30 @@ export const provinceSaleStatisticsFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "province",
-    label: "省份",
-    component: "Input",
-    required: true,
-  },
-  {
-    field: "averagePrice",
-    label: "平均价格",
-    component: "Input",
-    required: true,
-  },
-  {
-    field: "priceUnit",
-    label: "价格单位",
+    field: "name",
+    label: "热词",
     component: "Input",
   },
   {
-    field: "sales",
-    label: "销售量",
+    field: "count",
+    label: "提及次数",
     component: "Input",
-    required: true,
   },
   {
-    field: "saleUnit",
-    label: "销售量单位",
-    component: "Input",
-    // required: true,
+    field: "sentiment",
+    label: "情绪",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "负面", value: -1 },
+        { label: "中性", value: 0 },
+        { label: "正面", value: 1 },
+      ],
+    },
   },
   {
     field: "flag",
-    label: "产量类型",
+    label: "产品类型",
     component: "Select",
     componentProps: {
       options: [

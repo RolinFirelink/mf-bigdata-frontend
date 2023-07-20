@@ -2,7 +2,6 @@ import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
-import { dateUtil } from "/@/utils/DateUtil";
 
 /**
  * @description: 采购商指数

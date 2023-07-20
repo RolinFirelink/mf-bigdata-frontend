@@ -1,15 +1,15 @@
 <!--
  * @Author: DuoLaAMeng Czf141931
- * @Date: 2023-07-11 09:46:08
+ * @Date: 2023-07-20 14:31:54
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-20 15:51:30
- * @FilePath: \mf-bigdata-frontend\src\views\company\produce-info\ProduceInfoModal.vue
+ * @LastEditTime: 2023-07-20 18:41:33
+ * @FilePath: \mf-bigdata-frontend\src\views\analyse\product-base-day-data\ProductBaseDayDataModal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <!--
- @description: 企业生产信息表
+ @description: 产品基地每日数据
  @author: cgli
- @date: 2023-07-11
+ @date: 2023-07-20
  @version: V1.0.0
 -->
 <template>
@@ -20,22 +20,27 @@
 <script lang="ts">
   import { ref, computed, unref } from "vue";
   import { BasicForm, useForm } from "/@/components/general/Form/index";
-  import { produceInfoFormSchema } from "./produceInfo.data";
+  import { productBaseDayDataFormSchema } from "./productBaseDayData.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
-  import { insertProduceInfo, updateProduceInfo } from "/@/api/company/ProduceInfo";
-  import { getCompanyOptions } from "/@/api/company/Company";
+  import {
+    insertProductBaseDayData,
+    updateProductBaseDayData,
+  } from "/@/api/analyse/ProductBaseDayData";
+  import { getMaterialOptions } from "/@/api/product/Material";
+  import { getProductBaseOptions } from "/@/api/company/ProductBase";
 
   export default {
-    name: "ProduceInfoModal",
+    name: "ProductBaseDayDataModal",
     components: { BasicModal, BasicForm },
     emits: ["success", "register"],
     setup(_, { emit }) {
-      const companyList: any = ref([]);
+      // 基地列表
+      const baseList: any = ref([]);
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
-        schemas: produceInfoFormSchema,
+        schemas: productBaseDayDataFormSchema,
         showActionButtonGroup: false,
         autoSubmitOnEnter: true,
       });
@@ -51,38 +56,45 @@
         }
       });
       const getTitle = computed(() =>
-        !unref(isUpdate) ? "新增企业生产信息表" : "编辑企业生产信息表",
+        !unref(isUpdate) ? "新增产品基地每日数据" : "编辑产品基地每日数据",
       );
 
       async function setOptions() {
-        // 获取供应商列表
-        const companyList = await getCompanyOptions(1);
+        const baseNameList = await getProductBaseOptions();
+        baseList.value = await getProductBaseOptions();
+        const materialList = await getMaterialOptions();
         updateSchema([
           {
-            field: "companyId",
-            componentProps: {
-              options: companyList,
-            },
+            field: "baseId",
+            componentProps: { options: baseList.value },
+          },
+          {
+            field: "baseName",
+            componentProps: { options: baseNameList },
+          },
+          {
+            field: "product",
+            componentProps: { options: materialList },
           },
         ]);
       }
 
       async function handleSubmit() {
         let values = await validate();
-        companyList.value.forEach((item) => {
-          if (item.id === values.companyId) {
-            return (values.companyName = item.name);
+        baseList.value.forEach((item) => {
+          if (item.id === values.baseId) {
+            return (values.name = item.name);
           }
         });
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
-          saveProduceInfo(updateProduceInfo, values);
+          saveProductBaseDayData(updateProductBaseDayData, values);
         } else {
-          saveProduceInfo(insertProduceInfo, values);
+          saveProductBaseDayData(insertProductBaseDayData, values);
         }
       }
 
-      function saveProduceInfo(save, values) {
+      function saveProductBaseDayData(save, values) {
         save(values)
           .then(() => {
             emit("success");
@@ -94,7 +106,7 @@
       }
 
       return {
-        companyList,
+        baseList,
         setOptions,
         registerModal,
         registerForm,

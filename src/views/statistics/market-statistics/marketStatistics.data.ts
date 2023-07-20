@@ -1,25 +1,38 @@
-/*
- * @Author: DuoLaAMeng Czf141931
- * @Date: 2023-07-10 20:24:00
- * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-20 20:27:28
- * @FilePath: \mf-bigdata-frontend\src\views\price\originPrice\originPrice.data.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8
- */
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
+
 /**
- * @description: 产地价格
+ * @description: 市场行情统计表
  * @author cgli
- * @date: 2023-07-10
+ * @date: 2023-07-17
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
   {
-    title: "公司",
-    dataIndex: "companyName",
+    title: "城市",
+    dataIndex: "city",
+    width: 120,
+  },
+  {
+    title: "产量",
+    dataIndex: "yield",
+    width: 120,
+  },
+  {
+    title: "产量单位",
+    dataIndex: "yieldUnit",
+    width: 120,
+  },
+  {
+    title: "平均价格（元）",
+    dataIndex: "averagePrice",
+    width: 120,
+  },
+  {
+    title: "销售额（万元）",
+    dataIndex: "sales",
     width: 120,
   },
   {
@@ -47,32 +60,20 @@ export const columns: BasicColumn[] = [
         case 6:
           text = "预制菜";
           break;
+        case 7:
+          text = "鸽子";
+          break;
       }
       const color = "#FF9800";
       return h(Tag, { color: color }, () => text);
     },
   },
-  {
-    title: "主要销售城市",
-    dataIndex: "mainCity",
-    width: 120,
-  },
-  {
-    title: "价格",
-    dataIndex: "price",
-    width: 120,
-  },
-  {
-    title: "价格单位",
-    dataIndex: "unit",
-    width: 120,
-  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "companyName",
-    label: "公司",
+    field: "city",
+    label: "城市",
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
@@ -93,14 +94,8 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "cityName",
-    label: "主要销售城市",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
 ];
-export const originPriceFormSchema: FormSchema[] = [
+export const marketStatisticsFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
@@ -108,15 +103,29 @@ export const originPriceFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: "companyId",
-    label: "公司",
-    component: "Select",
-    componentProps: {
-      fieldNames: {
-        label: "companyName",
-        value: "id",
-      },
-    },
+    field: "city",
+    label: "城市",
+    component: "Input",
+  },
+  {
+    field: "yield",
+    label: "产量",
+    component: "Input",
+  },
+  {
+    field: "yieldUnit",
+    label: "产量单位",
+    component: "Input",
+  },
+  {
+    field: "averagePrice",
+    label: "平均价格（元）",
+    component: "Input",
+  },
+  {
+    field: "sales",
+    label: "销售额（万元）",
+    component: "Input",
   },
   {
     field: "flag",
@@ -133,20 +142,5 @@ export const originPriceFormSchema: FormSchema[] = [
         { label: "鸽子", value: 7 },
       ],
     },
-  },
-  {
-    field: "cityCode",
-    label: "主要销售城市",
-    component: "Input",
-  },
-  {
-    field: "price",
-    label: "价格",
-    component: "Input",
-  },
-  {
-    field: "unit",
-    label: "价格单位",
-    component: "Input",
   },
 ];

@@ -2,13 +2,12 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-16 12:56:24
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-16 14:42:29
+ * @LastEditTime: 2023-07-16 21:08:04
  * @FilePath: \mf-bigdata-frontend\src\views\statistics\province-supply\provinceSupply.data.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { dateUtil } from "/@/utils/DateUtil";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 
