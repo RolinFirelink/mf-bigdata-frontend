@@ -117,12 +117,9 @@ export const searchFormSchema: FormSchema[] = [
     label: "统计时间",
     component: "RangePicker",
     componentProps: {
-      format: "YYYY-MM-DD HH:mm:ss",
+      format: "YYYY-MM-DD",
       placeholder: ["开始时间", "结束时间"],
-      showTime: {
-        hideDisabledOptions: true,
-        defaultValue: [dateUtil("00:00:00", "HH:mm:ss"), dateUtil("23:59:59", "HH:mm:ss")],
-      },
+      valueFormat: "YYYY-MM-DD",
       ranges: {
         ["今天"]: [dateUtil().startOf("day"), dateUtil()],
         ["昨天"]: [
