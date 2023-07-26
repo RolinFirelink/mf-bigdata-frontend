@@ -1,4 +1,4 @@
-import { Textarea } from "ant-design-vue";
+// import { Textarea } from "ant-design-vue";
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 
@@ -34,6 +34,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "remark",
     width: 120,
   },
+  // {
+  //   title: "区分字段",
+  //   dataIndex: "flag",
+  //   width: 120,
+  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -114,6 +119,17 @@ export const materialCategoryFormSchema: FormSchema[] = [
   // {
   //   field: "flag",
   //   label: "区分字段",
-  //   component: "Input",
+  //   component: "Select",
+  //   componentProps: {
+  //     options: [
+  //       { label: "肉鸡", value: 1 },
+  //       { label: "柑橘", value: 2 },
+  //       { label: "兰花", value: 3 },
+  //       { label: "对虾", value: 4 },
+  //       { label: "菜心", value: 5 },
+  //       { label: "预制菜", value: 6 },
+  //       { label: "鸽子", value: 7 },
+  //     ],
+  //   },
   // },
 ];

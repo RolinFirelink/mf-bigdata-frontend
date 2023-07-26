@@ -11,11 +11,11 @@ import { dateUtil } from "/@/utils/DateUtil";
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
-  {
-    title: "生产基地ID",
-    dataIndex: "baseId",
-    width: 120,
-  },
+  // {
+  //   title: "生产基地ID",
+  //   dataIndex: "baseId",
+  //   width: 120,
+  // },
   {
     title: "基地名称",
     dataIndex: "baseName",
@@ -109,30 +109,30 @@ export const columns: BasicColumn[] = [
     dataIndex: "salesVolumeUnit",
     width: 120,
   },
-  {
-    title: "城市",
-    dataIndex: "city",
-    width: 120,
-  },
-  {
-    title: "纬度",
-    dataIndex: "lat",
-    width: 120,
-  },
-  {
-    title: "经度",
-    dataIndex: "lng",
-    width: 120,
-  },
+  // {
+  //   title: "城市",
+  //   dataIndex: "city",
+  //   width: 120,
+  // },
+  // {
+  //   title: "纬度",
+  //   dataIndex: "lat",
+  //   width: 120,
+  // },
+  // {
+  //   title: "经度",
+  //   dataIndex: "lng",
+  //   width: 120,
+  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: "baseName",
-    label: "基地名称",
-    component: "Input",
-    colProps: { lg: 4, md: 5 },
-  },
+  // {
+  //   field: "baseName",
+  //   label: "基地名称",
+  //   component: "Input",
+  //   colProps: { lg: 4, md: 5 },
+  // },
   {
     field: "flag",
     label: "产品类型",
@@ -273,31 +273,31 @@ export const productBaseDayDataFormSchema: FormSchema[] = [
     label: "销售量单位",
     component: "Input",
   },
-  {
-    field: "city",
-    label: "城市",
-    component: "Input",
-  },
-  {
-    field: "lat",
-    label: "纬度",
-    component: "Input",
-  },
-  {
-    field: "lng",
-    label: "经度",
-    component: "Input",
-  },
-  {
-    field: "baseName",
-    label: "基地名称",
-    component: "Select",
-    componentProps: {
-      fieldNames: {
-        label: "baseName",
-        value: "baseName",
-      },
-    },
-    required: true,
-  },
+  // {
+  //   field: "city",
+  //   label: "城市",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "lat",
+  //   label: "纬度",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "lng",
+  //   label: "经度",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "baseName",
+  //   label: "基地名称",
+  //   component: "Select",
+  //   componentProps: {
+  //     fieldNames: {
+  //       label: "baseName",
+  //       value: "baseName",
+  //     },
+  //   },
+  //   required: true,
+  // },
 ];

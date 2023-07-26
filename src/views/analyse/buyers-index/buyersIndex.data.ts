@@ -58,6 +58,11 @@ export const columns: BasicColumn[] = [
       return h(Tag, { color: color }, () => text);
     },
   },
+  {
+    title: "统计时间",
+    dataIndex: "statisticalTime",
+    width: 120,
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -133,6 +138,16 @@ export const buyersIndexFormSchema: FormSchema[] = [
         { label: "预制菜", value: 6 },
         { label: "鸽子", value: 7 },
       ],
+    },
+  },
+  {
+    field: "statisticalTime",
+    label: "统计时间",
+    component: "DatePicker",
+    componentProps: {
+      format: "YYYY-MM-DD",
+      placeholder: "记录日期",
+      showTime: true,
     },
   },
 ];

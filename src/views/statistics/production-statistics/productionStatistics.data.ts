@@ -74,6 +74,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "yieldUnit",
     width: 120,
   },
+  {
+    title: "生产规模单位",
+    dataIndex: "scaleUnit",
+    width: 120,
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -191,6 +196,11 @@ export const productionStatisticsFormSchema: FormSchema[] = [
   {
     field: "yieldUnit",
     label: "产量单位",
+    component: "Input",
+  },
+  {
+    field: "scaleUnit",
+    label: "生产规模单位",
     component: "Input",
   },
 ];

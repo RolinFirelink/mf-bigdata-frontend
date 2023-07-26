@@ -47,6 +47,9 @@ export const columns: BasicColumn[] = [
         case 6:
           text = "预制菜";
           break;
+        case 7:
+          text = "鸽子";
+          break;
       }
       const color = "#FF9800";
       return h(Tag, { color: color }, () => text);
