@@ -157,7 +157,9 @@ export const useUserStore = defineStore({
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      goLogin && router.push(PageEnum.BASE_LOGIN);
+      // goLogin && router.push(PageEnum.BASE_LOGIN);
+      // console.log("hh");
+      router.push(PageEnum.OAUTH_LOGIN);
     },
 
     /**
@@ -171,7 +173,8 @@ export const useUserStore = defineStore({
         title: () => h("span", t("sys.app.logoutTip")),
         content: () => h("span", t("sys.app.logoutMessage")),
         onOk: async () => {
-          await this.logout(true);
+          // await this.logout(true);
+          await this.logout(false);
         },
       });
     },
