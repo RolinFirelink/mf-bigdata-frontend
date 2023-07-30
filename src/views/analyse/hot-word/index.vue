@@ -36,6 +36,26 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in flag"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
+        <template v-if="column.key === 'sentiment'">
+          <Tag
+            v-for="item in sentiment"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.sentiment == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <HotWordModal @register="registerModal" @success="handleSuccess" />
@@ -48,6 +68,9 @@
   import HotWordModal from "./HotWordModal.vue";
   import { columns, searchFormSchema } from "./hotWord.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { onBeforeMount, ref } from "vue";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "HotWordManagement",
@@ -73,6 +96,24 @@
           dataIndex: "action",
         },
       });
+
+      const flag = ref<DictItem[]>([]);
+      const sentiment = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getFlag();
+        getSentiment();
+      });
+
+      function getFlag() {
+        getDictItems("mk_product_type").then((res) => {
+          flag.value = res;
+        });
+      }
+      function getSentiment() {
+        getDictItems("mk_article_inclined").then((res) => {
+          sentiment.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -105,6 +146,8 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        sentiment,
+        flag,
       };
     },
   };

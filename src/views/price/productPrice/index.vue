@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-12 14:45:34
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-12 14:49:26
+ * @LastEditTime: 2023-07-30 16:32:29
  * @FilePath: \mf-bigdata-frontend\src\views\price\productPrice\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,6 +47,16 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in flag"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <ProductPriceModal @register="registerModal" @success="handleSuccess" />
@@ -59,6 +69,9 @@
   import ProductPriceModal from "./ProductPriceModal.vue";
   import { columns, searchFormSchema } from "./productPrice.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { onBeforeMount, ref } from "vue";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "ProductPriceManagement",
@@ -84,6 +97,17 @@
           dataIndex: "action",
         },
       });
+
+      const flag = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getFlag();
+      });
+
+      function getFlag() {
+        getDictItems("mk_product_type").then((res) => {
+          flag.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -116,6 +140,7 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        flag,
       };
     },
   };

@@ -11,10 +11,9 @@ export const getDictProps = (param) => {
     labelField: "dictLabel",
     // use id as value
     valueField: "dictValue",
-    resultField: "list"
+    resultField: "list",
   };
 };
-
 
 export const buildDictTag = (value: String | number, dict: DictItem[]) => {
   for (const source of dict) {

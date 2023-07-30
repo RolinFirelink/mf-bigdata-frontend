@@ -23,8 +23,7 @@
     components: { BasicModal, BasicForm },
     emits: ["success", "register"],
     setup(_, { emit }) {
-      const regionTree: any = ref([]);
-      const regionOption: any = ref([]);
+      const regionList: any = ref([]);
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
@@ -37,8 +36,8 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
+        load(0, 0);
         setListData();
-        setTreeData(0);
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -58,79 +57,82 @@
         ]).then();
       }
 
-      //地区树形数据
-      async function setTreeData(parentId) {
-        const data = await listRegionByPid(parentId);
-        regionTree.value = data;
-        updateTreeData();
-      }
-
-      function updateTreeData() {
+      const load = async (pid, index) => {
+        regionList.value[index] = await listRegionByPid(pid);
         updateSchema([
           {
-            field: "address",
+            field: "country",
             componentProps: {
-              options: regionTree.value,
-              "load-data": handleExpand,
+              options: regionList.value[0],
+              onSelect: test1,
+            },
+          },
+          {
+            field: "province",
+            componentProps: {
+              options: regionList.value[1],
+              onSelect: test2,
+            },
+          },
+          {
+            field: "city",
+            componentProps: {
+              options: regionList.value[2],
+              onSelect: test3,
+            },
+          },
+          {
+            field: "area",
+            componentProps: {
+              options: regionList.value[3],
+              onSelect: test4,
+            },
+          },
+          {
+            field: "street",
+            componentProps: {
+              options: regionList.value[4],
             },
           },
         ]).then();
-      }
+      };
 
-      async function handleExpand(options) {
-        regionOption.value = options;
-        const value = options[options.length - 1];
-        // regionOption.value = value;
-        const data = (await listRegionByPid(value.id)) || [];
-        if (data.length > 0) {
-          regionTree.value.forEach((item) => {
-            if (pushData(value.id, item, data)) {
-              return;
-            }
-          });
-        } else {
-          regionTree.value.forEach((item) => {
-            if (setIsLeaf(value.id, item)) {
-              return;
-            }
-          });
-        }
-        updateTreeData();
-      }
-
-      function setIsLeaf(id, node) {
-        if (node.id === id) {
-          node.isLeaf = true;
-          return true;
-        }
-        if (node.children) {
-          node.children.forEach((item) => {
-            setIsLeaf(id, item);
-          });
-        }
-        return false;
-      }
-
-      function pushData(id, node, data) {
-        if (node.id === id) {
-          node.children = data;
-          return true;
-        }
-        if (node.children) {
-          node.children.forEach((item) => {
-            return pushData(id, item, data);
-          });
-        }
-        return false;
-      }
-
+      const test1 = async (value) => {
+        load(value, 1);
+      };
+      const test2 = async (value) => {
+        load(value, 2);
+      };
+      const test3 = async (value) => {
+        load(value, 3);
+      };
+      const test4 = async (value) => {
+        load(value, 4);
+      };
       async function handleSubmit() {
         let values = await validate();
-        const lastRegion = regionOption.value[regionOption.value.length - 1];
-        values.areaCode = lastRegion.code;
-        values.areaName = lastRegion.name;
-        values.address = lastRegion.pidsName + values.detail;
-        values.detail = undefined;
+        if (values.country) {
+          //选择了国家
+          values.areaCode = values.country;
+          values.country = undefined;
+          if (values.province) {
+            //选择了省份
+            values.areaCode = values.province;
+            values.province = undefined;
+            if (values.city) {
+              values.areaCode = values.city;
+              values.city = undefined;
+              if (values.area) {
+                values.areaCode = values.area;
+                values.area = undefined;
+                if (values.street) {
+                  values.areaCode = values.street;
+                  values.street = undefined;
+                }
+              }
+            }
+          }
+        }
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
           saveProductBase(updateProductBase, values);
@@ -151,8 +153,8 @@
       }
 
       return {
-        regionOption,
-        setTreeData,
+        regionList,
+        load,
         registerModal,
         registerForm,
         getTitle,
