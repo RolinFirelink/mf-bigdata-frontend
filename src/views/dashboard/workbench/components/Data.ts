@@ -136,6 +136,9 @@ export const dynamicInfoItems: DynamicInfoItem[] = [
     avatar: "dynamic-avatar-1|svg",
     name: "威廉",
     date: "2021-04-01 20:00",
+    avatar: "dynamic-avatar-1|svg",
+    name: "威廉",
+    date: "2021-04-01 20:00",
     desc: `推送了代码到 <a>Github</a>`,
   },
 ];
