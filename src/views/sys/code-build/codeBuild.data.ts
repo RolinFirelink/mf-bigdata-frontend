@@ -12,59 +12,59 @@ export const columns: BasicColumn[] = [
   {
     title: "表名",
     dataIndex: "tableName",
-    width: 180
+    width: 180,
   },
   {
     title: "接口路径前缀",
     dataIndex: "apiPrefix",
-    width: 120
+    width: 120,
   },
   {
     title: "实体类名",
     dataIndex: "entityName",
-    width: 150
+    width: 150,
   },
   {
     title: "项目包名",
     dataIndex: "packageName",
-    width: 180
+    width: 180,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
-    width: 150
+    width: 150,
   },
   {
     title: "表描述",
-    dataIndex: "tableComment"
-  }
+    dataIndex: "tableComment",
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "tableName",
     label: "表名",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "apiPrefix",
     label: "接口路径前缀",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "entityName",
     label: "实体类名",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
-  }
+    colProps: { lg: 4, md: 5 },
+  },
 ];
 export const codeBuildFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "dataBase",
@@ -79,35 +79,39 @@ export const codeBuildFormSchema: FormSchema[] = [
       labelField: "label",
       valueField: "code",
       initFetchParams: {
-        parentId: ""
+        parentId: "",
       },
       isLeaf: (record) => {
         return record.type === 1;
-      }
-    }
+      },
+    },
   },
   {
     field: "apiPrefix",
     label: "接口路径前缀",
     component: "Input",
-    helpMessage: ["网关path中的路由匹配前缀", "例如:网关中认证服务访问路径为Path=/oauth2/**接口前缀为oauth2", "不传会使用packageName，最底层包名 例如:com.arg.smart.sys包会使用sys"]
+    helpMessage: [
+      "网关path中的路由匹配前缀",
+      "例如:网关中认证服务访问路径为Path=/oauth2/**接口前缀为oauth2",
+      "不传会使用packageName，最底层包名 例如:com.arg.smart.sys包会使用sys",
+    ],
   },
   {
     field: "entityName",
     label: "实体类名",
     component: "Input",
-    helpMessage: ["javaBean对象实体名称", "不传会使用表名驼峰化"]
+    helpMessage: ["javaBean对象实体名称", "不传会使用表名驼峰化"],
   },
   {
     field: "packageName",
     label: "项目包名",
     component: "Input",
-    helpMessage: ["java包名称 格式:com.arg.smart.***", "不传使用默认包名 com.arg.smart.web"]
+    helpMessage: ["java包名称 格式:com.arg.smart.***", "不传使用默认包名 com.arg.smart.web"],
   },
   {
     field: "tableComment",
     label: "表描述",
     component: "Input",
-    helpMessage: ["表相关描述信息", "不传会获取数据库表中的中文描述，如果也为空则使用表名"]
-  }
+    helpMessage: ["表相关描述信息", "不传会获取数据库表中的中文描述，如果也为空则使用表名"],
+  },
 ];

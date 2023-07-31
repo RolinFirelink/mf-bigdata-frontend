@@ -6,7 +6,7 @@
 <template>
   <div class="app-loading">
     <div class="app-loading-wrap">
-      <img src="/resource/img/logo.png" class="app-loading-logo" alt="Logo" />/>
+      <img src="/resource/img/logo.png" class="app-loading-logo" alt="Logo" />
       <div>
         <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
       </div>

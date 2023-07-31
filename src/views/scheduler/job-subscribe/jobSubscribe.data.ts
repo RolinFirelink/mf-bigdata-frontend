@@ -19,7 +19,7 @@ export const columns: BasicColumn[] = [
         placeholder: ["开始时间", "结束时间"],
         showTime: {
           hideDisabledOptions: true,
-          defaultValue: [dateUtil(), dateUtil("23:59:59", "HH:mm:ss")]
+          defaultValue: [dateUtil(), dateUtil("23:59:59", "HH:mm:ss")],
         },
         defaultValue: [dateUtil(record.startTime), dateUtil(record.endTime)],
         ranges: {
@@ -28,7 +28,7 @@ export const columns: BasicColumn[] = [
           ["三个月"]: [dateUtil(), dateUtil().add(3, "months")],
           ["一年"]: [dateUtil(), dateUtil().add(1, "years")],
           ["两年"]: [dateUtil(), dateUtil().add(2, "years")],
-          ["三年"]: [dateUtil(), dateUtil().add(3, "years")]
+          ["三年"]: [dateUtil(), dateUtil().add(3, "years")],
         },
         onChange(value: any) {
           if (value && value.length == 2) {
@@ -38,9 +38,9 @@ export const columns: BasicColumn[] = [
             record.startTime = null;
             record.endTime = null;
           }
-        }
+        },
       });
-    }
+    },
   },
   {
     title: "cron表达式",
@@ -52,7 +52,7 @@ export const columns: BasicColumn[] = [
           record.cron = e.target.value;
         },
       });
-    }
+    },
   },
   {
     title: "状态",
@@ -71,8 +71,8 @@ export const columns: BasicColumn[] = [
           record.pendingStatus = true;
           record.status = checked ? 0 : 1;
           record.pendingStatus = false;
-        }
+        },
       });
-    }
-  }
+    },
+  },
 ];
