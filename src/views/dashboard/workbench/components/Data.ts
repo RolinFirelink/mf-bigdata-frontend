@@ -2,6 +2,11 @@ interface EchartItem {
   title: string;
 }
 
+interface dataItem {
+  title: string;
+  id: string;
+  count: number;
+}
 interface NavItem {
   title: string;
   icon: string;
@@ -108,5 +113,50 @@ export const echartItems: EchartItem[] = [
   },
   {
     title: "不同城市销售热度",
+  },
+];
+
+export const dataItems: dataItem[] = [
+  {
+    title: "产品总数",
+    id: "01",
+    count: 6,
+  },
+  {
+    title: "企业数量",
+    id: "02",
+    count: 114514,
+  },
+  {
+    title: "产地数量",
+    id: "03",
+    count: 10086,
+  },
+  {
+    title: "销售总量",
+    id: "04",
+    count: 1145666,
+  },
+];
+export const groupItems: dataItem[] = [
+  {
+    title: "产品总数",
+    id: "01",
+    count: 6,
+  },
+  {
+    title: "企业数量",
+    id: "02",
+    count: 114514,
+  },
+  {
+    title: "产地数量",
+    id: "03",
+    count: 10086,
+  },
+  {
+    title: "销售总量",
+    id: "04",
+    count: 1145666,
   },
 ];

@@ -157,28 +157,15 @@ export const useUserStore = defineStore({
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      // this.clearCookie();
-      // window.location.href = "https://www.12221.com.cn/api/oauth2/authorize";
+      this.clear();
       goLogin && router.push(PageEnum.BASE_LOGIN);
     },
-    //清空cookie
-    clearCookie() {
-      // const keys = document.cookie.match(/[^ =;]+(?=\=)/g);
-      // if (keys) {
-      //   for (let i = keys.length; i--; ) {
-      //     document.cookie = keys[i] + "=0;path=/;expires=" + new Date(0).toUTCString(); //清除当前域名下的,例如：m.kevis.com
-      //     document.cookie =
-      //       keys[i] +
-      //       "=0;path=/;domain=" +
-      //       document.domain +
-      //       ";expires=" +
-      //       new Date(0).toUTCString(); //清除当前域名下的，例如 .m.kevis.com
-      //     document.cookie =
-      //       keys[i] + "=0;path=/;domain=kevis.com;expires=" + new Date(0).toUTCString(); //清除一级域名下的或指定的，例如 .kevis.com
-      //   }
-      // }
-      // document.cookie = "";
-      // console.log("已清除");
+    //清空cookie、本地存储等
+    clear() {
+      document.cookie = "";
+      localStorage.clear();
+      sessionStorage.clear();
+      console.log("清除cookie");
     },
 
     /**

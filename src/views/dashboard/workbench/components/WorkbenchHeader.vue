@@ -28,7 +28,6 @@
   import { useUserStore } from "/@/store/modules/User";
   import headerImg from "/@/assets/images/header.png";
   import { imageUrl } from "/@/utils/FileUtils";
-
   const userStore = useUserStore();
   const userinfo = computed(() => userStore.getUserInfo);
   const avatar = computed(() => {
