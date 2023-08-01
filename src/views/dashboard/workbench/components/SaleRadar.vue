@@ -1,22 +1,32 @@
 <template>
-  <Card title="销售统计" :loading="loading">
-    <div ref="chartRef" :style="{ width, height }"></div>
+  <Card title="供销统计" :loading="loading">
+    <div class="flex">
+      <div :style="{ width, height }">
+        <SaleEchart />
+      </div>
+      <div :style="{ width, height }">
+        <SupplyEchart />
+      </div>
+      <div ref="chartRef" :style="{ width, height }"></div>
+    </div>
   </Card>
 </template>
 <script lang="ts" setup>
   import { Ref, ref, watch } from "vue";
   import { Card } from "ant-design-vue";
   import { useECharts } from "/@/hooks/web/UseECharts";
+  import SaleEchart from "./SaleEchart.vue";
+  import SupplyEchart from "./SupplyEchart.vue";
 
   const props = defineProps({
     loading: Boolean,
     width: {
       type: String as PropType<string>,
-      default: "100%",
+      default: "33.3%",
     },
     height: {
       type: String as PropType<string>,
-      default: "400px",
+      default: "350px",
     },
   });
 
@@ -29,9 +39,13 @@
         return;
       }
       setOptions({
+        title: {
+          show: true,
+          text: "销售热度top5城市",
+        },
         legend: {
           bottom: 0,
-          data: ["Visits", "Sales"],
+          data: ["销售热度"],
         },
         tooltip: {},
         radar: {
@@ -39,22 +53,22 @@
           splitNumber: 8,
           indicator: [
             {
-              name: "2017",
+              name: "广州",
             },
             {
-              name: "2017",
+              name: "北京",
             },
             {
-              name: "2018",
+              name: "上海",
             },
             {
-              name: "2019",
+              name: "长沙",
             },
             {
-              name: "2020",
+              name: "深圳",
             },
             {
-              name: "2021",
+              name: "天津",
             },
           ],
         },
@@ -71,15 +85,8 @@
             },
             data: [
               {
-                value: [90, 50, 86, 40, 50, 20],
-                name: "Visits",
-                itemStyle: {
-                  color: "#b6a2de",
-                },
-              },
-              {
                 value: [70, 75, 70, 76, 20, 85],
-                name: "Sales",
+                name: "销售热度",
                 itemStyle: {
                   color: "#67e0e3",
                 },
