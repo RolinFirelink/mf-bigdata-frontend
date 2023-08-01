@@ -1,16 +1,14 @@
 <template>
   <Card title="云图链接" v-bind="$attrs">
     <template #extra>
-      <a-button type="link" size="small">更多</a-button>
+      <a-button type="link" size="small">
+        <a href="https://www.12221.com.cn/#/nephogram" target="_blank">更多</a>
+      </a-button>
     </template>
-    <div class="container">
-      <div class="content-wrapper">
-        <div class="list">
-          <CardGrid v-for="item in consultationList" :key="item.id" class="!md:w-1/4 !w-full">
-            <ContentItem :item-data="item" />
-          </CardGrid>
-        </div>
-      </div>
+    <div class="list">
+      <CardGrid v-for="item in consultationList" :key="item.id" class="!md:w-1/4 !w-full">
+        <ContentItem :item-data="item" />
+      </CardGrid>
     </div>
   </Card>
 </template>
@@ -124,75 +122,10 @@
       background-color: #ffffff;
       margin-right: 20px;
       float: left;
+      justify-content: center;
     }
     .home-item:last-child {
       margin-right: 0px;
-    }
-  }
-
-  @media only screen and (max-width: 767px) {
-    .container {
-      width: 95%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-    }
-
-    .upper {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .title {
-      margin-right: auto;
-    }
-
-    .mainTitle {
-      font-size: 23px;
-      font-weight: bold;
-      color: #333;
-      position: relative;
-      text-align: center;
-      margin-left: 5px;
-    }
-
-    .redBox {
-      width: 46px;
-      height: 21px;
-      font-size: 20px;
-      background-color: red;
-      margin-top: -100px;
-      margin-left: 5px;
-      display: inline-block;
-    }
-
-    .redBox span {
-      color: aliceblue;
-      font-size: 12px;
-      font-weight: 16px;
-    }
-
-    .moreInfo {
-      margin-right: 2%;
-    }
-
-    .moreInfo a {
-      text-decoration: none;
-      font-size: 18px;
-      color: gray;
-    }
-
-    .list {
-      width: 95%;
-      margin: 10px auto;
-      overflow: hidden;
-      flex-wrap: wrap;
-      .home-item {
-        width: 100%;
-        height: 350px;
-        margin: 0 0 15px 0;
-      }
     }
   }
 </style>

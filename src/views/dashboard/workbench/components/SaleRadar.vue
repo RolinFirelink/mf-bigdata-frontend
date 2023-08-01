@@ -1,5 +1,5 @@
 <template>
-  <Card title="供销统计" :loading="loading">
+  <Card title="供销统计" :loading="loading" style="margin-top: 20px">
     <div class="flex">
       <div :style="{ width, height }">
         <SaleEchart />

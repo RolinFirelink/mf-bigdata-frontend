@@ -118,7 +118,7 @@ export const echartItems: EchartItem[] = [
 
 export const dataItems: dataItem[] = [
   {
-    title: "产品总数",
+    title: "产品种数",
     id: "01",
     count: 6,
   },
@@ -133,30 +133,8 @@ export const dataItems: dataItem[] = [
     count: 10086,
   },
   {
-    title: "销售总量",
+    title: "采购商数量",
     id: "04",
-    count: 1145666,
-  },
-];
-export const groupItems: dataItem[] = [
-  {
-    title: "产品总数",
-    id: "01",
-    count: 6,
-  },
-  {
-    title: "企业数量",
-    id: "02",
-    count: 114514,
-  },
-  {
-    title: "产地数量",
-    id: "03",
-    count: 10086,
-  },
-  {
-    title: "销售总量",
-    id: "04",
-    count: 1145666,
+    count: 114,
   },
 ];
