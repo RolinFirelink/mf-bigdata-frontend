@@ -13,14 +13,14 @@ const DATE_FORMAT = "YYYY-MM-DD";
 
 export function formatToDateTime(
   date: dayjs.Dayjs | undefined = undefined,
-  format = DATE_TIME_FORMAT
+  format = DATE_TIME_FORMAT,
 ): string {
   return dayjs(date).format(format);
 }
 
 export function formatToDate(
   date: dayjs.Dayjs | string | undefined = undefined,
-  format = DATE_FORMAT
+  format = DATE_FORMAT,
 ): string {
   return dayjs(date).format(format);
 }

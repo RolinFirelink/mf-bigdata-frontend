@@ -253,16 +253,16 @@ export const usePermissionStore = defineStore({
       }
 
       //如果存在前端路由信息，补充到到后台
-      routes.push(...routeModuleList);
-      if (routeModuleList != null && routeModuleList.length > 0) {
-        // 将路由转换成菜单
-        const frontMenu = transformRouteToMenu(routeModuleList, true);
-        menuList.push(...frontMenu);
-        // 对菜单进行排序
-        menuList.sort((a, b) => {
-          return (a.menuSort || 0) - (b.menuSort || 0);
-        });
-      }
+      // routes.push(...routeModuleList);
+      // if (routeModuleList != null && routeModuleList.length > 0) {
+      //   // 将路由转换成菜单
+      //   const frontMenu = transformRouteToMenu(routeModuleList, true);
+      //   menuList.push(...frontMenu);
+      //   // 对菜单进行排序
+      //   menuList.sort((a, b) => {
+      //     return (a.menuSort || 0) - (b.menuSort || 0);
+      //   });
+      // }
       if (menuList.length > 0) {
         //设置第一个菜单为首页
         this.setHomePath(menuList[0].path);

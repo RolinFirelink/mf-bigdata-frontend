@@ -36,6 +36,16 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: "行政区域编码",
+    dataIndex: "areaCode",
+    width: 120,
+  },
+  {
+    title: "公司编码",
+    dataIndex: "companyNo",
+    width: 120,
+  },
+  {
     title: "法人",
     dataIndex: "juridicalPerson",
     width: 120,
@@ -63,6 +73,11 @@ export const columns: BasicColumn[] = [
   {
     title: "公司地址",
     dataIndex: "address",
+    width: 120,
+  },
+  {
+    title: "备注",
+    dataIndex: "remark",
     width: 120,
   },
 ];
@@ -152,5 +167,11 @@ export const companyFormSchema: FormSchema[] = [
       ],
     },
     colProps: { span: 12 },
+  },
+  {
+    field: "remark",
+    label: "备注",
+    component: "Input",
+    colProps: { span: 24 },
   },
 ];

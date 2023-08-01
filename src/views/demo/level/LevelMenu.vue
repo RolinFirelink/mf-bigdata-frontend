@@ -4,18 +4,13 @@
  @date: 2022/12/14 17:18
 -->
 <template>
-  <div>
-    多级页面
-    <br>
-  </div>
+  <div> 多级页面 <br /> </div>
 </template>
 
 <script>
-export default {
-  name: "LevelMenu"
-};
+  export default {
+    name: "LevelMenu",
+  };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

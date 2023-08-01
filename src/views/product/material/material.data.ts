@@ -9,10 +9,43 @@ import { h } from "vue";
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
+  // {
+  //   title: "产品类型",
+  //   dataIndex: "categoryName",
+  //   width: 120,
+  // },
   {
     title: "产品类型",
-    dataIndex: "categoryName",
+    dataIndex: "flag",
     width: 120,
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.flag) {
+        case 1:
+          text = "肉鸡";
+          break;
+        case 2:
+          text = "柑橘";
+          break;
+        case 3:
+          text = "兰花";
+          break;
+        case 4:
+          text = "对虾";
+          break;
+        case 5:
+          text = "菜心";
+          break;
+        case 6:
+          text = "预制菜";
+          break;
+        case 7:
+          text = "鸽儿";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: "产品名称",
@@ -244,9 +277,20 @@ export const materialFormSchema: FormSchema[] = [
   //   label: "种植规模(㎡)",
   //   component: "Input",
   // },
-  // {
-  //   field: "flag",
-  //   label: "区分字段",
-  //   component: "Input",
-  // },
+  {
+    field: "flag",
+    label: "区分字段",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "肉鸡", value: 1 },
+        { label: "柑橘", value: 2 },
+        { label: "兰花", value: 3 },
+        { label: "对虾", value: 4 },
+        { label: "菜心", value: 5 },
+        { label: "预制菜", value: 6 },
+        { label: "鸽子", value: 7 },
+      ],
+    },
+  },
 ];

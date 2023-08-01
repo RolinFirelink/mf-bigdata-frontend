@@ -52,7 +52,7 @@
         const companyList = await getCompanyOptions(1);
         updateSchema([
           {
-            field: "parentId",
+            field: "companyId",
             componentProps: { options: companyList },
           },
         ]).then();
