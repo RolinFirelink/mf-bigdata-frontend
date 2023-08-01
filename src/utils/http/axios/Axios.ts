@@ -26,7 +26,8 @@ export class VAxios {
   /**
    * @description: Create axios instance
    */
-  private createAxios(config: CreateAxiosOptions): void {
+    private createAxios(config: CreateAxiosOptions): void {
+    axios.defaults.withCredentials = true;
     this.axiosInstance = axios.create(config);
   }
 
