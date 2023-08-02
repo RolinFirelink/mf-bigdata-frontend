@@ -99,7 +99,7 @@
     text-decoration: none;
   }
 
-  .detail:hover a {
+  .detail:hover span {
     color: white;
   }
 
