@@ -157,7 +157,7 @@ export const useUserStore = defineStore({
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      this.clear();
+      // this.clear();
       goLogin && router.push(PageEnum.BASE_LOGIN);
     },
     //清空cookie、本地存储等
