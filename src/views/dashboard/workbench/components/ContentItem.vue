@@ -17,27 +17,34 @@
   </div>
 </template>
 
-<script setup>
-  import { defineProps, ref } from "vue";
-  const setContent = (text, numSub) => {
-    if (text == null) {
-      return "";
-    }
-    if (text.length > numSub) {
-      return text.substring(0, numSub - 1) + "...";
-    }
-    return text;
+<script lang="ts">
+  import { ref } from "vue";
+  const props = {
+    itemData: { type: Object, default: {} },
   };
-  const goPage = (url) => {
-    window.open(url, "_blank");
-  };
-  // const loading = ref(true);
-  defineProps({
-    itemData: {
-      type: Object,
-      default: () => ({}),
+  export default {
+    props,
+    setup(props) {
+      const itemData = ref(props.itemData);
+      const setContent = (text, numSub) => {
+        if (text == null) {
+          return "";
+        }
+        if (text.length > numSub) {
+          return text.substring(0, numSub - 1) + "...";
+        }
+        return text;
+      };
+      const goPage = (url) => {
+        window.open(url, "_blank");
+      };
+      return {
+        itemData,
+        goPage,
+        setContent,
+      };
     },
-  });
+  };
 </script>
 
 <style scoped>

@@ -12,55 +12,47 @@
     </div>
   </Card>
 </template>
-<script setup>
+<script lang="ts">
   import ContentItem from "./ContentItem.vue";
   import { ref } from "vue";
   import { Card, CardGrid } from "ant-design-vue";
-  // import { getReportList } from "@/api/report";
 
-  const consultationList = ref([
-    {
-      name: "柑橘云图一",
-      article:
-        "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-      imgUrl: "/images/charts/ganju1.png",
-      path: "https://www.12221.com.cn/#/charts/ganju1",
+  export default {
+    components: { Card, CardGrid, ContentItem },
+    setup() {
+      const consultationList = ref([
+        {
+          name: "柑橘云图一",
+          article:
+            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
+          imgUrl: "/images/charts/ganju1.png",
+          path: "https://www.12221.com.cn/#/charts/ganju1",
+        },
+        {
+          name: "柑橘云图二",
+          article:
+            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
+          imgUrl: "/images/charts/ganju2.png",
+          path: "https://www.12221.com.cn/#/charts/ganju2",
+        },
+        {
+          name: "菜心云图一",
+          article:
+            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
+          imgUrl: "/images/charts/caixin1.png",
+          path: "https://www.12221.com.cn/#/charts/caixin1",
+        },
+        {
+          name: "菜心云图二",
+          article:
+            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
+          imgUrl: "/images/charts/caixin2.png",
+          path: "https://www.12221.com.cn/#/charts/caixin2",
+        },
+      ]);
+      return { consultationList };
     },
-    {
-      name: "柑橘云图二",
-      article:
-        "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-      imgUrl: "/images/charts/ganju2.png",
-      path: "https://www.12221.com.cn/#/charts/ganju2",
-    },
-    {
-      name: "菜心云图一",
-      article:
-        "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-      imgUrl: "/images/charts/caixin1.png",
-      path: "https://www.12221.com.cn/#/charts/caixin1",
-    },
-    {
-      name: "菜心云图二",
-      article:
-        "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-      imgUrl: "/images/charts/caixin2.png",
-      path: "https://www.12221.com.cn/#/charts/caixin2",
-    },
-  ]);
-
-  // onMounted(() => {
-  //   setData();
-  // });
-
-  // const setData = async () => {
-  //   const data = await getReportList(0, "");
-  //   if (data && data.length >= 4) {
-  //     for (let i = 0; i < 4; i++) {
-  //       consultationList.value[i] = data[i];
-  //     }
-  //   }
-  // };
+  };
 </script>
 <style lang="less" scoped>
   * {

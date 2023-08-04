@@ -20,7 +20,7 @@
   import headerImg from "/@/assets/images/header.png";
   import { imageUrl } from "/@/utils/FileUtils";
   const userStore = useUserStore();
-  const userinfo = computed(() => userStore.getUserInfo);
+  // const userinfo = computed(() => userStore.getUserInfo);
   const avatar = computed(() => {
     const imgUrl = userStore.getUserInfo?.headImgUrl;
     return imgUrl ? imageUrl("/storage/file/" + imgUrl) : headerImg;
@@ -46,6 +46,7 @@
     const { data } = await axios.get(`https://restapi.amap.com/v3/weather/weatherInfo`, { params });
     console.log("天气", data);
     weather.value = data.lives[0];
+    console.log(weather.value);
   };
   onMounted(() => {
     getLocationInfo();
