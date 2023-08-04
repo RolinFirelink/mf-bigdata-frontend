@@ -1,19 +1,23 @@
 <template>
-  <Card title="供销统计" :loading="loading" style="margin-top: 20px">
-    <div class="flex">
-      <div :style="{ width, height }">
+  <Card title="供销统计" v-bind="$attrs" :loading="loading" style="margin-top: 20px">
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div :style="{ width, height }" class="flex mt-2 h-10 text-secondary space-between">
         <SaleEchart />
       </div>
-      <div :style="{ width, height }">
+    </CardGrid>
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div :style="{ width, height }" class="flex mt-2 h-10 text-secondary space-between">
         <SupplyEchart />
       </div>
-      <div ref="chartRef" :style="{ width, height }"></div>
-    </div>
+    </CardGrid>
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div ref="chartRef" :style="{ width, height }" class="flex mt-2 h-10 space-between"></div>
+    </CardGrid>
   </Card>
 </template>
 <script lang="ts" setup>
   import { Ref, ref, watch } from "vue";
-  import { Card } from "ant-design-vue";
+  import { Card, CardGrid } from "ant-design-vue";
   import { useECharts } from "/@/hooks/web/UseECharts";
   import SaleEchart from "./SaleEchart.vue";
   import SupplyEchart from "./SupplyEchart.vue";

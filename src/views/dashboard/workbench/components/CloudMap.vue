@@ -7,7 +7,7 @@
     </template>
     <div class="list">
       <CardGrid v-for="item in consultationList" :key="item.id" class="!md:w-1/4 !w-full">
-        <ContentItem :item-data="item" />
+        <ContentItem :item-data="item" class="content" />
       </CardGrid>
     </div>
   </Card>

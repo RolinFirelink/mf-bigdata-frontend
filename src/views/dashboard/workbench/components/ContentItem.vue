@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-  import { defineProps, ref } from "vue";
+  import { defineProps } from "vue";
   const setContent = (text, numSub) => {
     if (text == null) {
       return "";
