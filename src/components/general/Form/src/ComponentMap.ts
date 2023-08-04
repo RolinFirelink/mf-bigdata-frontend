@@ -1,6 +1,5 @@
 import type { Component } from "vue";
 import type { ComponentType } from "./types";
-
 /**
  * Component list, register here to setting it in the form
  */
@@ -32,7 +31,7 @@ import { BasicUpload } from "/@/components/general/Upload";
 import { StrengthMeter } from "/@/components/general/StrengthMeter";
 import { IconPicker } from "/@/components/general/Icon";
 import { CountdownInput } from "/@/components/general/CountDown";
-
+import { CropperImage } from "/@/components/general/Cropper";
 const componentMap = new Map<ComponentType, Component>();
 
 componentMap.set("Input", Input);
@@ -71,7 +70,7 @@ componentMap.set("InputCountDown", CountdownInput);
 
 componentMap.set("Upload", BasicUpload);
 componentMap.set("Divider", Divider);
-
+componentMap.set("CropperImage", CropperImage);
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component);
 }

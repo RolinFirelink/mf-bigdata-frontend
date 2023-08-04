@@ -20,11 +20,12 @@
       {{ btnText ? btnText : t("component.cropper.selectImage") }}
     </a-button>
 
-    <CopperModal
+    <CopperModal2
       @register="register"
       @upload-success="handleUploadSuccess"
       :uploadApi="uploadApi"
       :src="sourceValue"
+      :circled="false"
     />
   </div>
 </template>
@@ -39,7 +40,7 @@
     watch,
     PropType,
   } from "vue";
-  import CopperModal from "./CopperModal.vue";
+  import CopperModal2 from "./CopperModal2.vue";
   import { useDesign } from "/@/hooks/web/UseDesign";
   import { useModal } from "/@/components/general/Modal";
   import { useMessage } from "/@/hooks/web/UseMessage";
@@ -49,6 +50,7 @@
   import { UploadFileParams } from "/#/axios";
 
   const props = {
+    height: { type: [String, Number] },
     width: { type: [String, Number], default: "200px" },
     value: { type: String },
     showBtn: { type: Boolean, default: true },
@@ -59,7 +61,7 @@
 
   export default defineComponent({
     name: "CropperAvatar",
-    components: { CopperModal, Icon },
+    components: { CopperModal2, Icon },
     props,
     emits: ["update:value", "change"],
     setup(props, { emit, expose }) {
@@ -73,12 +75,14 @@
 
       const getWidth = computed(() => `${props.width}`.replace(/px/, "") + "px");
 
+      const getHeight = computed(() => `${props.height || props.width}`.replace(/px/, "") + "px");
+
       const getIconWidth = computed(() => parseInt(`${props.width}`.replace(/px/, "")) / 2 + "px");
 
       const getStyle = computed((): CSSProperties => ({ width: unref(getWidth) }));
 
       const getImageWrapperStyle = computed(
-        (): CSSProperties => ({ width: unref(getWidth), height: unref(getWidth) }),
+        (): CSSProperties => ({ width: unref(getWidth), height: unref(getHeight) }),
       );
 
       watchEffect(() => {
@@ -92,9 +96,9 @@
         },
       );
 
-      function handleUploadSuccess({ source, data }) {
+      function handleUploadSuccess({ source, data }, fileUrl) {
         sourceValue.value = source;
-        emit("change", { source, data });
+        emit("change", { source, data }, fileUrl);
         createMessage.success(t("component.cropper.uploadSuccess"));
       }
 
@@ -128,7 +132,6 @@
       cursor: pointer;
       background: @component-background;
       border: 1px solid @border-color-base;
-      border-radius: 50%;
 
       img {
         width: 100%;

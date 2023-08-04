@@ -3,7 +3,7 @@ import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
-
+import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
 /**
  * @description: 文章
  * @author cgli
@@ -37,9 +37,13 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "封面图片地址",
+    title: "图片",
     dataIndex: "coverImg",
-    width: 120,
+    customRender: ({ record }) => {
+      const imgList = [record.coverImg];
+      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
+    },
+    width: 60,
   },
   {
     title: "状态",
@@ -253,19 +257,13 @@ export const articleFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "coverImg",
-    label: "封面图片地址",
-    component: "Input",
-    required: false,
-  },
-  {
     field: "status",
     label: "状态",
     component: "Select",
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: "草稿箱", value: 0 },
+        { label: "草稿", value: 0 },
         { label: "审核中", value: 1 },
         { label: "发布", value: 2 },
       ],

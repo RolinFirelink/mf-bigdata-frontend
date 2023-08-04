@@ -6,6 +6,14 @@
 -->
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+    <CropperImage
+      :uploadApi="uploadApi"
+      :value="imgUrl"
+      :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+      @change="updateImg"
+      width="300"
+      height="150"
+    />
     <BasicForm @register="registerForm" @submit="handleSubmit" />
     <ArticleContent ref="articleContent" v-if="dialogVisible" style="z-index: 100" />
   </BasicModal>
@@ -18,12 +26,17 @@
   import { insertArticle, updateArticle } from "/@/api/cms/Article";
   import { getArticleCategoryList } from "/@/api/cms/ArticleCategory";
   import ArticleContent from "./ArticleContent.vue";
-
+  import { uploadApi } from "/@/api/storage/Upload";
+  import { CropperImage } from "/@/components/general/Cropper";
+  import { imageUrl } from "/@/utils/FileUtils";
+  import { getLocalFileUrl } from "/@/api/storage/SysFile";
   export default {
     name: "ArticleModal",
-    components: { BasicModal, BasicForm, ArticleContent },
+    components: { BasicModal, BasicForm, ArticleContent, CropperImage },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      //图片地址
+      const imgUrl = ref("");
       // 编辑器组件
       const dialogVisible = ref(true);
       const articleContent = ref();
@@ -44,6 +57,7 @@
         if (unref(isUpdate)) {
           // 获取文章内容
           articleContent.value.getContent(data.record.id);
+          imgUrl.value = data.record.coverImg;
         }
         setTreeData();
 
@@ -65,11 +79,16 @@
           },
         ]).then();
       }
+
+      function updateImg({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        imgUrl.value = fileUrl;
+      }
       async function handleSubmit() {
         let values = await validate();
         // 设置文章内容
         values.content = encodeURIComponent(articleContent.value.valueHtml);
-
+        values.coverImg = imgUrl.value;
         setModalProps({ confirmLoading: true });
 
         if (unref(isUpdate)) {
@@ -96,6 +115,11 @@
       }
 
       return {
+        imageUrl,
+        getLocalFileUrl,
+        imgUrl,
+        uploadApi,
+        updateImg,
         registerModal,
         registerForm,
         getTitle,

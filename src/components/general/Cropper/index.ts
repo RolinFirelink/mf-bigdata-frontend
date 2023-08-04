@@ -1,5 +1,5 @@
 import { withInstall } from "/@/utils";
-import cropperImage from "./src/Cropper.vue";
+import cropperImage from "./src/CropperImage.vue";
 import avatarCropper from "./src/CropperAvatar.vue";
 
 export * from "./src/typing";

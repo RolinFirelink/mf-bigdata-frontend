@@ -8,7 +8,7 @@
         <span>{{ itemData.name }}</span>
       </div>
       <div class="article">
-        {{ setContent(itemData.article, 33) }}
+        {{ setContent(itemData.article, 20) }}
       </div>
       <div class="detail">
         <span @click="goPage(itemData.path)">查看详情 >> </span>
@@ -41,14 +41,6 @@
 </script>
 
 <style scoped>
-  .home-item {
-    width: 245px;
-    height: 150px;
-    background-color: #ffffff;
-    margin-right: 20px;
-    float: left;
-  }
-
   .cover img {
     width: 100%;
     height: 140px;
@@ -56,12 +48,8 @@
     transition: all 0.3s ease;
   }
 
-  /* .cover img:hover {
-    transform: scale(1.1);
-  } */
-
   .more {
-    margin: 10px 5px 10px 5px;
+    margin: 10px 5px 10px -10px;
   }
 
   .title {
@@ -82,7 +70,7 @@
   .detail {
     width: 80px;
     height: 25px;
-    margin-left: 15px;
+    margin-left: 5px;
     border: 1px solid green;
     border-radius: 25px;
     margin-top: 22px;

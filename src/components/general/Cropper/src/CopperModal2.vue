@@ -4,7 +4,7 @@
     @register="register"
     :title="t('component.cropper.modalTitle')"
     width="800px"
-    :canFullscreen="false"
+    :canFullscreen="true"
     @ok="handleOk"
     :okText="t('component.cropper.okText')"
   >
@@ -20,6 +20,7 @@
             @ready="handleReady"
           />
         </div>
+
         <div :class="`${prefixCls}-toolbar`">
           <Upload :fileList="[]" accept="image/*" :beforeUpload="handleBeforeUpload">
             <Tooltip :title="t('component.cropper.selectImage')" placement="bottom">
@@ -93,7 +94,10 @@
           </Space>
         </div>
       </div>
-      <div :class="`${prefixCls}-right`">
+      <div style="height: 100px; width: 200px; margin: auto auto">
+        <img :src="previewSource" v-if="previewSource" :alt="t('component.cropper.preview')" />
+      </div>
+      <!-- <div :class="`${prefixCls}-right`">
         <div :class="`${prefixCls}-preview`">
           <img :src="previewSource" v-if="previewSource" :alt="t('component.cropper.preview')" />
         </div>
@@ -105,7 +109,7 @@
             <Avatar :src="previewSource" :size="80" />
           </div>
         </template>
-      </div>
+      </div> -->
     </div>
   </BasicModal>
 </template>
@@ -123,6 +127,7 @@
 
   const props = {
     circled: { type: Boolean, default: true },
+    isPrivate: { type: Number, default: 0 },
     uploadApi: {
       type: Function as PropType<(params: UploadFileParams) => Promise<any>>,
     },
@@ -183,8 +188,17 @@
           const blob = dataURLtoBlob(previewSource.value);
           try {
             setModalProps({ confirmLoading: true });
-            const result = await uploadApi({ file: blob, fileName, path: "avatar" });
-            emit("uploadSuccess", { source: previewSource.value, data: result.fileKey });
+            const result = await uploadApi({
+              file: blob,
+              fileName,
+              path: "avatar",
+              isPrivate: props.isPrivate,
+            });
+            emit(
+              "uploadSuccess",
+              { source: previewSource.value, data: result.fileKey },
+              result.fileUrl,
+            );
             closeModal();
           } finally {
             setModalProps({ confirmLoading: false });
@@ -261,7 +275,6 @@
       margin: 0 auto;
       overflow: hidden;
       border: 1px solid @border-color-base;
-      border-radius: 50%;
 
       img {
         width: 100%;

@@ -38,14 +38,14 @@
       article:
         "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
       imgUrl: "/images/charts/caixin1.png",
-      path: "https://www.12221.com.cn/#/charts/ganju3",
+      path: "https://www.12221.com.cn/#/charts/caixin1",
     },
     {
       name: "菜心云图二",
       article:
         "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
       imgUrl: "/images/charts/caixin2.png",
-      path: "https://www.12221.com.cn/#/charts/ganju4",
+      path: "https://www.12221.com.cn/#/charts/caixin2",
     },
   ]);
 
@@ -117,15 +117,11 @@
     flex-wrap: nowrap;
 
     .home-item {
-      width: 255px;
-      height: 290px;
+      width: 200px;
+      margin: 0 auto;
       background-color: #ffffff;
-      margin-right: 20px;
       float: left;
       justify-content: center;
-    }
-    .home-item:last-child {
-      margin-right: 0px;
     }
   }
 </style>
