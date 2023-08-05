@@ -1,23 +1,29 @@
 <template>
-  <Card title="供销统计" :loading="loading" style="margin-top: 20px">
-    <div class="flex">
-      <div :style="{ width, height }">
-        <SaleEchart />
+  <Card title="主要数据展示" v-bind="$attrs" :loading="loading" style="margin-top: 20px">
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div :style="{ width, height }" class="flex mt-2 h-10 text-secondary space-between">
+        <PriceTrendChart />
       </div>
-      <div :style="{ width, height }">
-        <SupplyEchart />
+    </CardGrid>
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div :style="{ width, height }" class="flex mt-2 h-10 text-secondary space-between">
+        <ProcurementMapChart />
       </div>
-      <div ref="chartRef" :style="{ width, height }"></div>
-    </div>
+    </CardGrid>
+    <CardGrid class="!md:w-1/3 !w-full">
+      <div :style="{ width, height }" class="flex mt-2 h-10 text-secondary space-between">
+        <ProduceMacroData />
+      </div>
+    </CardGrid>
   </Card>
 </template>
 <script lang="ts" setup>
   import { Ref, ref, watch } from "vue";
-  import { Card } from "ant-design-vue";
+  import { Card, CardGrid } from "ant-design-vue";
   import { useECharts } from "/@/hooks/web/UseECharts";
-  import SaleEchart from "./SaleEchart.vue";
-  import SupplyEchart from "./SupplyEchart.vue";
-
+  import PriceTrendChart from "./PriceTrendChart.vue";
+  import ProcurementMapChart from "./ProcurementMapChart.vue";
+  import ProduceMacroData from "./ProduceMacroData.vue";
   const props = defineProps({
     loading: Boolean,
     width: {
@@ -26,7 +32,7 @@
     },
     height: {
       type: String as PropType<string>,
-      default: "350px",
+      default: "200px",
     },
   });
 

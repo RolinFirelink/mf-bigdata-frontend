@@ -101,3 +101,10 @@ export function uploadExcel(params) {
     { successMessageMode: "message" },
   );
 }
+
+export function getProductBaseInfo(params) {
+  return defHttp.get({
+    url: Api.ProductBase + "/",
+    params,
+  });
+}

@@ -1,5 +1,5 @@
 <template>
-  <Card title="数据" v-bind="$attrs" style="margin-top: 20px">
+  <Card title="数据统计" v-bind="$attrs" style="margin-top: 20px">
     <CardGrid v-for="item in items" :key="item.id" class="!md:w-1/4 !w-full">
       <div class="flex mt-2 h-10 text-secondary">
         <h2 class="ctitle">{{ item.title }}</h2>

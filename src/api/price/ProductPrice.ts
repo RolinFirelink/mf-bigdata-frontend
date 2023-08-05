@@ -17,6 +17,7 @@ import {
   ProductPrice,
   ReqProductPrice,
   ProductPricePageModel,
+  ProductPriceTrend,
 } from "/@/api/price/model/ProductPriceModel";
 
 enum Api {
@@ -70,4 +71,17 @@ export function deleteProductPrice(id: string) {
     { url: Api.ProductPrice + "/" + id },
     { successMessageMode: "message" },
   );
+}
+
+/**
+ * 产品趋势图数据
+ *
+ * @param reqProductPrice
+ * @return
+ */
+export function getProductPriceTrend(reqProductPrice?: ReqProductPrice) {
+  return defHttp.get<Array<ProductPriceTrend>>({
+    url: Api.ProductPrice + "/public/trend",
+    params: reqProductPrice,
+  });
 }
