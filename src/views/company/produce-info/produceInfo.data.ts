@@ -44,6 +44,16 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: "预计产量",
+    dataIndex: "projectedProduction",
+    width: 120,
+  },
+  {
+    title: "产品单位",
+    dataIndex: "productUnit",
+    width: 120,
+  },
+  {
     title: "标识（多个，用分号分割）",
     dataIndex: "identifiers",
     width: 120,
@@ -128,6 +138,16 @@ export const produceInfoFormSchema: FormSchema[] = [
   {
     field: "identifiers",
     label: "标识（多个，用分号分割）",
+    component: "Input",
+  },
+  {
+    field: "projectedProduction",
+    label: "预计产量",
+    component: "Input",
+  },
+  {
+    field: "productUnit",
+    label: "产品单位",
     component: "Input",
   },
 ];

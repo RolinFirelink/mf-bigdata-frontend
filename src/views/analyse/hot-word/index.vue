@@ -11,6 +11,14 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:hotWord:insert')"
           >新增热词表</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          >下载导入模板</a
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -71,10 +79,12 @@
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
+  import { uploadExcel } from "/@/api/analyse/HotWord";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "HotWordManagement",
-    components: { BasicTable, HotWordModal, TableAction },
+    components: { BasicTable, HotWordModal, TableAction, Upload },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
@@ -138,7 +148,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,

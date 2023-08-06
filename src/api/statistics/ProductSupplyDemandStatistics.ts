@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-17 11:28:42
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-17 11:34:04
+ * @LastEditTime: 2023-08-06 18:46:22
  * @FilePath: \mf-bigdata-frontend\src\api\statistics\ProductSupplyDemandStatistics.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -77,6 +77,18 @@ export function updateProductSupplyDemandStatistics(
 export function deleteProductSupplyDemandStatistics(id: string) {
   return defHttp.delete<ProductSupplyDemandStatistics>(
     { url: Api.ProductSupplyDemandStatistics + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ *
+ * @param params
+ * @returns
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    { url: Api.ProductSupplyDemandStatistics + "/excelUpload", params },
     { successMessageMode: "message" },
   );
 }

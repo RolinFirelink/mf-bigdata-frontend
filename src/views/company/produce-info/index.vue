@@ -14,6 +14,14 @@
           v-if="hasPermission('sys:produceInfo:insert')"
           >新增企业生产信息表</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/a0bcc8ec6701478095a7757b499a62e7.xls?access_token=0f244f75b2594598b4223fdadb189f87"
+          >下载导入模板</a
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -64,10 +72,12 @@
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
+  import { uploadExcel } from "/@/api/company/ProduceInfo";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "ProduceInfoManagement",
-    components: { BasicTable, ProduceInfoModal, TableAction },
+    components: { BasicTable, ProduceInfoModal, TableAction, Upload },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
@@ -124,7 +134,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,

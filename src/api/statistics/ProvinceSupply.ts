@@ -66,3 +66,15 @@ export function deleteProvinceSupply(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ *
+ * @param params
+ * @returns
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    { url: Api.ProvinceSupply + "/excelUpload", params },
+    { successMessageMode: "message" },
+  );
+}

@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-20 18:23:36
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-20 18:27:56
+ * @LastEditTime: 2023-08-06 13:51:47
  * @FilePath: \mf-bigdata-frontend\src\views\analyse\base-product-production-scale\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,6 +21,14 @@
           @click="handleCreate"
           v-if="hasPermission('sys:baseProductProductionScale:insert')"
           >新增基地产品生产规模数据表</a-button
+        >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          >下载导入模板</a
         >
       </template>
       <template #bodyCell="{ column, record }">
@@ -62,10 +70,12 @@
   import BaseProductProductionScaleModal from "./BaseProductProductionScaleModal.vue";
   import { columns, searchFormSchema } from "./baseProductProductionScale.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { uploadExcel } from "/@/api/analyse/BaseProductProductionScale";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "BaseProductProductionScaleManagement",
-    components: { BasicTable, BaseProductProductionScaleModal, TableAction },
+    components: { BasicTable, BaseProductProductionScaleModal, TableAction, Upload },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
@@ -111,7 +121,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,

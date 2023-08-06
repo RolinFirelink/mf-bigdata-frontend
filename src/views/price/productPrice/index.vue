@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-12 14:45:34
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-30 16:32:29
+ * @LastEditTime: 2023-08-06 17:51:49
  * @FilePath: \mf-bigdata-frontend\src\views\price\productPrice\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,6 +21,14 @@
           @click="handleCreate"
           v-if="hasPermission('sys:productPrice:insert')"
           >新增产品价格表</a-button
+        >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          >下载导入模板</a
         >
       </template>
       <template #bodyCell="{ column, record }">
@@ -72,10 +80,12 @@
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
+  import { uploadExcel } from "/@/api/price/ProductPrice";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "ProductPriceManagement",
-    components: { BasicTable, ProductPriceModal, TableAction },
+    components: { BasicTable, ProductPriceModal, TableAction, Upload },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
@@ -132,7 +142,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,
