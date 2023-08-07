@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-20 18:23:36
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-06 13:51:47
+ * @LastEditTime: 2023-08-07 11:54:28
  * @FilePath: \mf-bigdata-frontend\src\views\analyse\base-product-production-scale\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -27,7 +27,7 @@
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          href="http://49.234.45.35:8888/storage/file/aa4a163027bc477dbed91d26b27abe31.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
           >下载导入模板</a
         >
       </template>

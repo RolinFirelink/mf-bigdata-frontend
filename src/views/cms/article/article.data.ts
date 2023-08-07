@@ -3,6 +3,7 @@ import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
+import { getDictProps } from "/@/utils/DictUtils";
 
 /**
  * @description: 文章
@@ -42,6 +43,16 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: "倾向",
+    dataIndex: "inclined",
+    width: 120,
+  },
+  {
+    title: "产品类型",
+    dataIndex: "flag",
+    width: 120,
+  },
+  {
     title: "状态",
     dataIndex: "status",
     width: 120,
@@ -78,70 +89,9 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: "内容模式",
-    dataIndex: "contentModel",
-    width: 120,
-    customRender: ({ record }) => {
-      const status = record.contentModel;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "grey";
-      const text = enable ? "定制模式" : "标准模式";
-      return h(Tag, { color: color }, () => text);
-    },
-  },
-  {
     title: "点击数",
     dataIndex: "clickNum",
     width: 120,
-  },
-  {
-    title: "收藏量",
-    dataIndex: "collectNum",
-    width: 120,
-  },
-  {
-    title: "评论数",
-    dataIndex: "commentNum",
-    width: 120,
-  },
-  {
-    title: "点赞数",
-    dataIndex: "likeNum",
-    width: 120,
-  },
-  {
-    title: "下载量",
-    dataIndex: "downloadNum",
-    width: 120,
-  },
-  {
-    title: "分享数",
-    dataIndex: "shareNum",
-    width: 120,
-  },
-  {
-    title: "是否允许评论",
-    dataIndex: "allowComment",
-    width: 120,
-    customRender: ({ record }) => {
-      const status = record.allowComment;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "grey";
-      const text = enable ? "允许" : "不允许";
-      return h(Tag, { color: color }, () => text);
-    },
-  },
-  {
-    title: "是否允许订阅",
-    dataIndex: "allowSubscribe",
-    width: 120,
-    customRender: ({ record }) => {
-      const status = record.allowSubscribe;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "grey";
-      const text = enable ? "允许" : "不允许";
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "排序",
@@ -158,11 +108,11 @@ export const columns: BasicColumn[] = [
     dataIndex: "endTime",
     width: 120,
   },
-  {
-    title: "信息类型",
-    dataIndex: "mediaType",
-    width: 120,
-  },
+  // {
+  //   title: "信息类型",
+  //   dataIndex: "mediaType",
+  //   width: 120,
+  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -206,6 +156,26 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { lg: 12, md: 8 },
   },
+  {
+    field: "status",
+    label: "状态",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "草稿箱", value: 0 },
+        { label: "审核中", value: 1 },
+        { label: "发布", value: 2 },
+      ],
+    },
+    colProps: { lg: 9, md: 5 },
+  },
+  {
+    field: "flag",
+    label: "产品类型",
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
+    colProps: { lg: 9, md: 5 },
+  },
 ];
 export const articleFormSchema: FormSchema[] = [
   {
@@ -230,7 +200,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "author",
     label: "作者",
     component: "Input",
-    required: true,
+    required: false,
   },
   {
     field: "source",
@@ -256,6 +226,13 @@ export const articleFormSchema: FormSchema[] = [
     field: "coverImg",
     label: "封面图片地址",
     component: "Input",
+    required: false,
+  },
+  {
+    field: "flag",
+    label: "产品类型",
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
     required: false,
   },
   {
@@ -287,85 +264,30 @@ export const articleFormSchema: FormSchema[] = [
     colProps: { span: 12 },
     required: true,
   },
-  {
-    field: "contentModel",
-    label: "内容模式",
-    component: "RadioButtonGroup",
-    defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: "标准", value: 0 },
-        { label: "定制", value: 1 },
-      ],
-    },
-    colProps: { span: 12 },
-  },
+  // {
+  //   field: "contentModel",
+  //   label: "内容模式",
+  //   component: "RadioButtonGroup",
+  //   defaultValue: 0,
+  //   componentProps: {
+  //     options: [
+  //       { label: "标准", value: 0 },
+  //       { label: "定制", value: 1 },
+  //     ],
+  //   },
+  //   colProps: { span: 12 },
+  // },
   {
     field: "clickNum",
     label: "点击数",
-    component: "Input",
-  },
-  {
-    field: "collectNum",
-    label: "收藏量",
-    component: "Input",
-    required: false,
-  },
-  {
-    field: "commentNum",
-    label: "评论数",
-    component: "Input",
-    required: false,
-  },
-  {
-    field: "likeNum",
-    label: "点赞数",
-    component: "Input",
-    required: false,
-  },
-  {
-    field: "downloadNum",
-    label: "下载量",
-    component: "Input",
-    required: false,
-  },
-  {
-    field: "shareNum",
-    label: "分享数",
-    component: "Input",
-    required: false,
-  },
-  {
-    field: "allowComment",
-    label: "是否允许评论",
-    component: "RadioButtonGroup",
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: "否", value: 0 },
-        { label: "是", value: 1 },
-      ],
-    },
-    colProps: { span: 12 },
-    required: true,
-  },
-  {
-    field: "allowSubscribe",
-    label: "是否允许订阅",
-    component: "RadioButtonGroup",
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: "否", value: 0 },
-        { label: "是", value: 1 },
-      ],
-    },
-    colProps: { span: 12 },
+    component: "InputNumber",
+    defaultValue: 0,
   },
   {
     field: "sort",
     label: "排序",
     component: "InputNumber",
+    defaultValue: 50,
     required: false,
   },
   {
@@ -391,17 +313,17 @@ export const articleFormSchema: FormSchema[] = [
     },
     colProps: { lg: 12, md: 8 },
   },
-  {
-    field: "mediaType",
-    label: "信息类型",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "文本", value: "文本" },
-        { label: "图片", value: "图片" },
-        { label: "视频", value: "视频" },
-      ],
-    },
-    colProps: { span: 12 },
-  },
+  // {
+  //   field: "mediaType",
+  //   label: "信息类型",
+  //   component: "Select",
+  //   componentProps: {
+  //     options: [
+  //       { label: "文本", value: "文本" },
+  //       { label: "图片", value: "图片" },
+  //       { label: "视频", value: "视频" },
+  //     ],
+  //   },
+  //   colProps: { span: 12 },
+  // },
 ];

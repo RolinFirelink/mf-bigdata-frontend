@@ -16,7 +16,7 @@
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          href="http://49.234.45.35:8888/storage/file/05e89e75b6bd41c6b020429423f4e7fe.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
           >下载导入模板</a
         >
       </template>

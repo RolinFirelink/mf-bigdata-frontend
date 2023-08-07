@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-16 12:05:28
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-06 13:23:25
+ * @LastEditTime: 2023-08-07 11:55:20
  * @FilePath: \mf-bigdata-frontend\src\views\analyse\buyers-index\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -27,7 +27,7 @@
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          href="http://49.234.45.35:8888/storage/file/8c6b6206d4394dcb85edf717119ae416.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
           >下载导入模板</a
         >
       </template>
