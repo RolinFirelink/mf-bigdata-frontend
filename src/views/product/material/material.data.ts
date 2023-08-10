@@ -131,6 +131,13 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
+  {
+    field: "flag",
+    label: "产品类型",
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
+    colProps: { lg: 4, md: 5 },
+  },
   // {
   //   field: "model",
   //   label: "型号",

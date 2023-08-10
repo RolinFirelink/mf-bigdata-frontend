@@ -44,7 +44,7 @@ export const columns: BasicColumn[] = [
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
   {
-    field: "city",
+    field: "cities",
     label: "城市",
     component: "Input",
     colProps: { lg: 4, md: 5 },

@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-20 18:23:36
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-07 11:54:28
+ * @LastEditTime: 2023-08-10 16:27:54
  * @FilePath: \mf-bigdata-frontend\src\views\analyse\base-product-production-scale\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -55,6 +55,16 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in flag"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <BaseProductProductionScaleModal @register="registerModal" @success="handleSuccess" />
@@ -72,6 +82,9 @@
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { uploadExcel } from "/@/api/analyse/BaseProductProductionScale";
   import { Upload } from "ant-design-vue";
+  import { onBeforeMount, ref } from "vue";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "BaseProductProductionScaleManagement",
@@ -97,6 +110,17 @@
           dataIndex: "action",
         },
       });
+
+      const flag = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getFlag();
+      });
+
+      function getFlag() {
+        getDictItems("mk_product_type").then((res) => {
+          flag.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -143,6 +167,7 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        flag,
       };
     },
   };
