@@ -330,15 +330,15 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "attestation",
     label: "认证情况",
     component: "ApiSelect",
-    // componentProps: {
-    //   options: [
-    //     { label: "绿色", value: 1 },
-    //     { label: "无公害", value: 2 },
-    //     { label: "地理标志", value: 3 },
-    //     { label: "其他", value: 4 },
-    //   ],
-    // },
-    componentProps: getDictProps("mk_attestation"),
+    componentProps: {
+      options: [
+        { label: "绿色", value: 1 },
+        { label: "无公害", value: 2 },
+        { label: "地理标志", value: 3 },
+        { label: "其他", value: 4 },
+      ],
+    },
+    // componentProps: getDictProps("mk_attestation"),
   },
   {
     field: "img",

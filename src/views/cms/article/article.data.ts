@@ -252,7 +252,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "source",
     label: "来源",
     component: "Input",
-    required: true,
+    required: false,
   },
   {
     field: "categoryId",

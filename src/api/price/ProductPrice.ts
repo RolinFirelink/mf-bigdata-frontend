@@ -74,7 +74,6 @@ export function deleteProductPrice(id: string) {
 }
 
 /**
-<<<<<<< HEAD
  * 产品趋势图数据
  *
  * @param reqProductPrice
@@ -85,7 +84,8 @@ export function getProductPriceTrend(reqProductPrice?: ReqProductPrice) {
     url: Api.ProductPrice + "/public/trend",
     params: reqProductPrice,
   });
-=======
+}
+/*
  * 上传excel数据
  *
  * @param params 文件数据
@@ -93,11 +93,7 @@ export function getProductPriceTrend(reqProductPrice?: ReqProductPrice) {
  */
 export function uploadExcel(params) {
   return defHttp.upload(
-    {
-      url: Api.ProductPrice + "/excelUpload",
-      params,
-    },
+    { url: Api.ProductPrice + "/excelUpload", params },
     { successMessageMode: "message" },
   );
->>>>>>> 1ee80b49fbee546e466075d7d0cc8ed984b6e328
 }
