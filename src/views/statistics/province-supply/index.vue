@@ -14,6 +14,14 @@
           v-if="hasPermission('sys:provinceSupply:insert')"
           >新增省份供应表</a-button
         >
+        <Upload :customRequest="upload" :showUploadList="false">
+          <a-button type="primary"> 上传数据 </a-button>
+        </Upload>
+        <a
+          class="download"
+          href="http://49.234.45.35:8888/storage/file/faa6fe6ab829498c9dbcea9b91fa9e1d.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          >下载导入模板</a
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -39,6 +47,16 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in flag"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <ProvinceSupplyModal @register="registerModal" @success="handleSuccess" />
@@ -51,10 +69,15 @@
   import ProvinceSupplyModal from "./ProvinceSupplyModal.vue";
   import { columns, searchFormSchema } from "./provinceSupply.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { onBeforeMount, ref } from "vue";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { getDictItems } from "/@/api/sys/DictItem";
+  import { uploadExcel } from "/@/api/statistics/ProvinceSupply";
+  import { Upload } from "ant-design-vue";
 
   export default {
     name: "ProvinceSupplyManagement",
-    components: { BasicTable, ProvinceSupplyModal, TableAction },
+    components: { BasicTable, ProvinceSupplyModal, TableAction, Upload },
     setup() {
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
@@ -76,6 +99,17 @@
           dataIndex: "action",
         },
       });
+
+      const flag = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getFlag();
+      });
+
+      function getFlag() {
+        getDictItems("mk_product_type").then((res) => {
+          flag.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -100,7 +134,21 @@
         reload();
       }
 
+      function upload(action) {
+        const file = action.file;
+        let fileName = file.name;
+        let suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        if (suffix != "xls" && suffix != "xlsx") {
+          //导入文件错误
+          return;
+        }
+        uploadExcel({ file: file }).then(() => {
+          handleSuccess();
+        });
+      }
+
       return {
+        upload,
         registerTable,
         registerModal,
         handleCreate,
@@ -108,6 +156,7 @@
         handleDelete,
         handleSuccess,
         hasPermission,
+        flag,
       };
     },
   };

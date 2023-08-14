@@ -4,6 +4,8 @@ import { h } from "vue";
 import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
 import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
+import { getDictProps } from "/@/utils/DictUtils";
+
 /**
  * @description: 文章
  * @author cgli
@@ -44,6 +46,16 @@ export const columns: BasicColumn[] = [
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
     },
     width: 60,
+  },
+  {
+    title: "倾向",
+    dataIndex: "inclined",
+    width: 120,
+  },
+  {
+    title: "产品类型",
+    dataIndex: "flag",
+    width: 120,
   },
   {
     title: "状态",
@@ -190,6 +202,26 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 8 },
   },
+  {
+    field: "status",
+    label: "状态",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "草稿箱", value: 0 },
+        { label: "审核中", value: 1 },
+        { label: "发布", value: 2 },
+      ],
+    },
+    colProps: { lg: 9, md: 5 },
+  },
+  {
+    field: "flag",
+    label: "产品类型",
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
+    colProps: { lg: 9, md: 5 },
+  },
 ];
 export const articleFormSchema: FormSchema[] = [
   {
@@ -214,7 +246,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "author",
     label: "作者",
     component: "Input",
-    required: true,
+    required: false,
   },
   {
     field: "source",
@@ -237,6 +269,13 @@ export const articleFormSchema: FormSchema[] = [
     },
   },
   {
+    field: "flag",
+    label: "产品类型",
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
+    required: false,
+  },
+  {
     field: "status",
     label: "状态",
     component: "Select",
@@ -250,21 +289,6 @@ export const articleFormSchema: FormSchema[] = [
     },
     colProps: { span: 12 },
     required: true,
-  },
-  {
-    field: "flag",
-    label: "产品分类",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "肉鸡", value: 1 },
-        { label: "柑橘", value: 2 },
-        { label: "兰花", value: 3 },
-        { label: "对虾", value: 4 },
-        { label: "菜心", value: 5 },
-        { label: "鸽子", value: 7 },
-      ],
-    },
   },
   {
     field: "isTop",
@@ -289,6 +313,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "sort",
     label: "排序",
     component: "InputNumber",
+    defaultValue: 50,
     required: false,
   },
   {
@@ -316,6 +341,6 @@ export const articleFormSchema: FormSchema[] = [
       ],
     },
     colProps: { span: 12 },
-    required: true,
+    required: false,
   },
 ];

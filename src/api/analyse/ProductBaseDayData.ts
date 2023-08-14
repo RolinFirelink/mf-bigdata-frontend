@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-20 14:31:54
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-20 17:02:53
+ * @LastEditTime: 2023-08-06 14:43:02
  * @FilePath: \mf-bigdata-frontend\src\api\analyse\ProductBaseDayData.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -70,6 +70,22 @@ export function updateProductBaseDayData(productBaseDayData: ProductBaseDayData)
 export function deleteProductBaseDayData(id: string) {
   return defHttp.delete<ProductBaseDayData>(
     { url: Api.ProductBaseDayData + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.ProductBaseDayData + "/excelUpload",
+      params,
+    },
     { successMessageMode: "message" },
   );
 }

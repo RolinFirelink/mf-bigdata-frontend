@@ -1,7 +1,10 @@
+// import { FieldNames } from "./../../../components/general/Tree/src/types/Tree";
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-import { h } from "vue";
-import { Tag } from "ant-design-vue";
+// import { h } from "vue";
+// import { Tag } from "ant-design-vue";
+import { getDictProps } from "/@/utils/DictUtils";
+
 /**
  * @description: 企业、供货商、销售商和承运商
  * @author cgli
@@ -13,27 +16,6 @@ export const columns: BasicColumn[] = [
     title: "公司名称",
     dataIndex: "companyName",
     width: 120,
-  },
-  {
-    title: "公司类型",
-    dataIndex: "companyType",
-    width: 120,
-    customRender: ({ record }) => {
-      let text = "";
-      switch (record.companyType) {
-        case 1:
-          text = "供应商";
-          break;
-        case 2:
-          text = "销售商";
-          break;
-        case 3:
-          text = "承运商";
-          break;
-      }
-      const color = "#FF9800";
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "法人",
@@ -113,38 +95,94 @@ export const companyFormSchema: FormSchema[] = [
     label: "电子邮箱",
     component: "Input",
   },
+  // {
+  //   field: "address",
+  //   label: "公司地址",
+  //   component: "Cascader",
+  //   componentProps: {
+  //     fieldNames: {
+  //       label: "name",
+  //       value: "id",
+  //       children: "children",
+  //     },
+  //   },
+  //   required: true,
+  //   colProps: { span: 24 },
+  // },
   {
-    field: "address",
-    label: "公司地址",
-    component: "Cascader",
+    field: "country",
+    label: "国家",
+    component: "Select",
     componentProps: {
       fieldNames: {
         label: "name",
         value: "id",
-        children: "children",
       },
     },
-    required: true,
-    colProps: { span: 24 },
   },
   {
-    field: "detail",
-    label: "详细地址",
-    component: "Input",
-    colProps: { span: 24 },
+    field: "province",
+    label: "省份",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
   },
+  {
+    field: "city",
+    label: "城市",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+  },
+  {
+    field: "area",
+    label: "地区",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+  },
+  {
+    field: "street",
+    label: "街道",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+  },
+  // {
+  //   field: "detail",
+  //   label: "详细地址",
+  //   component: "Input",
+  //   colProps: { span: 24 },
+  // },
   {
     field: "companyType",
     label: "公司类型",
-    component: "Select",
+    component: "ApiSelect",
     required: true,
-    componentProps: {
-      options: [
-        { label: "供货商", value: 1 },
-        { label: "销售商", value: 2 },
-        { label: "承运商", value: 3 },
-      ],
-    },
+    // componentProps: {
+    //   options: [
+    //     { label: "供货商", value: 1 },
+    //     { label: "销售商", value: 2 },
+    //     { label: "承运商", value: 3 },
+    //   ],
+    // },
+    componentProps: getDictProps("mk_company_type"),
     colProps: { span: 12 },
   },
   {

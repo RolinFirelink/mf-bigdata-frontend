@@ -43,13 +43,33 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'inclined'">
+          <Tag
+            v-for="item in inclined"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.inclined == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in flag"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <ArticleModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
-  import { toRaw, ref } from "vue";
+  import { onBeforeMount, toRaw, ref } from "vue";
   import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteArticle, getArticleList, batchDeleteArticle } from "/@/api/cms/Article";
@@ -57,6 +77,8 @@
   import ArticleModal from "./ArticleModal.vue";
   import { columns, searchFormSchema } from "./article.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { getDictItems } from "/@/api/sys/DictItem";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
 
   export default {
     name: "ArticleManagement",
@@ -67,10 +89,8 @@
       // 根据路径获取分类id
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
-      let categoryId = Number(path.charAt(path.length - 1));
-      if (categoryId === 0) {
-        categoryId = 10;
-      }
+      let parts = path.split(/[^0-9]+/);
+      let categoryId = parts[parts.length - 1];
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -105,6 +125,25 @@
           dataIndex: "action",
         },
       });
+
+      const inclined = ref<DictItem[]>([]);
+      const flag = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getInclined();
+        getFlag();
+      });
+
+      function getInclined() {
+        getDictItems("mk_article_inclined").then((res) => {
+          inclined.value = res;
+        });
+      }
+
+      function getFlag() {
+        getDictItems("mk_product_type").then((res) => {
+          flag.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -146,6 +185,8 @@
         hasPermission,
         batchDelete,
         selectedIds,
+        inclined,
+        flag,
       };
     },
   };

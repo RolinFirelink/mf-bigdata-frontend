@@ -51,6 +51,16 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'companyType'">
+          <Tag
+            v-for="item in companyType"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.companyType == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <CompanyModal @register="registerModal" @success="handleSuccess" />
@@ -67,6 +77,9 @@
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { uploadExcel } from "/@/api/company/Company";
   import { Upload } from "ant-design-vue";
+  import { onBeforeMount } from "vue";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "CompanyManagement",
@@ -77,7 +90,7 @@
       // 根据路径获取公司类型
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
-      let companyType = path.charAt(path.length - 1);
+      let companyType1 = path.charAt(path.length - 1);
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -90,7 +103,7 @@
         },
         // 额外请求参数
         searchInfo: {
-          companyType: companyType,
+          companyType: companyType1,
         },
         // 多选功能
         rowSelection: {
@@ -112,6 +125,17 @@
           dataIndex: "action",
         },
       });
+
+      const companyType = ref<DictItem[]>([]);
+      onBeforeMount(() => {
+        getCompanyType();
+      });
+
+      function getCompanyType() {
+        getDictItems("mk_company_type").then((res) => {
+          companyType.value = res;
+        });
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -167,6 +191,7 @@
         hasPermission,
         selectedIds,
         batchDelete,
+        companyType,
       };
     },
   };

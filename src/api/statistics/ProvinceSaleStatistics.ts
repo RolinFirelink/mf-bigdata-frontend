@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-15 18:53:54
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-15 19:43:28
+ * @LastEditTime: 2023-08-06 19:05:39
  * @FilePath: \mf-bigdata-frontend\src\api\order\ProvinceSaleStatistics.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -73,6 +73,18 @@ export function updateProvinceSaleStatistics(provinceSaleStatistics: ProvinceSal
 export function deleteProvinceSaleStatistics(id: string) {
   return defHttp.delete<ProvinceSaleStatistics>(
     { url: Api.ProvinceSaleStatistics + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ *
+ * @param params
+ * @returns
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    { url: Api.ProvinceSaleStatistics + "/excelUpload", params },
     { successMessageMode: "message" },
   );
 }

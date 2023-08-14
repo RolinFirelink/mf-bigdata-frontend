@@ -1,3 +1,11 @@
+/*
+ * @Author: DuoLaAMeng Czf141931
+ * @Date: 2023-08-05 20:19:07
+ * @LastEditors: DuoLaAMeng Czf141931
+ * @LastEditTime: 2023-08-05 21:32:46
+ * @FilePath: \mf-bigdata-frontend\src\api\company\ProduceInfo.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /**
  * @description: 企业生产信息表
  * @author cgli
@@ -56,6 +64,22 @@ export function updateProduceInfo(produceInfo: ProduceInfo) {
 export function deleteProduceInfo(id: string) {
   return defHttp.delete<ProduceInfo>(
     { url: Api.ProduceInfo + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.ProduceInfo + "/excelUpload",
+      params,
+    },
     { successMessageMode: "message" },
   );
 }

@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-12 14:45:34
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-12 14:47:53
+ * @LastEditTime: 2023-08-06 17:50:33
  * @FilePath: \mf-bigdata-frontend\src\api\price\ProductPrice.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -74,6 +74,7 @@ export function deleteProductPrice(id: string) {
 }
 
 /**
+<<<<<<< HEAD
  * 产品趋势图数据
  *
  * @param reqProductPrice
@@ -84,4 +85,19 @@ export function getProductPriceTrend(reqProductPrice?: ReqProductPrice) {
     url: Api.ProductPrice + "/public/trend",
     params: reqProductPrice,
   });
+=======
+ * 上传excel数据
+ *
+ * @param params 文件数据
+ * @return
+ */
+export function uploadExcel(params) {
+  return defHttp.upload(
+    {
+      url: Api.ProductPrice + "/excelUpload",
+      params,
+    },
+    { successMessageMode: "message" },
+  );
+>>>>>>> 1ee80b49fbee546e466075d7d0cc8ed984b6e328
 }
