@@ -21,15 +21,15 @@ interface UseFormActionContext {
 }
 
 export function useFormEvents({
-                                emit,
-                                getProps,
-                                formModel,
-                                getSchema,
-                                defaultValueRef,
-                                formElRef,
-                                schemaRef,
-                                handleFormValues
-                              }: UseFormActionContext) {
+  emit,
+  getProps,
+  formModel,
+  getSchema,
+  defaultValueRef,
+  formElRef,
+  schemaRef,
+  handleFormValues,
+}: UseFormActionContext) {
   async function resetFields(): Promise<void> {
     const { resetFunc, submitOnReset } = unref(getProps);
     resetFunc && isFunction(resetFunc) && (await resetFunc());
@@ -108,8 +108,7 @@ export function useFormEvents({
         });
       }
     });
-    validateFields(validKeys).catch((_) => {
-    });
+    validateFields(validKeys).catch((_) => {});
   }
 
   /**
@@ -176,12 +175,12 @@ export function useFormEvents({
     }
 
     const hasField = updateData.every(
-      (item) => item.component === "Divider" || (Reflect.has(item, "field") && item.field)
+      (item) => item.component === "Divider" || (Reflect.has(item, "field") && item.field),
     );
 
     if (!hasField) {
       error(
-        "All children of the form Schema array that need to be updated must contain the `field` field"
+        "All children of the form Schema array that need to be updated must contain the `field` field",
       );
       return;
     }
@@ -197,12 +196,10 @@ export function useFormEvents({
       updateData = [...data];
     }
     const hasField = updateData.every(
-      (item) => item.component === "Divider" || (Reflect.has(item, "field") && item.field)
+      (item) => item.component === "Divider" || (Reflect.has(item, "field") && item.field),
     );
     if (!hasField) {
-      error(
-        "需要更新的表单架构数组的所有子级必须包含“字段”字段"
-      );
+      error("需要更新的表单架构数组的所有子级必须包含“字段”字段");
       return;
     }
     const schema: FormSchema[] = [];
@@ -257,7 +254,9 @@ export function useFormEvents({
   function itemIsDateType(key: string) {
     return unref(getSchema).some((item) => {
       const component = item.component;
-      return item.field === key ? component !== undefined && dateItemType.includes(component) : false;
+      return item.field === key
+        ? component !== undefined && dateItemType.includes(component)
+        : false;
     });
   }
 
@@ -310,6 +309,6 @@ export function useFormEvents({
     removeSchemaByField,
     resetFields,
     setFieldsValue,
-    scrollToField
+    scrollToField,
   };
 }

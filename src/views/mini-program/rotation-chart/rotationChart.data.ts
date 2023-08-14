@@ -3,8 +3,6 @@ import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
-import { imageUrl } from "/@/utils/FileUtils";
-import { getLocalFileUrl } from "/@/api/storage/SysFile";
 /**
  * @description: 轮播图图片
  * @author cgli
@@ -16,7 +14,7 @@ export const columns: BasicColumn[] = [
     title: "图片",
     dataIndex: "imgUrl",
     customRender: ({ record }) => {
-      const imgList = [imageUrl(getLocalFileUrl(record.imgUrl))];
+      const imgList = [record.imgUrl];
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
     },
     width: 60,

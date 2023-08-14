@@ -9,6 +9,14 @@
           color="#d6d6d6"
         />
       </div>
+      <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
+        <Icon
+          icon="ant-design:cloud-upload-outlined"
+          :size="getIconWidth"
+          :style="getImageWrapperStyle"
+          color="#d6d6d6"
+        />
+      </div>
       <img :src="sourceValue" v-if="sourceValue" alt="avatar" />
     </div>
     <a-button
@@ -19,7 +27,7 @@
     >
       {{ btnText ? btnText : t("component.cropper.selectImage") }}
     </a-button>
-
+    <a-button @click="delImg" style="margin-left=5px">删除图片</a-button>
     <CopperModal2
       @register="register"
       @upload-success="handleUploadSuccess"
@@ -63,7 +71,7 @@
     name: "CropperAvatar",
     components: { CopperModal2, Icon },
     props,
-    emits: ["update:value", "change"],
+    emits: ["del-img", "update:value", "change"],
     setup(props, { emit, expose }) {
       const sourceValue = ref(props.value || "");
       const { prefixCls } = useDesign("cropper-avatar");
@@ -96,6 +104,10 @@
         },
       );
 
+      function delImg() {
+        emit("del-img");
+      }
+
       function handleUploadSuccess({ source, data }, fileUrl) {
         sourceValue.value = source;
         emit("change", { source, data }, fileUrl);
@@ -105,6 +117,7 @@
       expose({ openModal: openModal.bind(null, true), closeModal });
 
       return {
+        delImg,
         t,
         prefixCls,
         register,
@@ -132,7 +145,6 @@
       cursor: pointer;
       background: @component-background;
       border: 1px solid @border-color-base;
-
       img {
         width: 100%;
       }
@@ -148,7 +160,6 @@
       background: rgb(0 0 0 / 40%);
       cursor: pointer;
       transition: opacity 0.4s;
-
       ::v-deep(svg) {
         margin: auto;
       }

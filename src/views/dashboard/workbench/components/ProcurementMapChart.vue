@@ -111,27 +111,30 @@
             云浮市: "粤西地区",
           };
           const cityMap = new Map();
-          data.forEach((item) => {
-            let cityData = cityMap.get(item.city);
-            if (!cityData) {
-              // 根据城市查找对应的地区
-              let zone = zoneMapping[item.city] || "";
-              cityData = {
-                coord: cityPoints.get(item.city),
-                name: item.city,
-                // value: item.value,
-                value: item.annualOutput,
-                annualOutput: item.annualOutput,
-                region: item.region,
-                unit: item.outputUnit,
-                zone: zone,
-              };
-            }
-            cityMap.set(item.city, cityData);
-            //筛选后的数据给point
-            console.log("cityData", cityData);
-            // console.log("pointdataGD", pointdataGD);
-          });
+          if (data) {
+            data.forEach((item) => {
+              let cityData = cityMap.get(item.city);
+              if (!cityData) {
+                // 根据城市查找对应的地区
+                let zone = zoneMapping[item.city] || "";
+                cityData = {
+                  coord: cityPoints.get(item.city),
+                  name: item.city,
+                  // value: item.value,
+                  value: item.annualOutput,
+                  annualOutput: item.annualOutput,
+                  region: item.region,
+                  unit: item.outputUnit,
+                  zone: zone,
+                };
+              }
+              cityMap.set(item.city, cityData);
+              //筛选后的数据给point
+              console.log("cityData", cityData);
+              // console.log("pointdataGD", pointdataGD);
+            });
+          }
+
           pointdataGD = Array.from(cityMap.values());
           //动态变化最大产量值
           pointdataGD.forEach((item) => {

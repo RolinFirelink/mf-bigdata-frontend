@@ -18,14 +18,14 @@ interface UseAdvancedContext {
   defaultValueRef: Ref<Recordable>;
 }
 
-export default function({
-                          advanceState,
-                          emit,
-                          getProps,
-                          getSchema,
-                          formModel,
-                          defaultValueRef
-                        }: UseAdvancedContext) {
+export default function ({
+  advanceState,
+  emit,
+  getProps,
+  getSchema,
+  formModel,
+  defaultValueRef,
+}: UseAdvancedContext) {
   const vm = getCurrentInstance();
 
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint();
@@ -60,7 +60,7 @@ export default function({
         debounceUpdateAdvanced();
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   function getAdvanced(itemCol: Partial<ColEx>, itemColSum = 0, isLastAction = false) {
@@ -135,15 +135,15 @@ export default function({
           field: schema.field,
           values: {
             ...unref(defaultValueRef),
-            ...formModel
-          }
+            ...formModel,
+          },
         });
       }
 
       if (isShow && (colProps || baseColProps)) {
         const { itemColSum: sum, isAdvanced } = getAdvanced(
           { ...baseColProps, ...colProps },
-          itemColSum
+          itemColSum,
         );
 
         itemColSum = sum || 0;

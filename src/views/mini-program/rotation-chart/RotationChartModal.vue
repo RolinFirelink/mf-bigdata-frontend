@@ -8,7 +8,7 @@
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
     <CropperImage
       :uploadApi="uploadApi"
-      :value="imageUrl(getLocalFileUrl(imgUrl))"
+      :value="imgUrl"
       :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
       @change="updateImg"
       width="300"
@@ -25,8 +25,6 @@
   import { insertRotationChart, updateRotationChart } from "/@/api/miniProgram/RotationChart";
   import { uploadApi } from "/@/api/storage/Upload";
   import { CropperImage } from "/@/components/general/Cropper";
-  import { imageUrl } from "/@/utils/FileUtils";
-  import { getLocalFileUrl } from "/@/api/storage/SysFile";
   export default {
     name: "RotationChartModal",
     components: { BasicModal, BasicForm, CropperImage },
@@ -46,6 +44,7 @@
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
+          imgUrl.value = data.imgUrl;
           setFieldsValue({
             ...data.record,
           }).then();
@@ -53,9 +52,8 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增轮播图图片" : "编辑轮播图图片"));
 
-      function updateImg({ data }) {
-        console.log(data);
-        imgUrl.value = data;
+      function updateImg({ data }, fileUrl) {
+        imgUrl.value = fileUrl;
       }
 
       async function handleSubmit() {
@@ -81,8 +79,6 @@
       }
 
       return {
-        imageUrl,
-        getLocalFileUrl,
         imgUrl,
         uploadApi,
         updateImg,

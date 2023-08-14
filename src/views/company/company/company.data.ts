@@ -36,16 +36,6 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: "行政区域编码",
-    dataIndex: "areaCode",
-    width: 120,
-  },
-  {
-    title: "公司编码",
-    dataIndex: "companyNo",
-    width: 120,
-  },
-  {
     title: "法人",
     dataIndex: "juridicalPerson",
     width: 120,
@@ -75,11 +65,6 @@ export const columns: BasicColumn[] = [
     dataIndex: "address",
     width: 120,
   },
-  {
-    title: "备注",
-    dataIndex: "remark",
-    width: 120,
-  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -100,12 +85,6 @@ export const companyFormSchema: FormSchema[] = [
   {
     field: "companyName",
     label: "公司名称",
-    component: "Input",
-    required: true,
-  },
-  {
-    field: "companyNo",
-    label: "公司编码",
     component: "Input",
     required: true,
   },

@@ -16,11 +16,6 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "基地编码",
-    dataIndex: "baseNo",
-    width: 120,
-  },
-  {
     title: "企业",
     dataIndex: "companyName",
     width: 120,
@@ -186,12 +181,6 @@ export const productBaseFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: "baseNo",
-    label: "基地编码",
-    component: "Input",
-    required: true,
-  },
-  {
     field: "contacts",
     label: "联系人",
     component: "Input",
@@ -297,7 +286,6 @@ export const productBaseFormSchema: FormSchema[] = [
         { label: "兰花", value: 3 },
         { label: "对虾", value: 4 },
         { label: "菜心", value: 5 },
-        { label: "预制菜", value: 6 },
         { label: "鸽子", value: 7 },
       ],
     },

@@ -7,6 +7,7 @@
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
     <BasicForm @register="registerForm" @submit="handleSubmit" />
+    <AddressSelect />
   </BasicModal>
 </template>
 <script lang="ts">
@@ -17,10 +18,10 @@
   import { insertProductBase, updateProductBase } from "/@/api/company/ProductBase";
   import { getCompanyOptions } from "/@/api/company/Company";
   import { listRegionByPid } from "/@/api/sys/Region";
-
+  import AddressSelect from "/@/components/AddressSelect";
   export default {
     name: "ProductBaseModal",
-    components: { BasicModal, BasicForm },
+    components: { BasicModal, BasicForm, AddressSelect },
     emits: ["success", "register"],
     setup(_, { emit }) {
       const regionTree: any = ref([]);

@@ -13,13 +13,13 @@ export function useItemLabelWidth(schemaItemRef: Ref<FormSchema>, propsRef: Ref<
       labelWidth: globalLabelWidth,
       labelCol: globalLabelCol,
       wrapperCol: globWrapperCol,
-      layout
+      layout,
     } = unref(propsRef);
 
     // If labelWidth is set globally, all items setting
     if ((!globalLabelWidth && !labelWidth && !globalLabelCol) || disabledLabelWidth) {
       labelCol.style = {
-        textAlign: "left"
+        textAlign: "left",
       };
       return { labelCol, wrapperCol };
     }
@@ -35,8 +35,8 @@ export function useItemLabelWidth(schemaItemRef: Ref<FormSchema>, propsRef: Ref<
       labelCol: { style: { width }, ...col },
       wrapperCol: {
         style: { width: layout === "vertical" ? "100%" : `calc(100% - ${width})` },
-        ...wrapCol
-      }
+        ...wrapCol,
+      },
     };
   });
 }

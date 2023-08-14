@@ -125,16 +125,16 @@ export const dataItems: dataItem[] = [
   {
     title: "企业数量",
     id: "02",
-    count: 114514,
+    count: 74,
   },
   {
     title: "产地数量",
     id: "03",
-    count: 10086,
+    count: 74,
   },
   {
     title: "采购商数量",
     id: "04",
-    count: 114,
+    count: 53,
   },
 ];

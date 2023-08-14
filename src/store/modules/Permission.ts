@@ -38,7 +38,7 @@ export const usePermissionStore = defineStore({
     // 菜单列表
     menuList: [],
     //首页
-    homePath: PageEnum.BASE_HOME
+    homePath: PageEnum.BASE_HOME,
   }),
   getters: {
     getPermissions(): Set<string> {
@@ -55,7 +55,7 @@ export const usePermissionStore = defineStore({
     },
     getHomePath(): string {
       return this.homePath;
-    }
+    },
   },
   actions: {
     setPermissions(permissions: Set<string>) {
@@ -125,7 +125,7 @@ export const usePermissionStore = defineStore({
           hideMenu: !menu.isVisible,
           path: formatPath(menu.routePath),
           menuSort: menu.menuSort,
-          icon: menu.menuIcon
+          icon: menu.menuIcon,
         };
         //如果菜单类型是菜单而且是url链接并且是从外部打开，path直接使用外部路径
         if (menu.menuType === MenuType.菜单 && isUrl(menu.component) && menu.isExternal) {
@@ -142,8 +142,8 @@ export const usePermissionStore = defineStore({
             icon: menu.menuIcon,
             hideMenu: !menu.isVisible,
             menuSort: menu.menuSort,
-            ignoreKeepAlive: !menu.isKeepalive
-          }
+            ignoreKeepAlive: !menu.isKeepalive,
+          },
         };
         switch (menu.menuType) {
           case MenuType.目录:
@@ -186,8 +186,8 @@ export const usePermissionStore = defineStore({
             path: index,
             name: menu.id,
             meta: { title: menu.menuName, icon: menu.menuIcon },
-            component: importComponent(menu.component)
-          }
+            component: importComponent(menu.component),
+          },
         ];
         return route;
       };
@@ -199,12 +199,16 @@ export const usePermissionStore = defineStore({
        * @param menuList
        * @param routes
        */
-      function buildMenuRoute(menus: MenuListItem[], menuList: Menu[], routes: AppRouteRecordRaw[]) {
-        for (let menu of menus) {
+      function buildMenuRoute(
+        menus: MenuListItem[],
+        menuList: Menu[],
+        routes: AppRouteRecordRaw[],
+      ) {
+        for (const menu of menus) {
           if (menu.children != null && menu.children.length > 0) {
-            let cMenu: Menu = buildMenu(menu);
+            const cMenu: Menu = buildMenu(menu);
             menuList.push(cMenu);
-            let cRoute: AppRouteRecordRaw = buildRoute(menu);
+            const cRoute: AppRouteRecordRaw = buildRoute(menu);
             routes.push(cRoute);
             cMenu.children = [];
             cRoute.children = [];
@@ -227,11 +231,11 @@ export const usePermissionStore = defineStore({
        */
       function buildChildMenuRoute(menus: MenuListItem[], pMenu: Menu, pRoute: AppRouteRecordRaw) {
         let i = 0;
-        for (let menu of menus) {
-          let cMenu: Menu = buildMenu(menu);
+        for (const menu of menus) {
+          const cMenu: Menu = buildMenu(menu);
           cMenu.isExternal = menu.isExternal === 1 ? true : false;
           pMenu.children?.push(cMenu);
-          let cRoute: AppRouteRecordRaw = buildRoute(menu);
+          const cRoute: AppRouteRecordRaw = buildRoute(menu);
           //如果组件不是外部地址，菜单不是外部打开。采用内部路由path处理
           if (!isUrl(menu.component) || !menu.isExternal) {
             if (i++ == 0) {
@@ -285,8 +289,8 @@ export const usePermissionStore = defineStore({
         router.addRoute(route as unknown as RouteRecordRaw);
       });
       this.setDynamicAddedRoute(true);
-    }
-  }
+    },
+  },
 });
 
 // 需要在设置之外使用

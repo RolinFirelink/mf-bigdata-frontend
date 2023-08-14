@@ -67,7 +67,10 @@
       // 根据路径获取分类id
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
-      let categoryId = path.charAt(path.length - 1);
+      let categoryId = Number(path.charAt(path.length - 1));
+      if (categoryId === 0) {
+        categoryId = 10;
+      }
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
