@@ -17,6 +17,7 @@
   import { insertProductBase, updateProductBase } from "/@/api/company/ProductBase";
   import { getCompanyOptions } from "/@/api/company/Company";
   import { listRegionByPid } from "/@/api/sys/Region";
+  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "ProductBaseModal",
@@ -38,6 +39,7 @@
         isUpdate.value = !!data?.isUpdate;
         load(0, 0);
         setListData();
+        setAttestation();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -53,6 +55,18 @@
           {
             field: "companyId",
             componentProps: { options: companyList },
+          },
+        ]).then();
+      }
+
+      // 设置认证类型
+      async function setAttestation() {
+        const attestationList = await getDictItems("mk_attestation");
+        console.log(attestationList);
+        updateSchema([
+          {
+            field: "attestation",
+            componentProps: { options: attestationList },
           },
         ]).then();
       }
@@ -133,6 +147,8 @@
             }
           }
         }
+        values.attestation = values.attestation.join(";");
+        console.log(values.attestation);
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
           saveProductBase(updateProductBase, values);
@@ -140,7 +156,6 @@
           saveProductBase(insertProductBase, values);
         }
       }
-
       function saveProductBase(save, values) {
         save(values)
           .then(() => {

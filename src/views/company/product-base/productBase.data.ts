@@ -1,7 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-// import { h } from "vue";
-// import { Tag } from "ant-design-vue";
+import { h } from "vue";
+import { Tag } from "ant-design-vue";
 import { getDictProps } from "/@/utils/DictUtils";
 
 /**
@@ -86,23 +86,22 @@ export const columns: BasicColumn[] = [
     dataIndex: "attestation",
     width: 120,
     // customRender: ({ record }) => {
-    //   let text = "";
-    //   switch (record.attestation) {
-    //     case 1:
-    //       text = "绿色";
-    //       break;
-    //     case 2:
-    //       text = "无公害";
-    //       break;
-    //     case 3:
-    //       text = "地理标志";
-    //       break;
-    //     case 4:
-    //       text = "其他";
-    //       break;
+    //   const tags: any = [];
+    //   if (record.attestation) {
+    //     if (record.attestation.indexof(1) !== -1) {
+    //       tags.push(h(Tag, { color: "#05a42d" }, () => "绿色"));
+    //     }
+    //     if (record.attestation.indexof(2) !== -1) {
+    //       tags.push(h(Tag, { color: "#00b2ff" }, () => "无公害"));
+    //     }
+    //     if (record.attestation.indexof(3) !== -1) {
+    //       tags.push(h(Tag, { color: "#F43067" }, () => "地理标志"));
+    //     }
+    //     if (record.attestation.indexof(4) !== -1) {
+    //       tags.push(h(Tag, { color: "#e6c885" }, () => "其他"));
+    //     }
+    //     return h("div", tags);
     //   }
-    //   const color = "#FF9800";
-    //   return h(Tag, { color: color }, () => text);
     // },
   },
   {
@@ -340,16 +339,14 @@ export const productBaseFormSchema: FormSchema[] = [
   {
     field: "attestation",
     label: "认证情况",
-    component: "ApiSelect",
-    // componentProps: {
-    //   options: [
-    //     { label: "绿色", value: 1 },
-    //     { label: "无公害", value: 2 },
-    //     { label: "地理标志", value: 3 },
-    //     { label: "其他", value: 4 },
-    //   ],
-    // },
-    componentProps: getDictProps("mk_attestation"),
+    component: "Select",
+    componentProps: {
+      mode: "multiple",
+      fieldNames: {
+        label: "dictLabel",
+        value: "dictValue",
+      },
+    },
   },
   {
     field: "img",
