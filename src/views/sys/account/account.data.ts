@@ -9,32 +9,32 @@ export const columns: BasicColumn[] = [
   {
     title: "用户名",
     dataIndex: "account",
-    width: 180
+    width: 180,
   },
   {
     title: "昵称",
     dataIndex: "nickname",
-    width: 180
+    width: 180,
   },
   {
     title: "手机号",
     dataIndex: "phone",
-    width: 120
+    width: 120,
   },
   {
     title: "组织",
     dataIndex: "orgName",
-    width: 120
+    width: 120,
   },
   {
     title: "邮箱",
     dataIndex: "email",
-    width: 180
+    width: 180,
   },
   {
     title: "座机",
     dataIndex: "telephone",
-    width: 120
+    width: 120,
   },
   {
     title: "性别",
@@ -46,12 +46,12 @@ export const columns: BasicColumn[] = [
       const color = enable ? "green" : "red";
       const text = enable ? "男" : "女";
       return h(Tag, { color: color }, () => text);
-    }
+    },
   },
   {
     title: "生日",
     dataIndex: "birthday",
-    width: 120
+    width: 120,
   },
   {
     title: "状态",
@@ -77,29 +77,29 @@ export const columns: BasicColumn[] = [
             .finally(() => {
               record.pendingStatus = false;
             });
-        }
+        },
       });
-    }
-  }
+    },
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "account",
     label: "用户名",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "nickname",
     label: "昵称",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "phone",
     label: "手机号",
     component: "Input",
-    colProps: { lg: 4, md: 6 }
+    colProps: { lg: 4, md: 6 },
   },
   {
     field: "status",
@@ -108,49 +108,50 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    colProps: { lg: 4, md: 6 }
-  }
+    colProps: { lg: 4, md: 6 },
+  },
 ];
 export const accountFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "account",
     label: "用户名",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "password",
     label: "密码",
-    component: "InputPassword"
+    component: "InputPassword",
   },
   {
     field: "nickname",
     label: "昵称",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "phone",
     label: "手机号",
-    component: "Input"
+    component: "Input",
   },
   {
     label: "角色",
     field: "roleIds",
     component: "Select",
     componentProps: {
-      mode: "multiple"
+      mode: "multiple",
     },
     rules: [{ required: true, message: "请选择角色", type: "array" }],
-    dynamicDisabled: ((renderCallbackParams: RenderCallbackParams) => renderCallbackParams.values["account"] === "admin" ? true : false)
+    dynamicDisabled: (renderCallbackParams: RenderCallbackParams) =>
+      renderCallbackParams.values["account"] === "admin" ? true : false,
   },
   {
     field: "orgId",
@@ -160,21 +161,21 @@ export const accountFormSchema: FormSchema[] = [
       fieldNames: {
         label: "orgName",
         key: "id",
-        value: "id"
+        value: "id",
       },
-      getPopupContainer: () => document.body
+      getPopupContainer: () => document.body,
     },
-    required: true
+    required: true,
   },
   {
     label: "邮箱",
     field: "email",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "telephone",
     label: "座机",
-    component: "Input"
+    component: "Input",
   },
   {
     field: "birthday",
@@ -182,8 +183,8 @@ export const accountFormSchema: FormSchema[] = [
     component: "DatePicker",
     componentProps: {
       valueFormat: "YYYY-MM-DD",
-      format: "YYYY-MM-DD"
-    }
+      format: "YYYY-MM-DD",
+    },
   },
   {
     field: "sex",
@@ -193,10 +194,10 @@ export const accountFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "男", value: 1 },
-        { label: "女", value: 0 }
-      ]
+        { label: "女", value: 0 },
+      ],
     },
-    required: true
+    required: true,
   },
   {
     field: "status",
@@ -206,15 +207,15 @@ export const accountFormSchema: FormSchema[] = [
     componentProps: {
       options: [
         { label: "启用", value: 0 },
-        { label: "停用", value: 1 }
-      ]
+        { label: "停用", value: 1 },
+      ],
     },
-    required: true
+    required: true,
   },
   {
     field: "remark",
     label: "备注",
     component: "InputTextArea",
-    colProps: { span: 24 }
-  }
+    colProps: { span: 24 },
+  },
 ];

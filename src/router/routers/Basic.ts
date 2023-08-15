@@ -3,7 +3,7 @@ import {
   REDIRECT_NAME,
   LAYOUT,
   EXCEPTION_COMPONENT,
-  PAGE_NOT_FOUND_NAME
+  PAGE_NOT_FOUND_NAME,
 } from "/@/router/Constant";
 import { PageEnum } from "/@/enums/PageEnum";
 import { t } from "/@/hooks/web/UseI18n";
@@ -15,8 +15,8 @@ export const RootRoute = (redirect: string = PageEnum.BASE_HOME): AppRouteRecord
     name: "Root",
     redirect: redirect,
     meta: {
-      title: "Root"
-    }
+      title: "Root",
+    },
   };
 };
 
@@ -26,8 +26,8 @@ export const LoginRoute: AppRouteRecordRaw = {
   name: "Login",
   component: () => import("/@/views/sys/login/Login.vue"),
   meta: {
-    title: t("routes.basic.login")
-  }
+    title: t("routes.basic.login"),
+  },
 };
 
 //错误登录路由
@@ -36,8 +36,8 @@ export const ErrorLoginRoute: AppRouteRecordRaw = {
   name: "ErrorLogin",
   component: () => import("/@/views/sys/login/Login.vue"),
   meta: {
-    title: t("routes.basic.login")
-  }
+    title: t("routes.basic.login"),
+  },
 };
 
 //oauth2登录
@@ -46,8 +46,8 @@ export const Oauth2Route: AppRouteRecordRaw = {
   name: "Oauth2",
   component: () => import("/@/views/sys/login/Oauth2.vue"),
   meta: {
-    title: "oauth2"
-  }
+    title: "oauth2",
+  },
 };
 
 // 404 on a page
@@ -58,7 +58,7 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   meta: {
     title: "ErrorPage",
     hideBreadcrumb: true,
-    hideMenu: true
+    hideMenu: true,
   },
   children: [
     {
@@ -68,10 +68,10 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
       meta: {
         title: "ErrorPage",
         hideBreadcrumb: true,
-        hideMenu: true
-      }
-    }
-  ]
+        hideMenu: true,
+      },
+    },
+  ],
 };
 
 export const REDIRECT_ROUTE: AppRouteRecordRaw = {
@@ -81,7 +81,7 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
   meta: {
     title: REDIRECT_NAME,
     hideBreadcrumb: true,
-    hideMenu: true
+    hideMenu: true,
   },
   children: [
     {
@@ -90,8 +90,8 @@ export const REDIRECT_ROUTE: AppRouteRecordRaw = {
       component: () => import("/@/views/sys/redirect/index.vue"),
       meta: {
         title: REDIRECT_NAME,
-        hideBreadcrumb: true
-      }
-    }
-  ]
+        hideBreadcrumb: true,
+      },
+    },
+  ],
 };

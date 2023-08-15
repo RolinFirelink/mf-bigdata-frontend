@@ -89,7 +89,6 @@
       // 根据路径获取分类id
       let router = useRouter();
       let path = toRaw(router).currentRoute.value.fullPath;
-      // let categoryId = path.charAt(path.length - 1);`
       let parts = path.split(/[^0-9]+/);
       let categoryId = parts[parts.length - 1];
       const { hasPermission } = usePermission();

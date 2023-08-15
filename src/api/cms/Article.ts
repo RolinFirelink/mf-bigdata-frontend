@@ -75,6 +75,16 @@ export function batchDeleteArticle(ids: string) {
 }
 
 /**
+ * 获取文章
+ *
+ * @param id 唯一ID
+ * @return article 文章
+ */
+export const getArtilce = (id: string) => {
+  return defHttp.get<string>({ url: Api.Article + "/" + id });
+};
+
+/**
  * 获取文章内容
  *
  * @param id 唯一ID

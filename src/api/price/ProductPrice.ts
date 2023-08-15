@@ -17,6 +17,7 @@ import {
   ProductPrice,
   ReqProductPrice,
   ProductPricePageModel,
+  ProductPriceTrend,
 } from "/@/api/price/model/ProductPriceModel";
 
 enum Api {
@@ -73,6 +74,18 @@ export function deleteProductPrice(id: string) {
 }
 
 /**
+ * 产品趋势图数据
+ *
+ * @param reqProductPrice
+ * @return
+ */
+export function getProductPriceTrend(reqProductPrice?: ReqProductPrice) {
+  return defHttp.get<Array<ProductPriceTrend>>({
+    url: Api.ProductPrice + "/public/trend",
+    params: reqProductPrice,
+  });
+}
+/*
  * 上传excel数据
  *
  * @param params 文件数据
@@ -80,10 +93,7 @@ export function deleteProductPrice(id: string) {
  */
 export function uploadExcel(params) {
   return defHttp.upload(
-    {
-      url: Api.ProductPrice + "/excelUpload",
-      params,
-    },
+    { url: Api.ProductPrice + "/excelUpload", params },
     { successMessageMode: "message" },
   );
 }

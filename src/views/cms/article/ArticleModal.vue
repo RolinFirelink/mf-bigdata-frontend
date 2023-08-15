@@ -6,8 +6,17 @@
 -->
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+    <CropperImage
+      :uploadApi="uploadApi"
+      @del-img="imgUrl = ''"
+      :value="imgUrl"
+      :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+      @change="updateImg"
+      width="300"
+      height="150"
+    />
     <BasicForm @register="registerForm" @submit="handleSubmit" />
-    <ArticleContent ref="articleContent" v-if="dialogVisible" style="z-index: 100" />
+    <ArticleContent ref="articleContent" style="z-index: 100" />
   </BasicModal>
 </template>
 <script lang="ts">
@@ -18,14 +27,18 @@
   import { insertArticle, updateArticle } from "/@/api/cms/Article";
   import { getArticleCategoryList } from "/@/api/cms/ArticleCategory";
   import ArticleContent from "./ArticleContent.vue";
-
+  import { uploadApi } from "/@/api/storage/Upload";
+  import { CropperImage } from "/@/components/general/Cropper";
+  import { imageUrl } from "/@/utils/FileUtils";
+  import { getLocalFileUrl } from "/@/api/storage/SysFile";
   export default {
     name: "ArticleModal",
-    components: { BasicModal, BasicForm, ArticleContent },
+    components: { BasicModal, BasicForm, ArticleContent, CropperImage },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      //图片地址
+      const imgUrl = ref("");
       // 编辑器组件
-      const dialogVisible = ref(true);
       const articleContent = ref();
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
@@ -39,14 +52,16 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
-        // 打开编辑器
-        // articleContent.value.show();
+        articleContent.value.show();
+        // 清除编辑器的内容
+        articleContent.value.clearContent();
+        imgUrl.value = "";
         if (unref(isUpdate)) {
           // 获取文章内容
           articleContent.value.getContent(data.record.id);
+          imgUrl.value = data.record.coverImg;
         }
         setTreeData();
-
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -65,11 +80,18 @@
           },
         ]).then();
       }
+
+      function updateImg({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        imgUrl.value = fileUrl;
+      }
+
       async function handleSubmit() {
+        articleContent.value.closeEdit();
         let values = await validate();
         // 设置文章内容
         values.content = encodeURIComponent(articleContent.value.valueHtml);
-
+        values.coverImg = imgUrl.value;
         setModalProps({ confirmLoading: true });
 
         if (unref(isUpdate)) {
@@ -83,26 +105,24 @@
         save(values)
           .then(() => {
             emit("success");
-            // 关闭编辑器
-            // articleContent.value.closeEditor();
             closeModal();
           })
           .finally(() => {
             setModalProps({ confirmLoading: false });
           });
       }
-      function changeShow() {
-        dialogVisible.value = !dialogVisible.value;
-      }
 
       return {
+        imageUrl,
+        getLocalFileUrl,
+        imgUrl,
+        uploadApi,
+        updateImg,
         registerModal,
         registerForm,
         getTitle,
         handleSubmit,
         articleContent,
-        dialogVisible,
-        changeShow,
       };
     },
   };

@@ -1,5 +1,11 @@
 import { defHttp } from "/@/utils/http/axios";
-import { LoginParams, AccessToken, SsoUser, SsoUserPageModel, OnlineUserPageModel } from "./model/UserModel";
+import {
+  LoginParams,
+  AccessToken,
+  SsoUser,
+  SsoUserPageModel,
+  OnlineUserPageModel,
+} from "./model/UserModel";
 import { MessageMode } from "/#/axios";
 import { ContentTypeEnum } from "/@/enums/HttpEnum";
 import { ReqPage } from "/@/api/model/BaseModel";
@@ -14,7 +20,7 @@ enum Api {
   SendMsg = "/oauth2/sendMsg",
   Permissions = "/oauth2/user/permissions",
   SetStatus = "/oauth2/user/status",
-  Online = "/oauth2/user/online"
+  Online = "/oauth2/user/online",
 }
 
 /**
@@ -25,11 +31,11 @@ export function loginApi(params: LoginParams, mode: MessageMode = "modal") {
     {
       url: Api.Login,
       params,
-      headers: { "Content-Type": ContentTypeEnum.FORM_URLENCODED }
+      headers: { "Content-Type": ContentTypeEnum.FORM_URLENCODED },
     },
     {
-      errorMessageMode: mode
-    }
+      errorMessageMode: mode,
+    },
   );
 }
 
@@ -67,7 +73,10 @@ export function logoutUser(token: string) {
  * @param account
  */
 export const isAccountExist = (account: string) => {
-  return defHttp.get<any>({ url: `${Api.IsAccountExist}/${account}` }, { errorMessageMode: "none" });
+  return defHttp.get<any>(
+    { url: `${Api.IsAccountExist}/${account}` },
+    { errorMessageMode: "none" },
+  );
 };
 
 export const getUserList = (params?: SsoUser) => {
@@ -83,15 +92,18 @@ export function updateUser(params: SsoUser) {
 }
 
 export function deleteUser(params: string) {
-  return defHttp.delete<SsoUser>({ url: `${Api.User}/${params}` }, { successMessageMode: "message" });
+  return defHttp.delete<SsoUser>(
+    { url: `${Api.User}/${params}` },
+    { successMessageMode: "message" },
+  );
 }
 
-export function changePwd(params: { userId: string, oldPwd?: string, newPwd: string }) {
+export function changePwd(params: { userId: string; oldPwd?: string; newPwd: string }) {
   return defHttp.put({ url: Api.Pwd, params }, { successMessageMode: "message" });
 }
 
 export const setUserStatus = (userId: string, status: number) => {
-  return defHttp.put<Boolean>({ url: Api.SetStatus, params: { "id": userId, "status": status } });
+  return defHttp.put<Boolean>({ url: Api.SetStatus, params: { id: userId, status: status } });
 };
 
 export const getOnlineList = (params?: ReqPage) => {

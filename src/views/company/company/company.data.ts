@@ -18,32 +18,6 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "公司类型",
-    dataIndex: "companyType",
-    width: 120,
-    // customRender: ({ record }) => {
-    //   let text = "";
-    //   switch (record.companyType) {
-    //     case 1:
-    //       text = "供应商";
-    //       break;
-    //     case 2:
-    //       text = "销售商";
-    //       break;
-    //     case 3:
-    //       text = "承运商";
-    //       break;
-    //   }
-    //   const color = "#FF9800";
-    //   return h(Tag, { color: color }, () => record.companyType);
-    // },
-  },
-  {
-    title: "行政区域编码",
-    dataIndex: "areaCode",
-    width: 120,
-  },
-  {
     title: "法人",
     dataIndex: "juridicalPerson",
     width: 120,
@@ -71,11 +45,6 @@ export const columns: BasicColumn[] = [
   {
     title: "公司地址",
     dataIndex: "address",
-    width: 120,
-  },
-  {
-    title: "备注",
-    dataIndex: "remark",
     width: 120,
   },
 ];
@@ -126,20 +95,6 @@ export const companyFormSchema: FormSchema[] = [
     label: "电子邮箱",
     component: "Input",
   },
-  // {
-  //   field: "address",
-  //   label: "公司地址",
-  //   component: "Cascader",
-  //   componentProps: {
-  //     fieldNames: {
-  //       label: "name",
-  //       value: "id",
-  //       children: "children",
-  //     },
-  //   },
-  //   required: true,
-  //   colProps: { span: 24 },
-  // },
   {
     field: "country",
     label: "国家",
@@ -195,24 +150,11 @@ export const companyFormSchema: FormSchema[] = [
       },
     },
   },
-  // {
-  //   field: "detail",
-  //   label: "详细地址",
-  //   component: "Input",
-  //   colProps: { span: 24 },
-  // },
   {
     field: "companyType",
     label: "公司类型",
     component: "ApiSelect",
     required: true,
-    // componentProps: {
-    //   options: [
-    //     { label: "供货商", value: 1 },
-    //     { label: "销售商", value: 2 },
-    //     { label: "承运商", value: 3 },
-    //   ],
-    // },
     componentProps: getDictProps("mk_company_type"),
     colProps: { span: 12 },
   },

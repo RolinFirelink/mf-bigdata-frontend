@@ -2,7 +2,7 @@ export default {
   footer: { onlinePreview: "在线预览", onlineDocument: "在线文档" },
   header: {
     // user dropdown
-    dropdownItemDoc: "文档",
+    // dropdownItemDoc: "文档",
     dropdownUserInfo: "个人信息",
     dropdownItemLoginOut: "退出系统",
     dropdownItemChangePwd: "修改密码",
@@ -20,7 +20,7 @@ export default {
     lockScreen: "锁定屏幕",
     lockScreenBtn: "锁定",
 
-    home: "首页"
+    home: "首页",
   },
   multipleTab: {
     reload: "重新加载",
@@ -28,7 +28,7 @@ export default {
     closeLeft: "关闭左侧标签页",
     closeRight: "关闭右侧标签页",
     closeOther: "关闭其它标签页",
-    closeAll: "关闭全部标签页"
+    closeAll: "关闭全部标签页",
   },
   setting: {
     // content mode
@@ -112,6 +112,6 @@ export default {
     triggerHover: "悬停",
     triggerClick: "点击",
 
-    mixSidebarFixed: "固定展开菜单"
-  }
+    mixSidebarFixed: "固定展开菜单",
+  },
 };

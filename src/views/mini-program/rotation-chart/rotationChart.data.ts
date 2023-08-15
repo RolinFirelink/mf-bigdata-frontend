@@ -2,6 +2,7 @@ import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
+import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
 /**
  * @description: 轮播图图片
  * @author cgli
@@ -12,7 +13,11 @@ export const columns: BasicColumn[] = [
   {
     title: "图片",
     dataIndex: "imgUrl",
-    width: 120,
+    customRender: ({ record }) => {
+      const imgList = [record.imgUrl];
+      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
+    },
+    width: 60,
   },
   {
     title: "跳转路径",
@@ -69,12 +74,6 @@ export const rotationChartFormSchema: FormSchema[] = [
     label: "唯一ID",
     component: "Input",
     show: false,
-  },
-  {
-    field: "imgUrl",
-    label: "图片地址",
-    component: "Input",
-    required: true,
   },
   {
     field: "path",

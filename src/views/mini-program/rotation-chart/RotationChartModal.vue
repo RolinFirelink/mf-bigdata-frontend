@@ -6,6 +6,14 @@
 -->
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+    <CropperImage
+      :uploadApi="uploadApi"
+      :value="imgUrl"
+      :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+      @change="updateImg"
+      width="300"
+      height="150"
+    />
     <BasicForm @register="registerForm" @submit="handleSubmit" />
   </BasicModal>
 </template>
@@ -15,12 +23,14 @@
   import { rotationChartFormSchema } from "./rotationChart.data";
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertRotationChart, updateRotationChart } from "/@/api/miniProgram/RotationChart";
-
+  import { uploadApi } from "/@/api/storage/Upload";
+  import { CropperImage } from "/@/components/general/Cropper";
   export default {
     name: "RotationChartModal",
-    components: { BasicModal, BasicForm },
+    components: { BasicModal, BasicForm, CropperImage },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      const imgUrl = ref("");
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 100,
@@ -34,6 +44,7 @@
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
         if (unref(isUpdate)) {
+          imgUrl.value = data.imgUrl;
           setFieldsValue({
             ...data.record,
           }).then();
@@ -41,9 +52,14 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增轮播图图片" : "编辑轮播图图片"));
 
+      function updateImg({ data }, fileUrl) {
+        imgUrl.value = fileUrl;
+      }
+
       async function handleSubmit() {
         let values = await validate();
         setModalProps({ confirmLoading: true });
+        values.imgUrl = imgUrl.value;
         if (unref(isUpdate)) {
           saveRotationChart(updateRotationChart, values);
         } else {
@@ -63,6 +79,9 @@
       }
 
       return {
+        imgUrl,
+        uploadApi,
+        updateImg,
         registerModal,
         registerForm,
         getTitle,

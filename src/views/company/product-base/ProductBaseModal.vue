@@ -6,6 +6,15 @@
 -->
 <template>
   <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+    <CropperImage
+      :uploadApi="uploadApi"
+      @del-img="imgUrl = ''"
+      :value="imgUrl"
+      :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+      @change="updateImg"
+      width="300"
+      height="150"
+    />
     <BasicForm @register="registerForm" @submit="handleSubmit" />
   </BasicModal>
 </template>
@@ -16,15 +25,21 @@
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertProductBase, updateProductBase } from "/@/api/company/ProductBase";
   import { getCompanyOptions } from "/@/api/company/Company";
-  import { listRegionByPid } from "/@/api/sys/Region";
   import { getDictItems } from "/@/api/sys/DictItem";
-
+  import { imageUrl } from "/@/utils/FileUtils";
+  import { getLocalFileUrl } from "/@/api/storage/SysFile";
+  import { uploadApi } from "/@/api/storage/Upload";
+  import { CropperImage } from "/@/components/general/Cropper";
+  import { listRegionByPid, getRegionById } from "/@/api/sys/Region";
   export default {
     name: "ProductBaseModal",
-    components: { BasicModal, BasicForm },
+    components: { BasicModal, BasicForm, CropperImage },
     emits: ["success", "register"],
     setup(_, { emit }) {
+      //图片地址
+      const imgUrl = ref("");
       const regionList: any = ref([]);
+      const attestationList: any = ref([]);
       const isUpdate = ref(true);
       const [registerForm, { resetFields, setFieldsValue, validate, updateSchema }] = useForm({
         labelWidth: 100,
@@ -37,10 +52,39 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
+        imgUrl.value = "";
+        //加载地址
         load(0, 0);
-        setListData();
+        //设置公司列表
+        setCompanyList();
+        //设置认证情况列表
         setAttestation();
         if (unref(isUpdate)) {
+          if (data.record.areaCode) {
+            const pids = getRegionData(data.record.areaCode);
+            const pidList = (await pids).split(",");
+            pidList.forEach((item) => {
+              console.log(item);
+            });
+            data.record.country = pidList[0];
+            load(data.record.country, 1);
+            data.record.province = pidList[1];
+            load(data.record.province, 2);
+            data.record.city = pidList[2];
+            load(data.record.city, 3);
+            data.record.area = pidList[3];
+            load(data.record.area, 4);
+            data.record.street = pidList[4];
+          }
+          if (data.record.attestation) {
+            const dictCodeList = data.record.attestation.split(";");
+            data.record.attestation = dictCodeList.map((item) => {
+              return Number(item);
+            });
+          } else {
+            data.record.attestation = [];
+          }
+          imgUrl.value = data.record.img;
           setFieldsValue({
             ...data.record,
           }).then();
@@ -48,8 +92,13 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? "新增产品基地" : "编辑产品基地"));
 
+      function updateImg({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        imgUrl.value = fileUrl;
+      }
+
       // 获取并设置供应商列表数据
-      async function setListData() {
+      async function setCompanyList() {
         const companyList = await getCompanyOptions(1);
         updateSchema([
           {
@@ -59,17 +108,21 @@
         ]).then();
       }
 
-      // 设置认证类型
+      // 设置认证类型列表
       async function setAttestation() {
-        const attestationList = await getDictItems("mk_attestation");
-        console.log(attestationList);
+        attestationList.value = await getDictItems("mk_attestation");
         updateSchema([
           {
             field: "attestation",
-            componentProps: { options: attestationList },
+            componentProps: { options: attestationList.value },
           },
         ]).then();
       }
+
+      const getRegionData = async (id) => {
+        const data = await getRegionById(id);
+        return data.pids;
+      };
 
       const load = async (pid, index) => {
         regionList.value[index] = await listRegionByPid(pid);
@@ -125,6 +178,7 @@
       };
       async function handleSubmit() {
         let values = await validate();
+        console.log("values", values);
         if (values.country) {
           //选择了国家
           values.areaCode = values.country;
@@ -148,7 +202,7 @@
           }
         }
         values.attestation = values.attestation.join(";");
-        console.log(values.attestation);
+        values.img = imgUrl.value;
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {
           saveProductBase(updateProductBase, values);
@@ -168,8 +222,15 @@
       }
 
       return {
+        imageUrl,
+        getLocalFileUrl,
+        uploadApi,
+        attestationList,
         regionList,
+        imgUrl,
         load,
+        updateImg,
+        setAttestation,
         registerModal,
         registerForm,
         getTitle,

@@ -10,11 +10,11 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     VITE_GLOB_APP_SHORT_NAME,
     VITE_GLOB_LOGIN_TYPE,
     VITE_GLOB_OAUTH2_URL,
-    VITE_GLOB_OAUTH2_REDIRECT_URI
+    VITE_GLOB_OAUTH2_REDIRECT_URI,
   } = getAppEnvConfig();
   if (!/[a-zA-Z\_]*/.test(VITE_GLOB_APP_SHORT_NAME)) {
     warn(
-      `VITE_GLOB_APP_SHORT_NAME Variables can only be characters/underscores, please modify in the environment variables and re-running.`
+      `VITE_GLOB_APP_SHORT_NAME Variables can only be characters/underscores, please modify in the environment variables and re-running.`,
     );
   }
   // 采用全局配置
@@ -24,7 +24,7 @@ export const useGlobSetting = (): Readonly<GlobConfig> => {
     shortName: VITE_GLOB_APP_SHORT_NAME,
     loginType: VITE_GLOB_LOGIN_TYPE,
     oauth2Url: VITE_GLOB_OAUTH2_URL,
-    oauth2RedirectUri: VITE_GLOB_OAUTH2_REDIRECT_URI
+    oauth2RedirectUri: VITE_GLOB_OAUTH2_REDIRECT_URI,
   };
   return glob as Readonly<GlobConfig>;
 };

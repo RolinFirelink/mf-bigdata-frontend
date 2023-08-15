@@ -38,7 +38,7 @@ function genType() {
 export function setComponentRuleType(
   rule: RuleObject,
   component: ComponentType,
-  valueFormat: string
+  valueFormat: string,
 ) {
   if (["DatePicker", "MonthPicker", "WeekPicker", "TimePicker"].includes(component)) {
     rule.type = valueFormat ? "string" : "object";

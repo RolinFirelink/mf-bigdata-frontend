@@ -3,7 +3,6 @@
     <template #extra>
       <a-button type="link" size="small">更多</a-button>
     </template>
-
     <CardGrid v-for="item in items" :key="item.title" class="!md:w-1/3 !w-full">
       <span class="flex">
         <Icon :icon="item.icon" :color="item.color" size="30" />
@@ -21,12 +20,9 @@
   import { defineComponent } from "vue";
   import { Card, CardGrid } from "ant-design-vue";
   import { Icon } from "/@/components/general/Icon";
-  import { groupItems } from "./Data";
 
   export default defineComponent({
     components: { Card, CardGrid, Icon },
-    setup() {
-      return { items: groupItems };
-    },
+    setup() {},
   });
 </script>

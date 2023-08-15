@@ -13,7 +13,7 @@ import { usePermissionStore } from "/@/store/modules/Permission";
 import { isArray } from "/@/utils/Is";
 import { h } from "vue";
 import { Nullable } from "/@/utils/Types";
-
+``;
 interface UserState {
   userInfo: Nullable<SsoUser>;
   token?: string;
@@ -157,7 +157,15 @@ export const useUserStore = defineStore({
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
+      // this.clear();
       goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
+    //清空cookie、本地存储等
+    clear() {
+      document.cookie = "";
+      localStorage.clear();
+      sessionStorage.clear();
+      console.log("清除cookie");
     },
 
     /**

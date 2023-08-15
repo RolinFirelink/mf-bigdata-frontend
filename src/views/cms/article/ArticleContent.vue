@@ -1,5 +1,5 @@
 <template>
-  <div style="border: 1px solid #ccc">
+  <div style="border: 1px solid #ccc" v-if="editorVisible">
     <Toolbar
       style="border-bottom: 1px solid #ccc"
       :editor="editorRef"
@@ -22,7 +22,7 @@
   import { onBeforeUnmount, ref, shallowRef } from "vue";
   import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
   import { getArticleContent } from "/@/api/cms/Article";
-
+  import { uploadApi } from "/@/api/storage/Upload";
   export default {
     components: { Editor, Toolbar },
 
@@ -36,8 +36,31 @@
       const valueHtml = ref("");
 
       const toolbarConfig = {};
-      const editorConfig = { placeholder: "请输入内容..." };
-
+      const editorConfig = { placeholder: "请输入内容...", MENU_CONF: {} };
+      editorConfig.MENU_CONF["uploadImage"] = {
+        // 自定义选择图片函数
+        async customUpload(file, insertFn) {
+          const data = await uploadApi({
+            file: file,
+            fileName: file.name,
+            isPrivate: 0,
+            path: "article/img",
+          });
+          insertFn(data.fileUrl, data.fileName, data.fileUrl);
+        },
+      };
+      editorConfig.MENU_CONF["uploadVideo"] = {
+        // 自定义选择图片函数
+        async customUpload(file, insertFn) {
+          const data = await uploadApi({
+            file: file,
+            fileName: file.name,
+            isPrivate: 0,
+            path: "article/video",
+          });
+          insertFn(data.fileUrl, "", "");
+        },
+      };
       // 组件销毁时，也及时销毁编辑器
       onBeforeUnmount(() => {
         const editor = editorRef.value;
@@ -58,17 +81,32 @@
       };
 
       async function getContent(id) {
-        valueHtml.value = decodeURIComponent((await getArticleContent(id)) || "");
+        const content = await getArticleContent(id);
+        if (isEncoded(content)) {
+          valueHtml.value = decodeURIComponent(content);
+        } else {
+          valueHtml.value = content;
+        }
+      }
+      function isEncoded(str) {
+        try {
+          decodeURIComponent(str);
+          return true;
+        } catch (e) {
+          return false;
+        }
       }
 
-      const closeEditor = () => {
+      function closeEdit() {
         editorVisible.value = false;
-        const editor = editorRef.value;
-        if (editor == null) return;
-        editor.destroy();
+      }
+
+      const clearContent = () => {
+        valueHtml.value = "";
       };
 
       return {
+        closeEdit,
         editorRef,
         valueHtml,
         mode: "default", // 或 'simple'
@@ -77,10 +115,15 @@
         handleCreated,
         getContent,
         editorVisible,
-        closeEditor,
+        clearContent,
         show,
         handleChanged,
       };
     },
   };
 </script>
+<style scoped>
+  .w-e-text-container {
+    height: 700px !important; /*!important是重点，因为原div是行内样式设置的高度300px*/
+  }
+</style>

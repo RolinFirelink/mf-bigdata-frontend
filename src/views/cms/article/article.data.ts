@@ -3,6 +3,7 @@ import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
 import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
+import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
 import { getDictProps } from "/@/utils/DictUtils";
 
 /**
@@ -38,9 +39,13 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "封面图片地址",
+    title: "图片",
     dataIndex: "coverImg",
-    width: 120,
+    customRender: ({ record }) => {
+      const imgList = [record.coverImg];
+      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
+    },
+    width: 60,
   },
   {
     title: "倾向",
@@ -89,6 +94,29 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: "倾向性",
+    dataIndex: "inclined",
+    width: 120,
+    customRender: ({ record }) => {
+      let color = "";
+      let text = "";
+      const inclined = record.inclined;
+      const inclinedList = [
+        { value: 1, text: "正面", color: "green" },
+        { value: 2, text: "中性", color: "yellow" },
+        { value: 3, text: "负面", color: "red" },
+      ];
+      inclinedList.forEach((item) => {
+        if (inclined === item.value) {
+          color = item.color;
+          text = item.text;
+          return;
+        }
+      });
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
     title: "点击数",
     dataIndex: "clickNum",
     width: 120,
@@ -103,16 +131,6 @@ export const columns: BasicColumn[] = [
     dataIndex: "startTime",
     width: 120,
   },
-  {
-    title: "发布结束期",
-    dataIndex: "endTime",
-    width: 120,
-  },
-  // {
-  //   title: "信息类型",
-  //   dataIndex: "mediaType",
-  //   width: 120,
-  // },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -120,19 +138,34 @@ export const searchFormSchema: FormSchema[] = [
     field: "title",
     label: "标题",
     component: "Input",
-    colProps: { lg: 9, md: 5 },
+    colProps: { lg: 8, md: 5 },
   },
   {
     field: "author",
     label: "作者",
     component: "Input",
-    colProps: { lg: 9, md: 5 },
+    colProps: { lg: 8, md: 5 },
+  },
+  {
+    field: "flag",
+    label: "产品分类",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "肉鸡", value: 1 },
+        { label: "柑橘", value: 2 },
+        { label: "兰花", value: 3 },
+        { label: "对虾", value: 4 },
+        { label: "菜心", value: 5 },
+        { label: "鸽子", value: 7 },
+      ],
+    },
   },
   {
     field: "source",
     label: "来源",
     component: "Input",
-    colProps: { lg: 9, md: 5 },
+    colProps: { lg: 8, md: 5 },
   },
   {
     field: "[startTime, endTime]",
@@ -154,7 +187,20 @@ export const searchFormSchema: FormSchema[] = [
         ["最近3个月"]: [dateUtil().subtract(3, "months"), dateUtil()],
       },
     },
-    colProps: { lg: 12, md: 8 },
+    colProps: { lg: 8, md: 8 },
+  },
+  {
+    field: "inclined",
+    label: "倾向性",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "正面", value: 1 },
+        { label: "中性", value: 2 },
+        { label: "负面", value: 3 },
+      ],
+    },
+    colProps: { span: 8 },
   },
   {
     field: "status",
@@ -206,7 +252,7 @@ export const articleFormSchema: FormSchema[] = [
     field: "source",
     label: "来源",
     component: "Input",
-    required: true,
+    required: false,
   },
   {
     field: "categoryId",
@@ -223,12 +269,6 @@ export const articleFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "coverImg",
-    label: "封面图片地址",
-    component: "Input",
-    required: false,
-  },
-  {
     field: "flag",
     label: "产品类型",
     component: "ApiSelect",
@@ -242,7 +282,7 @@ export const articleFormSchema: FormSchema[] = [
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: "草稿箱", value: 0 },
+        { label: "草稿", value: 0 },
         { label: "审核中", value: 1 },
         { label: "发布", value: 2 },
       ],
@@ -264,24 +304,10 @@ export const articleFormSchema: FormSchema[] = [
     colProps: { span: 12 },
     required: true,
   },
-  // {
-  //   field: "contentModel",
-  //   label: "内容模式",
-  //   component: "RadioButtonGroup",
-  //   defaultValue: 0,
-  //   componentProps: {
-  //     options: [
-  //       { label: "标准", value: 0 },
-  //       { label: "定制", value: 1 },
-  //     ],
-  //   },
-  //   colProps: { span: 12 },
-  // },
   {
     field: "clickNum",
     label: "点击数",
-    component: "InputNumber",
-    defaultValue: 0,
+    component: "Input",
   },
   {
     field: "sort",
@@ -303,27 +329,18 @@ export const articleFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: "endTime",
-    label: "发布结束时间",
-    component: "DatePicker",
+    field: "inclined",
+    label: "倾向性",
+    component: "Select",
+    defaultValue: 2,
     componentProps: {
-      format: "YYYY-MM-DD HH:mm:ss",
-      placeholder: "发布时间",
-      showTime: true,
+      options: [
+        { label: "正面", value: 1 },
+        { label: "中性", value: 2 },
+        { label: "负面", value: 3 },
+      ],
     },
-    colProps: { lg: 12, md: 8 },
+    colProps: { span: 12 },
+    required: false,
   },
-  // {
-  //   field: "mediaType",
-  //   label: "信息类型",
-  //   component: "Select",
-  //   componentProps: {
-  //     options: [
-  //       { label: "文本", value: "文本" },
-  //       { label: "图片", value: "图片" },
-  //       { label: "视频", value: "视频" },
-  //     ],
-  //   },
-  //   colProps: { span: 12 },
-  // },
 ];

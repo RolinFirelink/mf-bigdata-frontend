@@ -10,11 +10,11 @@ interface UseAutoFocusContext {
 }
 
 export async function useAutoFocus({
-                                     getSchema,
-                                     getProps,
-                                     formElRef,
-                                     isInitedDefault
-                                   }: UseAutoFocusContext) {
+  getSchema,
+  getProps,
+  formElRef,
+  isInitedDefault,
+}: UseAutoFocusContext) {
   watchEffect(async () => {
     if (unref(isInitedDefault) || !unref(getProps).autoFocusFirstItem) {
       return;

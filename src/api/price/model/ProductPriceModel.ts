@@ -16,6 +16,16 @@ export interface ProductPrice extends BaseEntity<number> {
   unit: string;
 }
 
-export interface ReqProductPrice {}
+export interface ProductPriceTrend {
+  time: string;
+  maxPrice: number;
+  minPrice: number;
+}
+
+export interface ReqProductPrice {
+  startTime: string;
+  endTime: string;
+  flag: number;
+}
 
 export type ProductPricePageModel = PageResult<ProductPrice>;
