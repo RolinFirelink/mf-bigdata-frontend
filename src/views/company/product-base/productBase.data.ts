@@ -86,7 +86,7 @@ export const columns: BasicColumn[] = [
     title: "图片",
     dataIndex: "img",
     customRender: ({ record }) => {
-      const imgList = [record.coverImg];
+      const imgList = [record.img];
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
     },
     width: 60,
@@ -118,11 +118,8 @@ export const columns: BasicColumn[] = [
         case 5:
           text = "菜心";
           break;
-        case 6:
-          text = "预制菜";
-          break;
         case 7:
-          text = "鸽儿";
+          text = "鸽子";
           break;
       }
       const color = "#FF9800";
@@ -304,16 +301,20 @@ export const productBaseFormSchema: FormSchema[] = [
   {
     field: "attestation",
     label: "认证情况",
-    component: "ApiSelect",
+    component: "Select",
     componentProps: {
-      options: [
-        { label: "绿色", value: 1 },
-        { label: "无公害", value: 2 },
-        { label: "地理标志", value: 3 },
-        { label: "其他", value: 4 },
-      ],
+      mode: "multiple",
+      fieldNames: {
+        label: "dictLabel",
+        value: "dictValue",
+      },
     },
   },
+  // {
+  //   field: "img",
+  //   label: "封面图片",
+  //   component: "Input",
+  // },
   {
     field: "flag",
     label: "产品分类",
@@ -329,6 +330,9 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "lat",
     label: "经度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: "lng",
@@ -347,8 +351,5 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "region",
     label: "所在的区",
     component: "Input",
-    componentProps: {
-      disabled: true,
-    },
   },
 ];
