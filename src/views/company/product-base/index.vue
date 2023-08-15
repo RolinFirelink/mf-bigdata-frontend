@@ -54,26 +54,6 @@
             ]"
           />
         </template>
-        <template v-if="column.key === 'attestation'">
-          <Tag
-            v-for="item in attestation"
-            :key="item.dictCode + item.dictValue"
-            v-show="record.attestation == item.dictValue"
-            :color="item.color"
-          >
-            {{ item.dictLabel }}
-          </Tag>
-        </template>
-        <template v-if="column.key === 'flag'">
-          <Tag
-            v-for="item in flag"
-            :key="item.dictCode + item.dictValue"
-            v-show="record.flag == item.dictValue"
-            :color="item.color"
-          >
-            {{ item.dictLabel }}
-          </Tag>
-        </template>
       </template>
     </BasicTable>
     <ProductBaseModal @register="registerModal" @success="handleSuccess" />
@@ -93,9 +73,6 @@
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { uploadExcel } from "/@/api/company/ProductBase";
   import { Upload } from "ant-design-vue";
-  import { onBeforeMount } from "vue";
-  import { DictItem } from "/@/api/sys/model/DictItemModel";
-  import { getDictItems } from "/@/api/sys/DictItem";
 
   export default {
     name: "ProductBaseManagement",
@@ -133,24 +110,6 @@
           dataIndex: "action",
         },
       });
-
-      const attestation = ref<DictItem[]>([]);
-      const flag = ref<DictItem[]>([]);
-      onBeforeMount(() => {
-        getAttestation();
-        getFlag();
-      });
-
-      function getAttestation() {
-        getDictItems("mk_attestation").then((res) => {
-          attestation.value = res;
-        });
-      }
-      function getFlag() {
-        getDictItems("mk_product_type").then((res) => {
-          flag.value = res;
-        });
-      }
 
       function handleCreate() {
         openModal(true, {
@@ -206,8 +165,6 @@
         hasPermission,
         selectedIds,
         batchDelete,
-        attestation,
-        flag,
       };
     },
   };

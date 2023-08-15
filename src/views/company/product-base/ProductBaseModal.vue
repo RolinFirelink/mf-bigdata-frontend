@@ -16,7 +16,7 @@
   import { BasicModal, useModalInner } from "/@/components/general/Modal";
   import { insertProductBase, updateProductBase } from "/@/api/company/ProductBase";
   import { getCompanyOptions } from "/@/api/company/Company";
-  import { listRegionByPid } from "/@/api/sys/Region";
+  import { listRegionByPid, getRegionById } from "/@/api/sys/Region";
   export default {
     name: "ProductBaseModal",
     components: { BasicModal, BasicForm },
@@ -38,6 +38,22 @@
         load(0, 0);
         setListData();
         if (unref(isUpdate)) {
+          if (data.record.areaCode) {
+            const pids = getRegionData(data.record.areaCode);
+            const pidList = (await pids).split(",");
+            pidList.forEach((item) => {
+              console.log(item);
+            });
+            data.record.country = pidList[0];
+            load(data.record.country, 1);
+            data.record.province = pidList[1];
+            load(data.record.province, 2);
+            data.record.city = pidList[2];
+            load(data.record.city, 3);
+            data.record.area = pidList[3];
+            load(data.record.area, 4);
+            data.record.street = pidList[4];
+          }
           setFieldsValue({
             ...data.record,
           }).then();
@@ -55,6 +71,11 @@
           },
         ]).then();
       }
+
+      const getRegionData = async (id) => {
+        const data = await getRegionById(id);
+        return data.pids;
+      };
 
       const load = async (pid, index) => {
         regionList.value[index] = await listRegionByPid(pid);
@@ -110,6 +131,7 @@
       };
       async function handleSubmit() {
         let values = await validate();
+        console.log("values", values);
         if (values.country) {
           //选择了国家
           values.areaCode = values.country;

@@ -66,3 +66,13 @@ export function deleteRegion(id: string) {
 export const listRegionByPid = (pid) => {
   return defHttp.get<Array<Region>>({ url: Api.Region + `/listByPid/${pid}` });
 };
+
+/**
+ * 根据ID获取区域信息
+ *
+ * @param id
+ * @return
+ */
+export const getRegionById = (id) => {
+  return defHttp.get<Region>({ url: Api.Region + `/${id}` });
+};

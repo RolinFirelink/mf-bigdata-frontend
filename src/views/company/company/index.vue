@@ -51,16 +51,6 @@
             ]"
           />
         </template>
-        <template v-if="column.key === 'companyType'">
-          <Tag
-            v-for="item in companyType"
-            :key="item.dictCode + item.dictValue"
-            v-show="record.companyType == item.dictValue"
-            :color="item.color"
-          >
-            {{ item.dictLabel }}
-          </Tag>
-        </template>
       </template>
     </BasicTable>
     <CompanyModal @register="registerModal" @success="handleSuccess" />

@@ -1,9 +1,9 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
-// import { h } from "vue";
-// import { Tag } from "ant-design-vue";
+import { h } from "vue";
+import { Tag } from "ant-design-vue";
 import { getDictProps } from "/@/utils/DictUtils";
-
+import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
 /**
  * @description: 产品基地
  * @author cgli
@@ -37,38 +37,21 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "行政区域编码",
-    dataIndex: "areaCode",
-    width: 120,
-  },
-  {
     title: "基地详细地址",
     dataIndex: "address",
-    width: 120,
-  },
-  {
-    title: "备注",
-    dataIndex: "remark",
     width: 120,
   },
   {
     title: "基地面积",
     dataIndex: "area",
     width: 120,
+    customRender: ({ record }) => {
+      return record.area ? record.area + "亩" : "";
+    },
   },
   {
     title: "主要产物",
     dataIndex: "mainProduct",
-    width: 120,
-  },
-  {
-    title: "行政区域名称",
-    dataIndex: "areaName",
-    width: 120,
-  },
-  {
-    title: "行政区域编码",
-    dataIndex: "areaCode",
     width: 120,
   },
   {
@@ -80,30 +63,33 @@ export const columns: BasicColumn[] = [
     title: "认证情况",
     dataIndex: "attestation",
     width: 120,
-    // customRender: ({ record }) => {
-    //   let text = "";
-    //   switch (record.attestation) {
-    //     case 1:
-    //       text = "绿色";
-    //       break;
-    //     case 2:
-    //       text = "无公害";
-    //       break;
-    //     case 3:
-    //       text = "地理标志";
-    //       break;
-    //     case 4:
-    //       text = "其他";
-    //       break;
-    //   }
-    //   const color = "#FF9800";
-    //   return h(Tag, { color: color }, () => text);
-    // },
+    customRender: ({ record }) => {
+      const tags: any = [];
+      if (record.attestation) {
+        if (record.attestation.indexOf(1) !== -1) {
+          tags.push(h(Tag, { color: "#05a42d" }, () => "绿色"));
+        }
+        if (record.attestation.indexOf(2) !== -1) {
+          tags.push(h(Tag, { color: "#00b2ff" }, () => "无公害"));
+        }
+        if (record.attestation.indexOf(3) !== -1) {
+          tags.push(h(Tag, { color: "#F43067" }, () => "地理标志"));
+        }
+        if (record.attestation.indexOf(4) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "其他"));
+        }
+      }
+      return h("div", tags);
+    },
   },
   {
-    title: "封面图片",
+    title: "图片",
     dataIndex: "img",
-    width: 120,
+    customRender: ({ record }) => {
+      const imgList = [record.coverImg];
+      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
+    },
+    width: 60,
   },
   {
     title: "官网地址",
@@ -114,34 +100,34 @@ export const columns: BasicColumn[] = [
     title: "产品分类",
     dataIndex: "flag",
     width: 120,
-    // customRender: ({ record }) => {
-    //   let text = "";
-    //   switch (record.flag) {
-    //     case 1:
-    //       text = "肉鸡";
-    //       break;
-    //     case 2:
-    //       text = "柑橘";
-    //       break;
-    //     case 3:
-    //       text = "兰花";
-    //       break;
-    //     case 4:
-    //       text = "对虾";
-    //       break;
-    //     case 5:
-    //       text = "菜心";
-    //       break;
-    //     case 6:
-    //       text = "预制菜";
-    //       break;
-    //     case 7:
-    //       text = "鸽儿";
-    //       break;
-    //   }
-    //   const color = "#FF9800";
-    //   return h(Tag, { color: color }, () => text);
-    // },
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.flag) {
+        case 1:
+          text = "肉鸡";
+          break;
+        case 2:
+          text = "柑橘";
+          break;
+        case 3:
+          text = "兰花";
+          break;
+        case 4:
+          text = "对虾";
+          break;
+        case 5:
+          text = "菜心";
+          break;
+        case 6:
+          text = "预制菜";
+          break;
+        case 7:
+          text = "鸽儿";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: "城市",
@@ -181,17 +167,6 @@ export const searchFormSchema: FormSchema[] = [
     field: "flag",
     label: "产品分类",
     component: "ApiSelect",
-    // componentProps: {
-    //   options: [
-    //     { label: "肉鸡", value: 1 },
-    //     { label: "柑橘", value: 2 },
-    //     { label: "兰花", value: 3 },
-    //     { label: "对虾", value: 4 },
-    //     { label: "菜心", value: 5 },
-    //     { label: "预制菜", value: 6 },
-    //     { label: "鸽子", value: 7 },
-    //   ],
-    // },
     componentProps: getDictProps("mk_product_type"),
   },
 ];
@@ -338,12 +313,6 @@ export const productBaseFormSchema: FormSchema[] = [
         { label: "其他", value: 4 },
       ],
     },
-    // componentProps: getDictProps("mk_attestation"),
-  },
-  {
-    field: "img",
-    label: "封面图片",
-    component: "Input",
   },
   {
     field: "flag",
@@ -356,16 +325,19 @@ export const productBaseFormSchema: FormSchema[] = [
     label: "城市",
     component: "Input",
   },
-  // {
-  //   field: "lat",
-  //   label: "经度",
-  //   component: "Input",
-  // },
-  // {
-  //   field: "lng",
-  //   label: "维度",
-  //   component: "Input",
-  // },
+  {
+    field: "lat",
+    label: "经度",
+    component: "Input",
+  },
+  {
+    field: "lng",
+    label: "维度",
+    component: "Input",
+    componentProps: {
+      disabled: true,
+    },
+  },
   {
     field: "outputUnit",
     label: "产量单位",
@@ -375,5 +347,8 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "region",
     label: "所在的区",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
   },
 ];

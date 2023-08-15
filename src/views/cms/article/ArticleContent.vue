@@ -38,18 +38,29 @@
       const toolbarConfig = {};
       const editorConfig = { placeholder: "请输入内容...", MENU_CONF: {} };
       editorConfig.MENU_CONF["uploadImage"] = {
-        // 自定义选择图片
+        // 自定义选择图片函数
         async customUpload(file, insertFn) {
           const data = await uploadApi({
             file: file,
             fileName: file.name,
             isPrivate: 0,
-            path: "article",
+            path: "article/img",
           });
           insertFn(data.fileUrl, data.fileName, data.fileUrl);
         },
       };
-
+      editorConfig.MENU_CONF["uploadVideo"] = {
+        // 自定义选择图片函数
+        async customUpload(file, insertFn) {
+          const data = await uploadApi({
+            file: file,
+            fileName: file.name,
+            isPrivate: 0,
+            path: "article/video",
+          });
+          insertFn(data.fileUrl, "", "");
+        },
+      };
       // 组件销毁时，也及时销毁编辑器
       onBeforeUnmount(() => {
         const editor = editorRef.value;
