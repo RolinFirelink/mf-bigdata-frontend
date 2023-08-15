@@ -21,6 +21,7 @@ export interface ProductBase extends BaseEntity<number> {
   parentId: number;
   extendField: string;
   remark: string;
+  transactionSubject: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

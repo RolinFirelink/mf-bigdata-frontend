@@ -130,29 +130,27 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: "城市",
-    dataIndex: "city",
-    width: 120,
-  },
-  {
-    title: "经度",
-    dataIndex: "lat",
-    width: 120,
-  },
-  {
-    title: "维度",
-    dataIndex: "lng",
-    width: 120,
-  },
-  {
     title: "产量单位",
     dataIndex: "outputUnit",
     width: 120,
   },
   {
-    title: "所在的区",
-    dataIndex: "region",
+    title: "交易主体",
+    dataIndex: "transactionSubject",
     width: 120,
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.transactionSubject) {
+        case 1:
+          text = "供应商";
+          break;
+        case 2:
+          text = "采购商";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
   },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
@@ -311,6 +309,17 @@ export const productBaseFormSchema: FormSchema[] = [
         { label: "无公害", value: 2 },
         { label: "地理标志", value: 3 },
         { label: "其他", value: 4 },
+      ],
+    },
+  },
+  {
+    field: "transactionSubject",
+    label: "交易主体",
+    component: "Select",
+    componentProps: {
+      options: [
+        { label: "供应商", value: 1 },
+        { label: "采购商", value: 2 },
       ],
     },
   },
