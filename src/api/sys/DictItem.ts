@@ -1,3 +1,11 @@
+/*
+ * @Author: DuoLaAMeng Czf141931
+ * @Date: 2023-08-14 14:22:47
+ * @LastEditors: DuoLaAMeng Czf141931
+ * @LastEditTime: 2023-08-15 13:42:29
+ * @FilePath: \mf-bigdata-frontend\src\api\sys\DictItem.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /**
  * @description: 字典项
  * @author: cgli
@@ -66,4 +74,8 @@ export function deleteDictItem(id: string) {
     { url: Api.DictItem + "/" + id },
     { successMessageMode: "message" },
   );
+}
+
+export function getDictItemByCodeAndValue(dictCode: string, dictValue: string) {
+  return defHttp.get<DictItem>({ url: Api.DictItem + "/" + dictCode + "/" + dictValue });
 }

@@ -48,6 +48,9 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.area ? record.area + "亩" : "";
     },
+    customRender: ({ record }) => {
+      return record.area ? record.area + "亩" : "";
+    },
   },
   {
     title: "主要产物",
@@ -81,12 +84,36 @@ export const columns: BasicColumn[] = [
       }
       return h("div", tags);
     },
+    customRender: ({ record }) => {
+      const tags: any = [];
+      if (record.attestation) {
+        if (record.attestation.indexOf(1) !== -1) {
+          tags.push(h(Tag, { color: "#05a42d" }, () => "绿色"));
+        }
+        if (record.attestation.indexOf(2) !== -1) {
+          tags.push(h(Tag, { color: "#00b2ff" }, () => "无公害"));
+        }
+        if (record.attestation.indexOf(3) !== -1) {
+          tags.push(h(Tag, { color: "#F43067" }, () => "地理标志"));
+        }
+        if (record.attestation.indexOf(4) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "其他"));
+        }
+      }
+      return h("div", tags);
+    },
   },
   {
     title: "图片",
+    title: "图片",
     dataIndex: "img",
     customRender: ({ record }) => {
-      const imgList = [record.coverImg];
+      const imgList = [record.img];
+      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
+    },
+    width: 60,
+    customRender: ({ record }) => {
+      const imgList = [record.img];
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
     },
     width: 60,
@@ -118,11 +145,33 @@ export const columns: BasicColumn[] = [
         case 5:
           text = "菜心";
           break;
-        case 6:
-          text = "预制菜";
+        case 7:
+          text = "鸽子";
+          break;
+      }
+      const color = "#FF9800";
+      return h(Tag, { color: color }, () => text);
+    },
+    customRender: ({ record }) => {
+      let text = "";
+      switch (record.flag) {
+        case 1:
+          text = "肉鸡";
+          break;
+        case 2:
+          text = "柑橘";
+          break;
+        case 3:
+          text = "兰花";
+          break;
+        case 4:
+          text = "对虾";
+          break;
+        case 5:
+          text = "菜心";
           break;
         case 7:
-          text = "鸽儿";
+          text = "鸽子";
           break;
       }
       const color = "#FF9800";
@@ -302,16 +351,33 @@ export const productBaseFormSchema: FormSchema[] = [
   {
     field: "attestation",
     label: "认证情况",
-    component: "ApiSelect",
+    component: "Select",
     componentProps: {
-      options: [
-        { label: "绿色", value: 1 },
-        { label: "无公害", value: 2 },
-        { label: "地理标志", value: 3 },
-        { label: "其他", value: 4 },
-      ],
+      mode: "multiple",
+      fieldNames: {
+        label: "dictLabel",
+        value: "dictValue",
+      },
+    },
+    component: "Select",
+    componentProps: {
+      mode: "multiple",
+      fieldNames: {
+        label: "dictLabel",
+        value: "dictValue",
+      },
     },
   },
+  // {
+  //   field: "img",
+  //   label: "封面图片",
+  //   component: "Input",
+  // },
+  // {
+  //   field: "img",
+  //   label: "封面图片",
+  //   component: "Input",
+  // },
   {
     field: "transactionSubject",
     label: "交易主体",
