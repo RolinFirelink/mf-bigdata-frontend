@@ -31,6 +31,16 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: "起始位置",
+    dataIndex: "startAddress",
+    width: 120,
+  },
+  {
+    title: "终点位置",
+    dataIndex: "endAddress",
+    width: 120,
+  },
+  {
     title: "产品类型",
     dataIndex: "flag",
     width: 120,
@@ -74,26 +84,163 @@ export const salesFlowFormSchema: FormSchema[] = [
     field: "startLat",
     label: "起点纬度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
+    colProps: { lg: 8, md: 10 },
   },
   {
     field: "startLng",
     label: "起点经度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
+    colProps: { lg: 8, md: 10 },
   },
   {
     field: "endLat",
     label: "终点纬度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
+    colProps: { lg: 8, md: 10 },
   },
   {
     field: "endLng",
     label: "终点经度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "startCountry",
+    label: "起始国家",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "startProvince",
+    label: "起始省份",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "startCity",
+    label: "起始城市",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "startArea",
+    label: "起始地区",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "startStreet",
+    label: "起始街道",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "endCountry",
+    label: "终点国家",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "endProvince",
+    label: "终点省份",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "endCity",
+    label: "终点城市",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "endArea",
+    label: "终点地区",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
+  },
+  {
+    field: "endStreet",
+    label: "终点街道",
+    component: "Select",
+    componentProps: {
+      fieldNames: {
+        label: "name",
+        value: "id",
+      },
+    },
+    colProps: { lg: 8, md: 10 },
   },
   {
     field: "flag",
     label: "产品类型",
     component: "ApiSelect",
     componentProps: getDictProps("mk_product_type"),
+    colProps: { lg: 8, md: 10 },
   },
 ];

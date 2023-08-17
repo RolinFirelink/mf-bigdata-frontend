@@ -48,9 +48,6 @@ export const columns: BasicColumn[] = [
     customRender: ({ record }) => {
       return record.area ? record.area + "亩" : "";
     },
-    customRender: ({ record }) => {
-      return record.area ? record.area + "亩" : "";
-    },
   },
   {
     title: "主要产物",
@@ -84,34 +81,9 @@ export const columns: BasicColumn[] = [
       }
       return h("div", tags);
     },
-    customRender: ({ record }) => {
-      const tags: any = [];
-      if (record.attestation) {
-        if (record.attestation.indexOf(1) !== -1) {
-          tags.push(h(Tag, { color: "#05a42d" }, () => "绿色"));
-        }
-        if (record.attestation.indexOf(2) !== -1) {
-          tags.push(h(Tag, { color: "#00b2ff" }, () => "无公害"));
-        }
-        if (record.attestation.indexOf(3) !== -1) {
-          tags.push(h(Tag, { color: "#F43067" }, () => "地理标志"));
-        }
-        if (record.attestation.indexOf(4) !== -1) {
-          tags.push(h(Tag, { color: "#e6c805" }, () => "其他"));
-        }
-      }
-      return h("div", tags);
-    },
   },
   {
     title: "图片",
-    title: "图片",
-    dataIndex: "img",
-    customRender: ({ record }) => {
-      const imgList = [record.img];
-      return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
-    },
-    width: 60,
     customRender: ({ record }) => {
       const imgList = [record.img];
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
@@ -127,31 +99,6 @@ export const columns: BasicColumn[] = [
     title: "产品分类",
     dataIndex: "flag",
     width: 120,
-    customRender: ({ record }) => {
-      let text = "";
-      switch (record.flag) {
-        case 1:
-          text = "肉鸡";
-          break;
-        case 2:
-          text = "柑橘";
-          break;
-        case 3:
-          text = "兰花";
-          break;
-        case 4:
-          text = "对虾";
-          break;
-        case 5:
-          text = "菜心";
-          break;
-        case 7:
-          text = "鸽子";
-          break;
-      }
-      const color = "#FF9800";
-      return h(Tag, { color: color }, () => text);
-    },
     customRender: ({ record }) => {
       let text = "";
       switch (record.flag) {
@@ -361,14 +308,6 @@ export const productBaseFormSchema: FormSchema[] = [
         value: "dictValue",
       },
     },
-    component: "Select",
-    componentProps: {
-      mode: "multiple",
-      fieldNames: {
-        label: "dictLabel",
-        value: "dictValue",
-      },
-    },
   },
   // {
   //   field: "img",
@@ -395,6 +334,9 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "lat",
     label: "经度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: "lng",
@@ -413,8 +355,5 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "region",
     label: "所在的区",
     component: "Input",
-    componentProps: {
-      disabled: true,
-    },
   },
 ];
