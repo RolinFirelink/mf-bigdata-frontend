@@ -84,7 +84,6 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "图片",
-    dataIndex: "img",
     customRender: ({ record }) => {
       const imgList = [record.img];
       return h(TableImage, { size: 40, simpleShow: true, imgList: imgList });
@@ -125,6 +124,21 @@ export const columns: BasicColumn[] = [
       const color = "#FF9800";
       return h(Tag, { color: color }, () => text);
     },
+  },
+  {
+    title: "城市",
+    dataIndex: "city",
+    width: 120,
+  },
+  {
+    title: "经度",
+    dataIndex: "lat",
+    width: 120,
+  },
+  {
+    title: "维度",
+    dataIndex: "lng",
+    width: 120,
   },
   {
     title: "产量单位",
@@ -344,6 +358,9 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "lat",
     label: "经度",
     component: "Input",
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: "lng",
@@ -362,8 +379,5 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "region",
     label: "所在的区",
     component: "Input",
-    componentProps: {
-      disabled: true,
-    },
   },
 ];
