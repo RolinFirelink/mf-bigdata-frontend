@@ -1,3 +1,11 @@
+/*
+ * @Author: DuoLaAMeng Czf141931
+ * @Date: 2023-08-15 18:14:52
+ * @LastEditors: DuoLaAMeng Czf141931
+ * @LastEditTime: 2023-08-18 17:17:27
+ * @FilePath: \mf-bigdata-frontend\src\api\statistics\ProvinceSupply.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 /**
  * @description: 省份供应表
  * @author cgli
@@ -75,6 +83,18 @@ export function deleteProvinceSupply(id: string) {
 export function uploadExcel(params) {
   return defHttp.upload(
     { url: Api.ProvinceSupply + "/excelUpload", params },
+    { successMessageMode: "message" },
+  );
+}
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteProvinceSupply(ids: string) {
+  return defHttp.delete<ProvinceSupply>(
+    { url: Api.ProvinceSupply + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

@@ -2,6 +2,8 @@ import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { dateUtil } from "/@/utils/DateUtil";
 import { getDictProps } from "/@/utils/DictUtils";
+import { h } from "vue";
+import { Tag } from "ant-design-vue";
 
 /**
  * @description: 热词表
@@ -27,8 +29,32 @@ export const columns: BasicColumn[] = [
   },
   {
     title: "产品类型",
-    dataIndex: "flag",
+    dataIndex: "flags",
     width: 120,
+    customRender: ({ record }) => {
+      const tags: any = [];
+      if (record.flags) {
+        if (record.flags.indexOf(1) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "肉鸡"));
+        }
+        if (record.flags.indexOf(2) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "柑橘"));
+        }
+        if (record.flags.indexOf(3) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "兰花"));
+        }
+        if (record.flags.indexOf(4) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "对虾"));
+        }
+        if (record.flags.indexOf(5) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "菜心"));
+        }
+        if (record.flags.indexOf(7) !== -1) {
+          tags.push(h(Tag, { color: "#e6c805" }, () => "鸽子"));
+        }
+      }
+      return h("div", tags);
+    },
   },
   {
     title: "统计时间",
@@ -44,12 +70,12 @@ export const searchFormSchema: FormSchema[] = [
     component: "Input",
     colProps: { lg: 4, md: 5 },
   },
-  {
-    field: "flag",
-    label: "产品类型",
-    component: "ApiSelect",
-    componentProps: getDictProps("mk_product_type"),
-  },
+  // {
+  //   field: "flag",
+  //   label: "产品类型",
+  //   component: "ApiSelect",
+  //   componentProps: getDictProps("mk_product_type"),
+  // },
   {
     field: "sentiment",
     label: "情绪",
@@ -107,10 +133,16 @@ export const hotWordFormSchema: FormSchema[] = [
     componentProps: getDictProps("mk_article_inclined"),
   },
   {
-    field: "flag",
+    field: "flags",
     label: "产品类型",
-    component: "ApiSelect",
-    componentProps: getDictProps("mk_product_type"),
+    component: "Select",
+    componentProps: {
+      mode: "multiple",
+      fieldNames: {
+        label: "dictLabel",
+        value: "dictValue",
+      },
+    },
   },
   {
     field: "statisticalTime",

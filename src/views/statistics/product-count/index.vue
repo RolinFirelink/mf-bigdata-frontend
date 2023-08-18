@@ -14,12 +14,19 @@
           v-if="hasPermission('sys:productCount:insert')"
           >新增城市产品生产统计表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:productCount:delete')"
+          >批量删除</a-button
+        >
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/4c0a891792f54d078ca027f9a8f90298.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          href="https://www.12221.com.cn/api/storage/file/34189e16f1ed4f2092b053f209a430c2.xls"
           >下载导入模板</a
         >
       </template>
@@ -64,7 +71,11 @@
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteProductCount, getProductCountList } from "/@/api/statistics/ProductCount";
+  import {
+    deleteProductCount,
+    getProductCountList,
+    batchDeleteProductCount,
+  } from "/@/api/statistics/ProductCount";
   import { useModal } from "/@/components/general/Modal";
   import ProductCountModal from "./ProductCountModal.vue";
   import { columns, searchFormSchema } from "./productCount.data";
@@ -79,11 +90,23 @@
     name: "ProductCountManagement",
     components: { BasicTable, ProductCountModal, TableAction, Upload },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "城市产品生产统计表列表",
         api: getProductCountList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -134,6 +157,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteProductCount(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function upload(action) {
         const file = action.file;
         let fileName = file.name;
@@ -155,7 +185,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },

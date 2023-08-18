@@ -14,12 +14,19 @@
           v-if="hasPermission('sys:productBaseDayData:insert')"
           >新增产品基地每日数据</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:productBaseDayData:delete')"
+          >批量删除</a-button
+        >
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/979e168581ea428b976a7514c7c86b98.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          href="https://www.12221.com.cn/api/storage/file/62f309b6e96d43628fd0ca4093a66834.xls"
           >下载导入模板</a
         >
       </template>
@@ -67,6 +74,7 @@
   import {
     deleteProductBaseDayData,
     getProductBaseDayDataList,
+    batchDeleteProductBaseDayData,
   } from "/@/api/analyse/ProductBaseDayData";
   import { useModal } from "/@/components/general/Modal";
   import ProductBaseDayDataModal from "./ProductBaseDayDataModal.vue";
@@ -82,11 +90,23 @@
     name: "ProductBaseDayDataManagement",
     components: { BasicTable, ProductBaseDayDataModal, TableAction, Upload },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "产品基地每日数据列表",
         api: getProductBaseDayDataList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -137,6 +157,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteProductBaseDayData(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function upload(action) {
         const file = action.file;
         let fileName = file.name;
@@ -158,7 +185,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },

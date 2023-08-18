@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:originPrice:insert')"
           >新增产地价格</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:originPrice:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -56,7 +63,11 @@
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteOriginPrice, getOriginPriceList } from "/@/api/price/OriginPrice";
+  import {
+    deleteOriginPrice,
+    getOriginPriceList,
+    batchDeleteOriginPrice,
+  } from "/@/api/price/OriginPrice";
   import { useModal } from "/@/components/general/Modal";
   import OriginPriceModal from "./OriginPriceModal.vue";
   import { columns, searchFormSchema } from "./originPrice.data";
@@ -69,11 +80,23 @@
     name: "OriginPriceManagement",
     components: { BasicTable, OriginPriceModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "产地价格列表",
         api: getOriginPriceList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -124,6 +147,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteOriginPrice(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
         registerTable,
         registerModal,
@@ -131,7 +161,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },

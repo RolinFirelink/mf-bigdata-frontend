@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-10 20:24:00
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-07-10 22:40:24
+ * @LastEditTime: 2023-08-18 16:51:58
  * @FilePath: \mf-bigdata-frontend\src\api\price\OriginPrice.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -68,6 +68,18 @@ export function updateOriginPrice(originPrice: OriginPrice) {
 export function deleteOriginPrice(id: string) {
   return defHttp.delete<OriginPrice>(
     { url: Api.OriginPrice + "/" + id },
+    { successMessageMode: "message" },
+  );
+}
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteOriginPrice(ids: string) {
+  return defHttp.delete<OriginPrice>(
+    { url: Api.OriginPrice + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

@@ -66,3 +66,16 @@ export function deleteArticleCategory(id: string) {
     { successMessageMode: "message" },
   );
 }
+
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteArticleCategory(ids: string) {
+  return defHttp.delete<ArticleCategory>(
+    { url: Api.ArticleCategory + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

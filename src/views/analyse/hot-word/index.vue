@@ -11,12 +11,19 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:hotWord:insert')"
           >新增热词表</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:hotWord:delete')"
+          >批量删除</a-button
+        >
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/05e89e75b6bd41c6b020429423f4e7fe.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          href="https://www.12221.com.cn/api/storage/file/4fbdffaa282d45fd9088bd66314ce26b.xls"
           >下载导入模板</a
         >
       </template>
@@ -79,18 +86,30 @@
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
-  import { uploadExcel } from "/@/api/analyse/HotWord";
+  import { uploadExcel, batchDeleteHotWord } from "/@/api/analyse/HotWord";
   import { Upload } from "ant-design-vue";
 
   export default {
     name: "HotWordManagement",
     components: { BasicTable, HotWordModal, TableAction, Upload },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "热词表列表",
         api: getHotWordList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -148,6 +167,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteHotWord(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function upload(action) {
         const file = action.file;
         let fileName = file.name;
@@ -169,7 +195,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         sentiment,
         flag,
       };

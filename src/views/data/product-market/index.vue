@@ -1,7 +1,7 @@
 <!--
- @description: 企业生产信息表
+ @description: 批发市场表
  @author: cgli
- @date: 2023-07-11
+ @date: 2023-08-18
  @version: V1.0.0
 -->
 <template>
@@ -11,14 +11,14 @@
         <a-button
           type="primary"
           @click="handleCreate"
-          v-if="hasPermission('sys:produceInfo:insert')"
-          >新增企业生产信息表</a-button
+          v-if="hasPermission('sys:productMarket:insert')"
+          >新增批发市场表</a-button
         >
         <a-button
           :disabled="!selectedIds"
           type="danger"
           @click="batchDelete"
-          v-if="hasPermission('sys:produceInfo:delete')"
+          v-if="hasPermission('sys:productMarket:delete')"
           >批量删除</a-button
         >
         <Upload :customRequest="upload" :showUploadList="false">
@@ -26,7 +26,7 @@
         </Upload>
         <a
           class="download"
-          href="https://www.12221.com.cn/api/storage/file/ee7861ff26c24636bc9efc54a925ab4d.xls"
+          href="https://www.12221.com.cn/api/storage/file/7675910147de40bb8578506972d4ef86.xls"
           >下载导入模板</a
         >
       </template>
@@ -37,7 +37,7 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:produceInfo:update',
+                auth: 'sys:productMarket:update',
                 tooltip: '修改',
               },
               {
@@ -48,7 +48,7 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:produceInfo:delete',
+                auth: 'sys:productMarket:delete',
                 tooltip: '删除',
               },
             ]"
@@ -66,37 +66,33 @@
         </template>
       </template>
     </BasicTable>
-    <ProduceInfoModal @register="registerModal" @success="handleSuccess" />
+    <ProductMarketModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import {
-    deleteProduceInfo,
-    getProduceInfoList,
-    batchDeleteProduceInfo,
-  } from "/@/api/company/ProduceInfo";
+  import { deleteProductMarket, getProductMarketList } from "/@/api/data/ProductMarket";
   import { useModal } from "/@/components/general/Modal";
-  import ProduceInfoModal from "./ProduceInfoModal.vue";
-  import { columns, searchFormSchema } from "./produceInfo.data";
+  import ProductMarketModal from "./ProductMarketModal.vue";
+  import { columns, searchFormSchema } from "./productMarket.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
+  import { uploadExcel, batchDeleteProductMarket } from "/@/api/data/ProductMarket";
+  import { Upload } from "ant-design-vue";
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
-  import { uploadExcel } from "/@/api/company/ProduceInfo";
-  import { Upload } from "ant-design-vue";
 
   export default {
-    name: "ProduceInfoManagement",
-    components: { BasicTable, ProduceInfoModal, TableAction, Upload },
+    name: "ProductMarketManagement",
+    components: { BasicTable, ProductMarketModal, TableAction, Upload },
     setup() {
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: "企业生产信息表列表",
-        api: getProduceInfoList,
+        title: "批发市场表列表",
+        api: getProductMarketList,
         // 多选功能
         rowSelection: {
           checkStrictly: false,
@@ -148,19 +144,8 @@
       }
 
       function handleDelete(record: Recordable) {
-        deleteProduceInfo(record.id).then(() => {
+        deleteProductMarket(record.id).then(() => {
           handleSuccess();
-        });
-      }
-
-      function handleSuccess() {
-        reload();
-      }
-
-      function batchDelete() {
-        batchDeleteProduceInfo(selectedIds.value).then(() => {
-          handleSuccess();
-          selectedIds.value = "";
         });
       }
 
@@ -177,13 +162,24 @@
         });
       }
 
+      function handleSuccess() {
+        reload();
+      }
+
+      function batchDelete() {
+        batchDeleteProductMarket(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
-        upload,
         registerTable,
         registerModal,
         handleCreate,
         handleEdit,
         handleDelete,
+        upload,
         handleSuccess,
         batchDelete,
         hasPermission,
