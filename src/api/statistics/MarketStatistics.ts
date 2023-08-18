@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-17 10:24:32
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-06 18:23:00
+ * @LastEditTime: 2023-08-18 16:58:45
  * @FilePath: \mf-bigdata-frontend\src\api\statistics\MarketStatistics.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -78,6 +78,18 @@ export function deleteMarketStatistics(id: string) {
 export function uploadExcel(params) {
   return defHttp.upload(
     { url: Api.MarketStatistics + "/excelUpload", params },
+    { successMessageMode: "message" },
+  );
+}
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteMarketStatistics(ids: string) {
+  return defHttp.delete<MarketStatistics>(
+    { url: Api.MarketStatistics + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

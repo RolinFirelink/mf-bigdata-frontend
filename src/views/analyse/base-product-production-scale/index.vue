@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-07-20 18:23:36
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-10 16:27:54
+ * @LastEditTime: 2023-08-18 15:55:38
  * @FilePath: \mf-bigdata-frontend\src\views\analyse\base-product-production-scale\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -20,14 +20,21 @@
           type="primary"
           @click="handleCreate"
           v-if="hasPermission('sys:baseProductProductionScale:insert')"
-          >新增基地产品生产规模数据表</a-button
+          >新增基地产品生产规模数据</a-button
+        >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:baseProductProductionScale:delete')"
+          >批量删除</a-button
         >
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/aa4a163027bc477dbed91d26b27abe31.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          href="https://www.12221.com.cn/api/storage/file/351412afe47e428dbcc5343071da6f6d.xls"
           >下载导入模板</a
         >
       </template>
@@ -80,7 +87,10 @@
   import BaseProductProductionScaleModal from "./BaseProductProductionScaleModal.vue";
   import { columns, searchFormSchema } from "./baseProductProductionScale.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
-  import { uploadExcel } from "/@/api/analyse/BaseProductProductionScale";
+  import {
+    uploadExcel,
+    batchDeleteBaseProductProductionScale,
+  } from "/@/api/analyse/BaseProductProductionScale";
   import { Upload } from "ant-design-vue";
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
@@ -90,11 +100,23 @@
     name: "BaseProductProductionScaleManagement",
     components: { BasicTable, BaseProductProductionScaleModal, TableAction, Upload },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "基地产品生产规模数据表列表",
         api: getBaseProductProductionScaleList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -145,6 +167,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteBaseProductProductionScale(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function upload(action) {
         const file = action.file;
         let fileName = file.name;
@@ -166,7 +195,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },

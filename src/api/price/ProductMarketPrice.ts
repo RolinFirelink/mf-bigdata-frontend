@@ -2,7 +2,7 @@
  * @Author: DuoLaAMeng Czf141931
  * @Date: 2023-08-05 20:19:07
  * @LastEditors: DuoLaAMeng Czf141931
- * @LastEditTime: 2023-08-06 17:19:00
+ * @LastEditTime: 2023-08-18 16:40:13
  * @FilePath: \mf-bigdata-frontend\src\api\price\productMarketPrice.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -87,6 +87,18 @@ export function uploadExcel(params) {
       url: Api.ProductMarketPrice + "/excelUpload",
       params,
     },
+    { successMessageMode: "message" },
+  );
+}
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteProductMarketPrice(ids: string) {
+  return defHttp.delete<ProductMarketPrice>(
+    { url: Api.ProductMarketPrice + "/batch?ids=" + ids },
     { successMessageMode: "message" },
   );
 }

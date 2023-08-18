@@ -14,6 +14,13 @@
           v-if="hasPermission('sys:ArticleCategory:insert')"
           >新增文章分类</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:ArticleCategory:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -46,21 +53,37 @@
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteArticleCategory, getArticleCategoryList } from "/@/api/cms/ArticleCategory";
+  import {
+    deleteArticleCategory,
+    getArticleCategoryList,
+    batchDeleteArticleCategory,
+  } from "/@/api/cms/ArticleCategory";
   import { useModal } from "/@/components/general/Modal";
   import ArticleCategoryModal from "./ArticleCategoryModal.vue";
   import { columns, searchFormSchema } from "./articleCategory.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
-
+  import { ref } from "vue";
   export default {
     name: "ArticleCategoryManagement",
     components: { BasicTable, ArticleCategoryModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "文章分类列表",
         api: getArticleCategoryList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -100,6 +123,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteArticleCategory(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
         registerTable,
         registerModal,
@@ -107,7 +137,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
       };
     },
   };

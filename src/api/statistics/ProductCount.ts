@@ -83,3 +83,15 @@ export function uploadExcel(params) {
     { successMessageMode: "message" },
   );
 }
+/**
+ * 批量删除
+ *
+ * @param ids id数组
+ * @return
+ */
+export function batchDeleteProductCount(ids: string) {
+  return defHttp.delete<ProductCount>(
+    { url: Api.ProductCount + "/batch?ids=" + ids },
+    { successMessageMode: "message" },
+  );
+}

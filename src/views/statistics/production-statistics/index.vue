@@ -14,12 +14,19 @@
           v-if="hasPermission('sys:productionStatistics:insert')"
           >新增生产统计</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:productionStatistics:delete')"
+          >批量删除</a-button
+        >
         <Upload :customRequest="upload" :showUploadList="false">
           <a-button type="primary"> 上传数据 </a-button>
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/945e7aff77ec43b08fa7e2c11a75ff43.xls?access_token=b9be2ef8262e4e56904a05d0f5a9104c"
+          href="https://www.12221.com.cn/api/storage/file/8365943d168a44c096bca5c893794710.xls"
           >下载导入模板</a
         >
       </template>
@@ -75,18 +82,33 @@
   import { onBeforeMount, ref } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
-  import { uploadExcel } from "/@/api/statistics/ProductionStatistics";
+  import {
+    uploadExcel,
+    batchDeleteProductionStatistics,
+  } from "/@/api/statistics/ProductionStatistics";
   import { Upload } from "ant-design-vue";
 
   export default {
     name: "ProductionStatisticsManagement",
     components: { BasicTable, ProductionStatisticsModal, TableAction, Upload },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "生产统计列表",
         api: getProductionStatisticsList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -137,6 +159,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteProductionStatistics(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       function upload(action) {
         const file = action.file;
         let fileName = file.name;
@@ -158,7 +187,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },

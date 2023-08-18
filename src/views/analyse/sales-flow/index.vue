@@ -11,6 +11,13 @@
         <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:salesFlow:insert')"
           >新增销售流向</a-button
         >
+        <a-button
+          :disabled="!selectedIds"
+          type="danger"
+          @click="batchDelete"
+          v-if="hasPermission('sys:salesFlow:delete')"
+          >批量删除</a-button
+        >
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -53,7 +60,11 @@
 </template>
 <script lang="ts">
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
-  import { deleteSalesFlow, getSalesFlowList } from "/@/api/analyse/SalesFlow";
+  import {
+    deleteSalesFlow,
+    getSalesFlowList,
+    batchDeleteSalesFlow,
+  } from "/@/api/analyse/SalesFlow";
   import { useModal } from "/@/components/general/Modal";
   import SalesFlowModal from "./SalesFlowModal.vue";
   import { columns, searchFormSchema } from "./salesFlow.data";
@@ -66,11 +77,23 @@
     name: "SalesFlowManagement",
     components: { BasicTable, SalesFlowModal, TableAction },
     setup() {
+      // 多选ID数组字符串（逗号隔开）
+      const selectedIds = ref("");
       const { hasPermission } = usePermission();
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: "销售流向列表",
         api: getSalesFlowList,
+        // 多选功能
+        rowSelection: {
+          checkStrictly: false,
+          onChange: (_, selectedRows) => {
+            selectedIds.value = "";
+            selectedRows.forEach((item) => {
+              selectedIds.value += item.id + ",";
+            });
+          },
+        },
         columns,
         formConfig: {
           labelWidth: 100,
@@ -121,6 +144,13 @@
         reload();
       }
 
+      function batchDelete() {
+        batchDeleteSalesFlow(selectedIds.value).then(() => {
+          handleSuccess();
+          selectedIds.value = "";
+        });
+      }
+
       return {
         registerTable,
         registerModal,
@@ -128,7 +158,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        batchDelete,
         hasPermission,
+        selectedIds,
         flag,
       };
     },
