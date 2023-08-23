@@ -23,7 +23,7 @@
         </Upload>
         <a
           class="download"
-          href="http://49.234.45.35:8888/storage/file/1bc758887cd2411b81ea199cf79f97da.xls?access_token=e9bf7b611f8a4df7b0925fccf71caa40"
+          href="http://www.12221.com.cn/api/storage/file/ecb275ac82b944ba8c5005def592f45d.xlsx"
           >下载导入模板</a
         >
       </template>
