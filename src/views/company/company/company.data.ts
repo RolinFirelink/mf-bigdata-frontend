@@ -18,6 +18,11 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: "公司所在分类的名称",
+    dataIndex: "nameOfClassification",
+    width: 120,
+  },
+  {
     title: "法人",
     dataIndex: "juridicalPerson",
     width: 120,
@@ -43,8 +48,33 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: "省份",
+    dataIndex: "province",
+    width: 120,
+  },
+  {
+    title: "城市",
+    dataIndex: "city",
+    width: 120,
+  },
+  {
+    title: "县区",
+    dataIndex: "region",
+    width: 120,
+  },
+  {
     title: "公司地址",
     dataIndex: "address",
+    width: 120,
+  },
+  {
+    title: "业务范围",
+    dataIndex: "businessScope",
+    width: 120,
+  },
+  {
+    title: "所属会展",
+    dataIndex: "affiliatedExhibitions",
     width: 120,
   },
 ];
@@ -54,7 +84,55 @@ export const searchFormSchema: FormSchema[] = [
     field: "companyName",
     label: "公司名称",
     component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "contacts",
+    label: "联系人",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "contactPhone",
+    label: "联系电话",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "province",
+    label: "省份",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "city",
+    label: "城市",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "region",
+    label: "地区",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "nameOfClassification",
+    label: "所在分类的名称(例如：供应商名称 )",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
+  },
+  {
+    field: "businessScope",
+    label: "业务范围",
+    component: "Input",
     colProps: { lg: 4, md: 5 },
+  },
+  {
+    field: "address",
+    label: "详细地址",
+    component: "Input",
+    colProps: { lg: 4, md: 3 },
   },
 ];
 export const companyFormSchema: FormSchema[] = [
@@ -151,12 +229,32 @@ export const companyFormSchema: FormSchema[] = [
     },
   },
   {
+    field: "address",
+    label: "详细地址",
+    component: "Input",
+  },
+  {
     field: "companyType",
     label: "公司类型",
     component: "ApiSelect",
     required: true,
     componentProps: getDictProps("mk_company_type"),
     colProps: { span: 12 },
+  },
+  {
+    field: "businessScope",
+    label: "业务范围",
+    component: "Input",
+  },
+  {
+    field: "affiliatedExhibitions",
+    label: "所属会展",
+    component: "Input",
+  },
+  {
+    field: "nameOfClassification",
+    label: "所在分类的名称(例如：供应商名称 )",
+    component: "Input",
   },
   {
     field: "remark",
