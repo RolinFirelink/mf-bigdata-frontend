@@ -1,7 +1,6 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { h } from "vue";
-import { Tag } from "ant-design-vue";
 import { dateUtil } from "/@/utils/DateUtil";
 import TableImage from "/@/components/general/Table/src/components/TableImg.vue";
 import { getDictProps } from "/@/utils/DictUtils";
@@ -48,7 +47,7 @@ export const columns: BasicColumn[] = [
     width: 60,
   },
   {
-    title: "倾向",
+    title: "倾向性",
     dataIndex: "inclined",
     width: 120,
   },
@@ -61,60 +60,11 @@ export const columns: BasicColumn[] = [
     title: "状态",
     dataIndex: "status",
     width: 120,
-    customRender: ({ record }) => {
-      let text = "";
-      let color = "";
-      switch (record.status) {
-        case 0:
-          text = "草稿箱";
-          color = "grey";
-          break;
-        case 1:
-          text = "审核中";
-          color = "yellow";
-          break;
-        case 2:
-          text = "发布";
-          color = "green";
-          break;
-      }
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "是否置顶",
     dataIndex: "isTop",
     width: 120,
-    customRender: ({ record }) => {
-      const status = record.isTop;
-      const enable = ~~status === 1;
-      const color = enable ? "green" : "grey";
-      const text = enable ? "置顶" : "不置顶";
-      return h(Tag, { color: color }, () => text);
-    },
-  },
-  {
-    title: "倾向性",
-    dataIndex: "inclined",
-    width: 120,
-    customRender: ({ record }) => {
-      let color = "";
-      let text = "";
-      const inclined = record.inclined;
-      const inclinedList = [
-        { value: 1, text: "正面", color: "green" },
-        { value: 2, text: "中性", color: "yellow" },
-        { value: 3, text: "负面", color: "red" },
-      ];
-      inclinedList.forEach((item) => {
-        if (inclined === item.value) {
-          color = item.color;
-          text = item.text;
-          return;
-        }
-      });
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "点击数",
@@ -147,21 +97,6 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { lg: 8, md: 5 },
   },
   {
-    field: "flag",
-    label: "产品分类",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "肉鸡", value: 1 },
-        { label: "柑橘", value: 2 },
-        { label: "兰花", value: 3 },
-        { label: "对虾", value: 4 },
-        { label: "菜心", value: 5 },
-        { label: "鸽子", value: 7 },
-      ],
-    },
-  },
-  {
     field: "source",
     label: "来源",
     component: "Input",
@@ -192,27 +127,15 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: "inclined",
     label: "倾向性",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "正面", value: 1 },
-        { label: "中性", value: 2 },
-        { label: "负面", value: 3 },
-      ],
-    },
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_article_inclined"),
     colProps: { span: 8 },
   },
   {
     field: "status",
     label: "状态",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "草稿箱", value: 0 },
-        { label: "审核中", value: 1 },
-        { label: "发布", value: 2 },
-      ],
-    },
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_article_status"),
     colProps: { lg: 9, md: 5 },
   },
   {
@@ -278,29 +201,18 @@ export const articleFormSchema: FormSchema[] = [
   {
     field: "status",
     label: "状态",
-    component: "Select",
+    component: "ApiSelect",
     defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: "草稿", value: 0 },
-        { label: "审核中", value: 1 },
-        { label: "发布", value: 2 },
-      ],
-    },
+    componentProps: getDictProps("mk_article_status"),
     colProps: { span: 12 },
     required: true,
   },
   {
     field: "isTop",
     label: "是否置顶",
-    component: "RadioButtonGroup",
+    component: "ApiRadioGroup",
     defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: "否", value: 0 },
-        { label: "是", value: 1 },
-      ],
-    },
+    componentProps: getDictProps("mk_article_top"),
     colProps: { span: 12 },
     required: true,
   },
@@ -331,15 +243,9 @@ export const articleFormSchema: FormSchema[] = [
   {
     field: "inclined",
     label: "倾向性",
-    component: "Select",
+    component: "ApiSelect",
     defaultValue: 2,
-    componentProps: {
-      options: [
-        { label: "正面", value: 1 },
-        { label: "中性", value: 2 },
-        { label: "负面", value: 3 },
-      ],
-    },
+    componentProps: getDictProps("mk_article_inclined"),
     colProps: { span: 12 },
     required: false,
   },

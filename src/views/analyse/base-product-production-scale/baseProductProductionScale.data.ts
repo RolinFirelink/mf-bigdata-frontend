@@ -1,7 +1,7 @@
 import { BasicColumn } from "/@/components/general/Table";
 import { FormSchema } from "/@/components/general/Table";
 import { dateUtil } from "/@/utils/DateUtil";
-
+import { getDictProps } from "/@/utils/DictUtils";
 /**
  * @description: 基地产品生产规模数据表
  * @author cgli
@@ -37,27 +37,11 @@ export const columns: BasicColumn[] = [
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
-  // {
-  //   field: "baseName",
-  //   label: "基地",
-  //   component: "Input",
-  //   colProps: { lg: 4, md: 5 },
-  // },
   {
     field: "flag",
     label: "产品类别",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "肉鸡", value: 1 },
-        { label: "柑橘", value: 2 },
-        { label: "兰花", value: 3 },
-        { label: "对虾", value: 4 },
-        { label: "菜心", value: 5 },
-        { label: "预制菜", value: 6 },
-        { label: "鸽子", value: 7 },
-      ],
-    },
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
     colProps: { lg: 4, md: 5 },
   },
   {
@@ -125,18 +109,8 @@ export const baseProductProductionScaleFormSchema: FormSchema[] = [
   {
     field: "flag",
     label: "产品类型",
-    component: "Select",
-    componentProps: {
-      options: [
-        { label: "肉鸡", value: 1 },
-        { label: "柑橘", value: 2 },
-        { label: "兰花", value: 3 },
-        { label: "对虾", value: 4 },
-        { label: "菜心", value: 5 },
-        { label: "预制菜", value: 6 },
-        { label: "鸽子", value: 7 },
-      ],
-    },
+    component: "ApiSelect",
+    componentProps: getDictProps("mk_product_type"),
   },
   {
     field: "statisticalTime",

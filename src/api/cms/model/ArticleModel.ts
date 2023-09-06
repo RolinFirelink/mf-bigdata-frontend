@@ -35,12 +35,14 @@ export interface Article extends BaseEntity<number> {
 }
 
 export interface ReqArticle {
+  key: string;
   categoryId: number;
   title: string;
   author: string;
   source: string;
   startTime: string;
   endTime: string;
+  inclined: number;
 }
 
 export type ArticlePageModel = PageResult<Article>;

@@ -80,8 +80,8 @@
             load(data.record.province, 2);
             data.record.city = pidList[2];
             load(data.record.city, 3);
-            data.record.area = pidList[3];
-            load(data.record.area, 4);
+            data.record.region = pidList[3];
+            load(data.record.region, 4);
             data.record.street = pidList[4];
           }
           if (data.record.attestation) {
@@ -157,7 +157,7 @@
             },
           },
           {
-            field: "area",
+            field: "region",
             componentProps: {
               options: regionList.value[3],
               onSelect: test4,
@@ -186,7 +186,6 @@
       };
       async function handleSubmit() {
         let values = await validate();
-        console.log("values", values);
         if (values.country) {
           //选择了国家
           values.areaCode = values.country;
@@ -198,9 +197,9 @@
             if (values.city) {
               values.areaCode = values.city;
               values.city = undefined;
-              if (values.area) {
-                values.areaCode = values.area;
-                values.area = undefined;
+              if (values.region) {
+                values.areaCode = values.region;
+                values.region = undefined;
                 if (values.street) {
                   values.areaCode = values.street;
                   values.street = undefined;
@@ -209,7 +208,9 @@
             }
           }
         }
-        values.attestation = values.attestation.join(";");
+        if (values.attestation) {
+          values.attestation = values.attestation.join(";");
+        }
         values.img = imgUrl.value;
         setModalProps({ confirmLoading: true });
         if (unref(isUpdate)) {

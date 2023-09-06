@@ -1,6 +1,6 @@
 <template>
   <div :class="getClass" :style="getStyle">
-    <div :class="`${prefixCls}-image-wrapper`" :style="getImageWrapperStyle" @click="openModal">
+    <div :class="`${prefixCls}-image-wrapper`" :style="getImageWrapperStyle" @cl`ick="openModal">
       <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
         <Icon
           icon="ant-design:cloud-upload-outlined"

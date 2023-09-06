@@ -94,31 +94,6 @@ export const columns: BasicColumn[] = [
     title: "关联产品",
     dataIndex: "flag",
     width: 120,
-    customRender: ({ record }) => {
-      let text = "";
-      switch (record.flag) {
-        case 1:
-          text = "肉鸡";
-          break;
-        case 2:
-          text = "柑橘";
-          break;
-        case 3:
-          text = "兰花";
-          break;
-        case 4:
-          text = "对虾";
-          break;
-        case 5:
-          text = "菜心";
-          break;
-        case 6:
-          text = "预制菜";
-          break;
-      }
-      const color = "#FF9800";
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "备注",

@@ -111,25 +111,4 @@ export const materialCategoryFormSchema: FormSchema[] = [
     },
     colProps: { lg: 24, md: 8 },
   },
-  // {
-  //   field: "orgId",
-  //   label: "归属组织id",
-  //   component: "Input",
-  // },
-  // {
-  //   field: "flag",
-  //   label: "区分字段",
-  //   component: "Select",
-  //   componentProps: {
-  //     options: [
-  //       { label: "肉鸡", value: 1 },
-  //       { label: "柑橘", value: 2 },
-  //       { label: "兰花", value: 3 },
-  //       { label: "对虾", value: 4 },
-  //       { label: "菜心", value: 5 },
-  //       { label: "预制菜", value: 6 },
-  //       { label: "鸽子", value: 7 },
-  //     ],
-  //   },
-  // },
 ];

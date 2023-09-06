@@ -25,6 +25,7 @@ export interface ProductPriceTrend {
 export interface ReqProductPrice {
   startTime: string;
   endTime: string;
+  products: string;
   flag: number;
 }
 

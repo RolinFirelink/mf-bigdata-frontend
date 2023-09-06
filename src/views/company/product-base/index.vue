@@ -31,6 +31,16 @@
         >
       </template>
       <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'flag'">
+          <Tag
+            v-for="item in productList"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.flag == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
         <template v-if="column.key === 'action'">
           <TableAction
             :actions="[
@@ -72,12 +82,16 @@
   import { columns, searchFormSchema } from "./productBase.data";
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { uploadExcel } from "/@/api/company/ProductBase";
-  import { Upload } from "ant-design-vue";
-
+  import { Upload, Tag } from "ant-design-vue";
+  import { getDictItems } from "/@/api/sys/DictItem";
+  import { DictItem } from "/@/api/sys/model/DictItemModel";
   export default {
     name: "ProductBaseManagement",
-    components: { BasicTable, ProductBaseModal, TableAction, Upload },
+    components: { BasicTable, ProductBaseModal, TableAction, Upload, Tag },
     setup() {
+      //产品列表
+      const productList = ref<DictItem[]>([]);
+      load();
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
       const { hasPermission } = usePermission();
@@ -110,6 +124,10 @@
           dataIndex: "action",
         },
       });
+
+      async function load() {
+        productList.value = await getDictItems("mk_product_type");
+      }
 
       function handleCreate() {
         openModal(true, {
@@ -155,6 +173,7 @@
       }
 
       return {
+        productList,
         upload,
         registerTable,
         registerModal,

@@ -12,78 +12,78 @@ export const columns: BasicColumn[] = [
   {
     title: "连接名",
     dataIndex: "dbTitle",
-    width: 120
+    width: 120,
   },
   {
     title: "库类型",
     dataIndex: "dbType",
-    width: 80
+    width: 80,
   },
   {
     title: "连接池",
     dataIndex: "poolType",
-    width: 80
+    width: 80,
   },
   {
     title: "主机",
     dataIndex: "host",
-    width: 120
+    width: 120,
   },
   {
     title: "端口号",
     dataIndex: "port",
-    width: 120
+    width: 120,
   },
   {
     title: "数据库名",
     dataIndex: "dbName",
-    width: 120
+    width: 120,
   },
   {
     title: "备注",
     dataIndex: "remark",
-    width: 120
-  }
+    width: 120,
+  },
 ];
 export const searchFormSchema: FormSchema[] = [
   {
     field: "dbTitle",
     label: "连接名",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "dbType",
     label: "库类型",
     component: "ApiSelect",
     componentProps: getDictProps("sys_db_type"),
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "host",
     label: "主机",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
+    colProps: { lg: 4, md: 5 },
   },
   {
     field: "dbName",
     label: "数据库",
     component: "Input",
-    colProps: { lg: 4, md: 5 }
-  }
+    colProps: { lg: 4, md: 5 },
+  },
 ];
 export const dbConnectFormSchema: FormSchema[] = [
   {
     field: "id",
     label: "唯一ID",
     component: "Input",
-    show: false
+    show: false,
   },
   {
     field: "dbTitle",
     label: "连接名",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "dbType",
@@ -91,7 +91,7 @@ export const dbConnectFormSchema: FormSchema[] = [
     component: "ApiSelect",
     componentProps: getDictProps("sys_db_type"),
     defaultValue: 0,
-    required: true
+    required: true,
   },
   {
     field: "poolType",
@@ -99,41 +99,41 @@ export const dbConnectFormSchema: FormSchema[] = [
     component: "ApiSelect",
     componentProps: getDictProps("sys_db_pool"),
     defaultValue: "db_pool_hikari",
-    required: true
+    required: true,
   },
   {
     field: "host",
     label: "主机",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "port",
     label: "端口号",
     component: "InputNumber",
-    required: true
+    required: true,
   },
   {
     field: "dbName",
     label: "数据库名",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "username",
     label: "用户名",
     component: "Input",
-    required: true
+    required: true,
   },
   {
     field: "password",
     label: "密码",
     component: "InputPassword",
-    required: true
+    required: true,
   },
   {
     field: "remark",
     label: "备注",
-    component: "InputTextArea"
-  }
+    component: "InputTextArea",
+  },
 ];

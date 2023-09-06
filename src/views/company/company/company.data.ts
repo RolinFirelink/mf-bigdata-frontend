@@ -18,8 +18,8 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: "公司所在分类的名称",
-    dataIndex: "nameOfClassification",
+    title: "类型",
+    dataIndex: "companyType",
     width: 120,
   },
   {
@@ -113,12 +113,6 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: "region",
     label: "地区",
-    component: "Input",
-    colProps: { lg: 4, md: 3 },
-  },
-  {
-    field: "nameOfClassification",
-    label: "所在分类的名称(例如：供应商名称 )",
     component: "Input",
     colProps: { lg: 4, md: 3 },
   },

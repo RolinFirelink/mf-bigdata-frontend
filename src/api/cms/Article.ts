@@ -6,6 +6,7 @@
  */
 import { defHttp } from "/@/utils/http/axios";
 import { Article, ReqArticle, ArticlePageModel } from "/@/api/cms/model/ArticleModel";
+import { HotWord } from "../analyse/model/HotWordModel";
 
 enum Api {
   Article = "/web/cms/article",
@@ -92,4 +93,27 @@ export const getArtilce = (id: string) => {
  */
 export const getArticleContent = (id: string) => {
   return defHttp.get<string>({ url: Api.ArticleContent + "/" + id });
+};
+
+/**
+ * 舆情分析
+ *
+ * @param reqArticle
+ * @return hotWordList 热词列表
+ */
+export const analyseArticle = (reqArticle?: ReqArticle) => {
+  return defHttp.get<HotWord[]>({ url: Api.Article + "/analysis", params: reqArticle });
+};
+
+/**
+ * 舆情报表分析
+ *
+ * @param params(sources来源关键词列表)
+ * @return 舆情报表数据
+ */
+export const analyseArticlePublic = (params) => {
+  return defHttp.get<Map<string, Object>>({
+    url: Api.Article + "/analysisPublic",
+    params: params,
+  });
 };

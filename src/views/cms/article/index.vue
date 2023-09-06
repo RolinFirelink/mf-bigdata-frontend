@@ -8,16 +8,8 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" v-if="hasPermission('sys:article:insert')"
-          >新增文章</a-button
-        >
-        <a-button
-          :disabled="!selectedIds"
-          type="danger"
-          @click="batchDelete"
-          v-if="hasPermission('sys:article:delete')"
-          >批量删除</a-button
-        >
+        <a-button type="primary" @click="handleCreate">新增文章</a-button>
+        <a-button :disabled="!selectedIds" type="danger" @click="batchDelete">批量删除</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -26,7 +18,6 @@
               {
                 icon: 'ant-design:edit-outlined',
                 onClick: handleEdit.bind(null, record),
-                auth: 'sys:article:update',
                 tooltip: '修改',
               },
               {
@@ -37,15 +28,34 @@
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                auth: 'sys:article:delete',
                 tooltip: '删除',
               },
             ]"
           />
         </template>
+        <template v-if="column.key === 'status'">
+          <Tag
+            v-for="item in statusList"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.status == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
+        <template v-if="column.key === 'isTop'">
+          <Tag
+            v-for="item in topList"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.isTop == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
         <template v-if="column.key === 'inclined'">
           <Tag
-            v-for="item in inclined"
+            v-for="item in inclinedList"
             :key="item.dictCode + item.dictValue"
             v-show="record.inclined == item.dictValue"
             :color="item.color"
@@ -55,7 +65,7 @@
         </template>
         <template v-if="column.key === 'flag'">
           <Tag
-            v-for="item in flag"
+            v-for="item in productList"
             :key="item.dictCode + item.dictValue"
             v-show="record.flag == item.dictValue"
             :color="item.color"
@@ -69,7 +79,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { onBeforeMount, toRaw, ref } from "vue";
+  import { toRaw, ref } from "vue";
   import { useRouter } from "vue-router";
   import { BasicTable, useTable, TableAction } from "/@/components/general/Table";
   import { deleteArticle, getArticleList, batchDeleteArticle } from "/@/api/cms/Article";
@@ -79,11 +89,21 @@
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { getDictItems } from "/@/api/sys/DictItem";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
+  import { Tag } from "ant-design-vue";
 
   export default {
     name: "ArticleManagement",
-    components: { BasicTable, ArticleModal, TableAction },
+    components: { BasicTable, ArticleModal, TableAction, Tag },
     setup() {
+      //产品列表
+      const productList = ref<DictItem[]>([]);
+      //倾向性
+      const inclinedList = ref<DictItem[]>([]);
+      //状态
+      const statusList = ref<DictItem[]>([]);
+      //置顶
+      const topList = ref<DictItem[]>([]);
+      load();
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
       // 根据路径获取分类id
@@ -126,23 +146,11 @@
         },
       });
 
-      const inclined = ref<DictItem[]>([]);
-      const flag = ref<DictItem[]>([]);
-      onBeforeMount(() => {
-        getInclined();
-        getFlag();
-      });
-
-      function getInclined() {
-        getDictItems("mk_article_inclined").then((res) => {
-          inclined.value = res;
-        });
-      }
-
-      function getFlag() {
-        getDictItems("mk_product_type").then((res) => {
-          flag.value = res;
-        });
+      async function load() {
+        productList.value = await getDictItems("mk_product_type");
+        inclinedList.value = await getDictItems("mk_article_inclined");
+        statusList.value = await getDictItems("mk_article_status");
+        topList.value = await getDictItems("mk_article_top");
       }
 
       function handleCreate() {
@@ -185,8 +193,10 @@
         hasPermission,
         batchDelete,
         selectedIds,
-        inclined,
-        flag,
+        inclinedList,
+        productList,
+        statusList,
+        topList,
       };
     },
   };

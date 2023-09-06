@@ -64,6 +64,19 @@ export function updateDictItem(dictItem: DictItem) {
 }
 
 /**
+ * 批量修改字典项
+ *
+ * @param dictItems
+ * @return
+ */
+export function updateBatchDictItem(dictItems: DictItem[]) {
+  return defHttp.put<DictItem>(
+    { url: Api.DictItem + "/editBatch", params: dictItems },
+    { successMessageMode: "message" },
+  );
+}
+
+/**
  * 删除字典项
  *
  * @param id 唯一ID

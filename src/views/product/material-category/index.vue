@@ -6,7 +6,8 @@
 -->
 <template>
   <div>
-    <BasicTable @register="registerTable" @expand="getChildrenData">
+    <!--  @expand="getChildrenData" -->
+    <BasicTable @register="registerTable">
       <template #toolbar>
         <a-button
           type="primary"

@@ -99,31 +99,6 @@ export const columns: BasicColumn[] = [
     title: "产品分类",
     dataIndex: "flag",
     width: 120,
-    customRender: ({ record }) => {
-      let text = "";
-      switch (record.flag) {
-        case 1:
-          text = "肉鸡";
-          break;
-        case 2:
-          text = "柑橘";
-          break;
-        case 3:
-          text = "兰花";
-          break;
-        case 4:
-          text = "对虾";
-          break;
-        case 5:
-          text = "菜心";
-          break;
-        case 7:
-          text = "鸽子";
-          break;
-      }
-      const color = "#FF9800";
-      return h(Tag, { color: color }, () => text);
-    },
   },
   {
     title: "城市",
@@ -241,7 +216,7 @@ export const productBaseFormSchema: FormSchema[] = [
     },
   },
   {
-    field: "area",
+    field: "region",
     label: "地区",
     component: "Select",
     componentProps: {
@@ -322,16 +297,6 @@ export const productBaseFormSchema: FormSchema[] = [
       },
     },
   },
-  // {
-  //   field: "img",
-  //   label: "封面图片",
-  //   component: "Input",
-  // },
-  // {
-  //   field: "img",
-  //   label: "封面图片",
-  //   component: "Input",
-  // },
   {
     field: "transactionSubject",
     label: "交易主体",

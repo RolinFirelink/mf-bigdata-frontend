@@ -29,8 +29,6 @@
   import ArticleContent from "./ArticleContent.vue";
   import { uploadApi } from "/@/api/storage/Upload";
   import { CropperImage } from "/@/components/general/Cropper";
-  import { imageUrl } from "/@/utils/FileUtils";
-  import { getLocalFileUrl } from "/@/api/storage/SysFile";
   export default {
     name: "ArticleModal",
     components: { BasicModal, BasicForm, ArticleContent, CropperImage },
@@ -90,6 +88,7 @@
         articleContent.value.closeEdit();
         let values = await validate();
         // 设置文章内容
+        console.log(articleContent.value.valueHtml);
         values.content = encodeURIComponent(articleContent.value.valueHtml);
         values.coverImg = imgUrl.value;
         setModalProps({ confirmLoading: true });
@@ -113,8 +112,6 @@
       }
 
       return {
-        imageUrl,
-        getLocalFileUrl,
         imgUrl,
         uploadApi,
         updateImg,

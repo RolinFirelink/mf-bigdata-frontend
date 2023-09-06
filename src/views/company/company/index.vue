@@ -51,6 +51,16 @@
             ]"
           />
         </template>
+        <template v-if="column.key === 'companyType'">
+          <Tag
+            v-for="item in companyTypeList"
+            :key="item.dictCode + item.dictValue"
+            v-show="record.inclined == item.dictValue"
+            :color="item.color"
+          >
+            {{ item.dictLabel }}
+          </Tag>
+        </template>
       </template>
     </BasicTable>
     <CompanyModal @register="registerModal" @success="handleSuccess" />
@@ -67,14 +77,15 @@
   import { usePermission } from "/@/hooks/web/UsePermission";
   import { uploadExcel } from "/@/api/company/Company";
   import { Upload } from "ant-design-vue";
-  import { onBeforeMount } from "vue";
   import { DictItem } from "/@/api/sys/model/DictItemModel";
   import { getDictItems } from "/@/api/sys/DictItem";
-
+  import { Tag } from "ant-design-vue";
   export default {
     name: "CompanyManagement",
-    components: { BasicTable, CompanyModal, TableAction, Upload },
+    components: { BasicTable, CompanyModal, TableAction, Upload, Tag },
     setup() {
+      const companyTypeList = ref<DictItem[]>([]);
+      load();
       // 多选ID数组字符串（逗号隔开）
       const selectedIds = ref("");
       // 根据路径获取公司类型
@@ -116,15 +127,8 @@
         },
       });
 
-      const companyType = ref<DictItem[]>([]);
-      onBeforeMount(() => {
-        getCompanyType();
-      });
-
-      function getCompanyType() {
-        getDictItems("mk_company_type").then((res) => {
-          companyType.value = res;
-        });
+      async function load() {
+        companyTypeList.value = await getDictItems("mk_company_type");
       }
 
       function handleCreate() {
@@ -181,7 +185,7 @@
         hasPermission,
         selectedIds,
         batchDelete,
-        companyType,
+        companyTypeList,
       };
     },
   };
