@@ -119,3 +119,16 @@ export function batchDeleteProductPrice(ids: string) {
 export const getDailyAvgPrice = (reqProductPrice?: ReqProductPrice) => {
   return defHttp.get({ url: Api.ProductPrice + "/public/avgPrice", params: reqProductPrice });
 };
+
+/**
+ * 获取品种价格预测
+ *
+ * @params reqProductPrice
+ * @return
+ */
+export const getMarketTrendForecast = (reqProductPrice?: ReqProductPrice) => {
+  return defHttp.get({
+    url: Api.ProductPrice + "/public/getMarketTrendForecast",
+    params: reqProductPrice,
+  });
+};

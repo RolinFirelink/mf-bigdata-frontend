@@ -17,6 +17,7 @@
         </FormItem>
         <FormItem label="文章分类" style="margin-right: 40px">
           <Select
+            @change="computeTitle"
             allowClear
             v-model:value="categoryId"
             style="width: 150px"
@@ -44,7 +45,21 @@
         <Button type="primary" @click="save">生成文章内容并保存</Button>
       </div>
     </Form>
-    <div class="charts" ref="charts" id="charts" style="width: 1000px; height: 500px"></div>
+    <div
+      class="charts"
+      ref="charts"
+      id="charts"
+      style="width: 1000px; height: 500px; margin-bottom: 100px"
+    ></div>
+    <div class="article" id="article" v-show="img">
+      <p style="font-size: 20px; font-weight;: 600"> 一、{{ product }}价格分析 </p>
+      <p style="width: 1000px; line-height: 30px; font-size: 18px; text-indent: 2em">{{ text1 }}</p>
+      <p>
+        <img :src="img" style="width: 1000px; height: 500px" />
+      </p>
+      <p style="font-size: 20px; font-weight;: 600;margin-top:35px"> 二、{{ product }}价格预测 </p>
+      <p style="width: 1000px; line-height: 30px; font-size: 18px; text-indent: 2em">{{ text2 }}</p>
+    </div>
   </div>
 </template>
 
@@ -52,18 +67,22 @@
   import { Input, Form, FormItem, Button, RangePicker, Select } from "ant-design-vue";
   import { onMounted, ref } from "vue";
   import * as echarts from "echarts";
-  import { analyseArticlePublic } from "/@/api/cms/Article";
   import { uploadApi } from "/@/api/storage/Upload";
   import { getDictItems } from "/@/api/sys/dictItem";
   import { dataURLtoBlob } from "/@/utils/file/Base64Conver";
   import { insertArticle } from "/@/api/cms/Article";
-  import { getDailyAvgPrice } from "/@/api/price/ProductPrice";
+  import { getDailyAvgPrice, getMarketTrendForecast } from "/@/api/price/ProductPrice";
   import { dateUtil } from "/@/utils/DateUtil";
   import "echarts-wordcloud";
+  import { kill } from "process";
   export default {
     name: "PublicAnalysis2",
     components: { Input, Form, FormItem, Button, RangePicker, Select },
     setup() {
+      let seriesList = [];
+      const text1 = ref("");
+      const text2 = ref("");
+      const img = ref("");
       let charts;
       const categoryList = ref([
         { label: "日报", value: 7 },
@@ -85,6 +104,7 @@
       };
       const unit = ref("元/斤");
       const categoryId = ref(7);
+      const product = ref();
       const status = ref(0);
       const title = ref("周报");
       const flag = ref(2);
@@ -127,7 +147,8 @@
             "柑桔;蜜柑;沙糖桔;爱媛橙;沃柑;椪柑;皇帝柑;耙耙柑;不知火;青金桔;脆皮金桔;金桔";
           unit.value = "元/斤";
         } else if (flag.value === 8) {
-          unit.value = "元/只";
+          products.value = undefined;
+          unit.value = "元/斤";
         } else {
           products.value = undefined;
           unit.value = "元/斤";
@@ -139,28 +160,48 @@
           endTime: endTime.value,
         });
         console.log(data);
-        const xData = [];
         const dataMap = new Map();
         const xSet = new Set();
 
         if (data) {
+          //计算title
+          computeTitle();
           data.forEach((item) => {
             let list = dataMap.get(item.product);
             if (!list) {
               list = [];
             }
             xSet.add(item.time);
-            list.push(item.price);
+            list.push(item.price.toFixed(2));
             dataMap.set(item.product, list);
           });
         }
         initChart(dataMap, Array.from(xSet.values()));
       }
+      function computeTitle() {
+        productList.value.forEach((item) => {
+          if (item.dictValue === flag.value) {
+            product.value = item.dictLabel;
+            title.value = item.dictLabel + "价格";
+          }
+        });
+        if (categoryId.value != null) {
+          categoryList.value.forEach((item) => {
+            if (item.value === categoryId.value) {
+              title.value += item.label;
+            }
+          });
+        } else {
+          title.value += "报告";
+        }
+        if (startTime.value) {
+          title.value += "（" + startTime.value + " 至 " + endTime.value + "）";
+        }
+      }
       function initChart(dataMap, xData) {
-        console.log(xData);
         charts = echarts.init(document.getElementById("charts")!);
         const legendData = [];
-        const seriesList = [];
+        seriesList = [];
         dataMap.forEach((value, key) => {
           seriesList.push({
             name: key,
@@ -194,7 +235,9 @@
           });
           legendData.push(key);
         });
-
+        seriesList = seriesList.filter((item) => {
+          return item.data.length >= xData.length;
+        });
         console.log(seriesList, legendData);
         // 配置项
         const option = {
@@ -255,8 +298,134 @@
         };
         charts.setOption(option, true);
       }
-      function save() {}
+      async function save() {
+        const opt = {
+          pixelRatio: 1, // 导出的图片分辨率比例，默认为 1。
+        };
+        img.value = await upload(charts.getDataURL(opt));
+        text1.value = startTime.value != null ? startTime.value + " 至 " + endTime.value : "";
+        console.log(charts.option);
+        let i = 1;
+        const productStatusMap = new Map();
+        seriesList.forEach((item) => {
+          let avgPrice = 0;
+          item.data.forEach((item2) => (avgPrice += Number(item2)));
+          avgPrice = (avgPrice / item.data.length).toFixed(2);
+          const status = computeStatus(item.data);
+          let productStatusList = productStatusMap.get(status) || [];
+          productStatusList.push({ name: item.name, avgPrice: avgPrice });
+          productStatusMap.set(status, productStatusList);
+          text1.value +=
+            item.name +
+            "平均价格为" +
+            avgPrice +
+            unit.value +
+            (i === seriesList.length ? "。" : "、");
+          i++;
+        });
+        console.log(productStatusMap);
+        console.log("calculateOverallState", calculateOverallState(productStatusMap));
+        let j = 1;
+        text1.value += product.value + "价格总体" + calculateOverallState(productStatusMap) + "。";
+        productStatusMap.forEach((value, key) => {
+          let i = 1;
+          value.forEach((product) => {
+            text1.value += product.name + (i == value.length ? "" : "、");
+            i++;
+          });
+          text1.value += key + (j == productStatusMap.size ? "。" : "，");
+          j++;
+        });
+        text2.value = await getForecastInfo();
+        await sleep(2000);
+        const article = document.getElementById("article");
+        const content = encodeURIComponent(article?.innerHTML);
+        const data = await insertArticle({
+          title: title.value,
+          content,
+          flag: flag.value,
+          categoryId: categoryId.value,
+        });
+        console.log(data);
+      }
+      async function upload(base64) {
+        const data = await uploadApi({
+          file: dataURLtoBlob(base64),
+          fileName: "",
+          path: "article",
+          isPrivate: 0,
+        });
+        console.log(data.fileUrl);
+        return data.fileUrl;
+      }
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+      function computeStatus(data) {
+        let sum = 0;
+        for (let i = 1; i < data.length; i++) {
+          sum += data[i] - data[i - 1];
+        }
+        const k = (sum / data.length) * 100;
+        console.log("k", k);
+        if (k > 10) {
+          return "持续上涨";
+        } else if (k >= 5) {
+          return "小幅上涨";
+        } else if (k > -5) {
+          return "保持平稳";
+        } else if (k > -10) {
+          return "小幅下跌";
+        } else if (k <= -10) {
+          return "持续下跌";
+        }
+      }
+      function calculateOverallState(productStatusMap) {
+        let productStatusList = Array.from(productStatusMap.entries());
+        productStatusList.sort((a, b) => {
+          return b[1].length - a[1].length;
+        });
+        return productStatusList[0][0];
+      }
+      async function getForecastInfo() {
+        const data = await getMarketTrendForecast({
+          flag: flag.value,
+          startTime: startTime.value,
+          endTime: endTime.value,
+        });
+        let list = [];
+        if (data) {
+          data.forEach((item) => {
+            if (Number(item.product) == flag.value) {
+              list = item.productPriceTrends.map((item) => {
+                return item.value;
+              });
+            }
+          });
+        }
+        const status = computeStatus(list);
+        return "预计后续" + product.value + "价格将" + status + "，总体处于" + computeState(list);
+      }
+      function computeState(list) {
+        //得到平均价格
+        let sum = 0;
+        list.forEach((item) => {
+          sum += Number(item);
+        });
+        const avgPrice = sum / list.length;
+        let x = sum / 10;
+        let y = 0;
+        list.forEach((item) => {
+          if (item - avgPrice >= x || item - avgPrice <= x) {
+            y++;
+          }
+        });
+        return y >= list.length / 2 ? "活跃态势" : "平稳态势";
+      }
       return {
+        product,
+        text1,
+        img,
         categoryId,
         categoryList,
         ranges,
@@ -268,6 +437,8 @@
         flag,
         load,
         save,
+        computeTitle,
+        text2,
       };
     },
   };

@@ -49,11 +49,6 @@ export const columns: BasicColumn[] = [
     dataIndex: "flag",
     width: 120,
   },
-  // {
-  //   title: "逻辑删除",
-  //   dataIndex: "deleteFlag",
-  //   width: 120,
-  // },
   {
     title: "统计时间",
     dataIndex: "statisticalTime",

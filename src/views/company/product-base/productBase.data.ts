@@ -50,6 +50,11 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: "上市时间",
+    dataIndex: "timeToMarket",
+    width: 120,
+  },
+  {
     title: "主要产物",
     dataIndex: "mainProduct",
     width: 120,
@@ -251,7 +256,6 @@ export const productBaseFormSchema: FormSchema[] = [
     field: "companyId",
     label: "企业",
     component: "Select",
-    required: true,
     componentProps: {
       fieldNames: {
         label: "companyName",
@@ -283,6 +287,11 @@ export const productBaseFormSchema: FormSchema[] = [
   {
     field: "annualOutput",
     label: "年产量",
+    component: "Input",
+  },
+  {
+    field: "timeToMarket",
+    label: "上市时间",
     component: "Input",
   },
   {

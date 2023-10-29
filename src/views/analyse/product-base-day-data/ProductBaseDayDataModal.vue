@@ -48,7 +48,7 @@
         resetFields().then();
         setModalProps({ confirmLoading: false, width: "800px" });
         isUpdate.value = !!data?.isUpdate;
-        setOptions();
+        setOptions(data.record ? data.record.flag : null);
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -59,11 +59,15 @@
         !unref(isUpdate) ? "新增产品基地每日数据" : "编辑产品基地每日数据",
       );
 
-      async function setOptions() {
+      async function setOptions(flag) {
         const baseNameList = await getProductBaseOptions();
-        baseList.value = await getProductBaseOptions();
-        const materialList = await getMaterialOptions();
+        baseList.value = await getProductBaseOptions({ flag });
+        const materialList = await getMaterialOptions({ flag });
         updateSchema([
+          {
+            field: "flag",
+            componentProps: { onChange: changeProduct },
+          },
           {
             field: "baseId",
             componentProps: { options: baseList.value },
@@ -78,7 +82,10 @@
           },
         ]);
       }
-
+      function changeProduct(value) {
+        console.log(value);
+        setOptions(value);
+      }
       async function handleSubmit() {
         let values = await validate();
         baseList.value.forEach((item) => {

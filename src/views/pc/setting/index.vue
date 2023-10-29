@@ -1,6 +1,43 @@
 <template>
   <div class="container">
     <Form>
+      <FormItem label="菜单栏下的图片" style="margin-right: 30px">
+        <CropperImage
+          :uploadApi="uploadApi"
+          @del-img="optionImg = ''"
+          :value="optionImg"
+          :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+          @change="updateOptionImg"
+          width="450"
+          height="450"
+        />
+      </FormItem>
+      <FormItem label="首页舆情报告" style="margin-right: 30px">
+        <div style="float: left; margin-right: 30px">
+          <CropperImage
+            :uploadApi="uploadApi"
+            @del-img="articleImg1 = ''"
+            :value="articleImg1"
+            :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+            @change="updateArticleImg1"
+            width="380"
+            height="250"
+          />
+          <div><span>链接</span> <Input class="content" v-model:value="articleImg1Link" /> </div>
+        </div>
+        <div>
+          <CropperImage
+            :uploadApi="uploadApi"
+            @del-img="articleImg2 = ''"
+            :value="articleImg2"
+            :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
+            @change="updateArticleImg2"
+            width="380"
+            height="250"
+          />
+          <div><span>链接</span> <Input class="content" v-model:value="articleImg2Link" /> </div>
+        </div>
+      </FormItem>
       <div style="display: flex">
         <FormItem label="左边内容" style="margin-right: 30px">
           <div><span>标题：</span> <Input class="content" v-model:value="leftTitle" /> </div>
@@ -70,6 +107,7 @@
     name: "Setting",
     components: { Form, FormItem, Input, Button, CropperImage },
     setup() {
+      const optionImg = ref("");
       const leftTitle = ref("关于我们");
       const rightTitle = ref("联系我们");
       const leftContent = ref([
@@ -84,6 +122,10 @@
       const img2Name = ref("");
       const footerContent = ref("Copyright © 2023 广东特色农产品大数据 all right reserved");
       const footerICP = ref("粤ICP 备 12015709 号-16");
+      const articleImg1 = ref("");
+      const articleImg1Link = ref("");
+      const articleImg2 = ref("");
+      const articleImg2Link = ref("");
       const dataMap = new Map();
       async function load() {
         const data = await getDictItems("pc_footer_setting");
@@ -91,6 +133,7 @@
         data.forEach((item) => {
           dataMap.set(item.dictLabel, item);
         });
+        optionImg.value = dataMap.get("optionImg").dictValue;
         leftTitle.value = dataMap.get("leftTitle").dictValue;
         leftContent.value = dataMap.get("leftContent").dictValue.split(";").filter(Boolean);
         rightTitle.value = dataMap.get("rightTitle").dictValue;
@@ -101,6 +144,14 @@
         img2Name.value = dataMap.get("img2Name").dictValue;
         footerContent.value = dataMap.get("footerContent").dictValue;
         footerICP.value = dataMap.get("footerICP").dictValue;
+        console.log(
+          dataMap.get("articleImg1").dictValue.split(";"),
+          dataMap.get("articleImg2").dictValue.split(";"),
+        );
+        articleImg1.value = dataMap.get("articleImg1").dictValue.split(";")[0];
+        articleImg1Link.value = dataMap.get("articleImg1").dictValue.split(";")[1];
+        articleImg2.value = dataMap.get("articleImg2").dictValue.split(";")[0];
+        articleImg2Link.value = dataMap.get("articleImg2").dictValue.split(";")[1];
       }
       function removeContent(type, index) {
         if (type === 0) {
@@ -129,6 +180,18 @@
       function updateImg2({ data }, fileUrl) {
         console.log(data, fileUrl);
         img2.value = fileUrl;
+      }
+      function updateOptionImg({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        optionImg.value = fileUrl;
+      }
+      function updateArticleImg1({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        articleImg1.value = fileUrl;
+      }
+      function updateArticleImg2({ data }, fileUrl) {
+        console.log(data, fileUrl);
+        articleImg2.value = fileUrl;
       }
       async function save() {
         console.log(
@@ -159,6 +222,9 @@
         const img2NameItem = dataMap.get("img2Name");
         const footerContentItem = dataMap.get("footerContent");
         const footerICPItem = dataMap.get("footerICP");
+        const optionImgItem = dataMap.get("optionImg");
+        const aticleImg1Item = dataMap.get("articleImg1");
+        const aticleImg2Item = dataMap.get("articleImg2");
         leftTitleItem.dictValue = leftTitle.value;
         leftContentItem.dictValue = leftContentValue;
         rightTitleItem.dictValue = rightTitle.value;
@@ -169,6 +235,9 @@
         img2NameItem.dictValue = img2Name.value;
         footerContentItem.dictValue = footerContent.value;
         footerICPItem.dictValue = footerICP.value;
+        optionImgItem.dictValue = optionImg.value;
+        aticleImg1Item.dictValue = articleImg1.value + ";" + articleImg1Link.value;
+        aticleImg2Item.dictValue = articleImg2.value + ";" + articleImg2Link.value;
         const data = await updateBatchDictItem([
           leftTitleItem,
           leftContentItem,
@@ -180,6 +249,9 @@
           img2NameItem,
           footerContentItem,
           footerICPItem,
+          optionImgItem,
+          aticleImg1Item,
+          aticleImg2Item,
         ]);
         console.log(data);
         load();
@@ -197,13 +269,21 @@
         uploadApi,
         updateImg1,
         updateImg2,
+        updateOptionImg,
         save,
         rightTitle,
+        optionImg,
         leftTitle,
         img1Name,
         img2Name,
         footerICP,
         footerContent,
+        articleImg1,
+        articleImg2,
+        articleImg1Link,
+        articleImg2Link,
+        updateArticleImg2,
+        updateArticleImg1,
       };
     },
   };

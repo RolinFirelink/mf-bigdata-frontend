@@ -79,6 +79,6 @@ export function batchDeleteMaterial(ids: string) {
  * @param reqMaterial
  * @return
  */
-export const getMaterialOptions = () => {
-  return defHttp.get<MaterialPageModel>({ url: Api.Material + "/options" });
+export const getMaterialOptions = (reqMaterial?: ReqMaterial) => {
+  return defHttp.get<MaterialPageModel>({ url: Api.Material + "/options", params: reqMaterial });
 };

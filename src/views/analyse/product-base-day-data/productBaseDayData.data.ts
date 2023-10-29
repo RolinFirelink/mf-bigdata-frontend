@@ -10,11 +10,6 @@ import { getDictProps } from "/@/utils/DictUtils";
  * @version: V1.0.0
  */
 export const columns: BasicColumn[] = [
-  // {
-  //   title: "生产基地ID",
-  //   dataIndex: "baseId",
-  //   width: 120,
-  // },
   {
     title: "基地名称",
     dataIndex: "baseName",

@@ -58,7 +58,7 @@ export const columns: BasicColumn[] = [
       let color = "";
       switch (record.position) {
         case 0:
-          text = "小程序";
+          text = "手机端";
           color = "red";
           break;
         case 1:
@@ -141,7 +141,7 @@ export const rotationChartFormSchema: FormSchema[] = [
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: "小程序", value: 0 },
+        { label: "手机端", value: 0 },
         { label: "PC端", value: 1 },
       ],
     },

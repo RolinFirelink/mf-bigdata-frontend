@@ -81,7 +81,7 @@ export const baseProductProductionScaleFormSchema: FormSchema[] = [
   },
   {
     field: "baseId",
-    label: "基地ID",
+    label: "基地",
     component: "Select",
     componentProps: {
       fieldNames: {

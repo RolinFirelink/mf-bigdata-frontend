@@ -69,8 +69,11 @@ export function deleteProductBase(id: string) {
  *
  * @return
  */
-export const getProductBaseOptions = () => {
-  return defHttp.get<ProductBasePageModel>({ url: Api.ProductBase + "/options" });
+export const getProductBaseOptions = (reqProductBase?: ReqProductBase) => {
+  return defHttp.get<ProductBasePageModel>({
+    url: Api.ProductBase + "/options",
+    params: reqProductBase,
+  });
 };
 
 /**
