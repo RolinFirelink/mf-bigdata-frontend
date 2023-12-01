@@ -1,6 +1,6 @@
 <template>
   <Card title="数据统计" v-bind="$attrs" style="margin-top: 20px">
-    <CardGrid v-for="item in items" :key="item.id" class="!md:w-1/4 !w-full">
+    <CardGrid v-for="(item, index) in datas" :key="index" class="!md:w-1/3 !w-full">
       <div class="flex mt-2 h-10 text-secondary">
         <h2 class="ctitle">{{ item.title }}</h2>
       </div>
@@ -11,14 +11,21 @@
   </Card>
 </template>
 <script lang="ts">
-  import { defineComponent } from "vue";
+  import { defineComponent, onMounted, ref } from "vue";
   import { Card, CardGrid } from "ant-design-vue";
-  import { dataItems } from "./Data";
-
+  import { getStatisticsInfo } from "/@/api/statistics/statistics";
   export default defineComponent({
     components: { Card, CardGrid },
     setup() {
-      return { items: dataItems };
+      const datas: any = ref([]);
+      onMounted(() => {
+        load();
+      });
+      async function load() {
+        const data = await getStatisticsInfo();
+        datas.value = data;
+      }
+      return { datas };
     },
   });
 </script>

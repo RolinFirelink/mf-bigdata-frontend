@@ -6,8 +6,8 @@
       </a-button>
     </template>
     <div class="list">
-      <CardGrid v-for="item in consultationList" :key="item.id" class="!md:w-1/4 !w-full">
-        <ContentItem :item-data="item" class="content" />
+      <CardGrid v-for="item in consultationList" :key="item.id" class="!md:w-1/3 !w-full">
+        <ContentItem :item-data="item" class="home-item" />
       </CardGrid>
     </div>
   </Card>
@@ -22,32 +22,32 @@
     setup() {
       const consultationList = ref([
         {
-          name: "柑橘云图一",
+          name: "柑橘云图",
           article:
             "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
           imgUrl: "/images/charts/ganju1.png",
           path: "https://www.12221.com.cn/#/charts/ganju1",
         },
         {
-          name: "柑橘云图二",
+          name: "兰花云图",
           article:
             "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-          imgUrl: "/images/charts/ganju2.png",
-          path: "https://www.12221.com.cn/#/charts/ganju2",
+          imgUrl: "/images/charts/orchid1.png",
+          path: "https://www.12221.com.cn/#/charts/orchiid1",
         },
         {
-          name: "菜心云图一",
+          name: "海洋牧场(金鲳鱼)云图",
+          article:
+            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
+          imgUrl: "/images/charts/fish1.png",
+          path: "https://www.12221.com.cn/#/charts/fish1",
+        },
+        {
+          name: "蔬菜(菜心)云图",
           article:
             "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
           imgUrl: "/images/charts/caixin1.png",
           path: "https://www.12221.com.cn/#/charts/caixin1",
-        },
-        {
-          name: "菜心云图二",
-          article:
-            "数字化管理，实时掌握各品种分布情况以及动态数据信息，方便根据实际情况做动态数据调整。",
-          imgUrl: "/images/charts/caixin2.png",
-          path: "https://www.12221.com.cn/#/charts/caixin2",
         },
       ]);
       return { consultationList };
@@ -109,7 +109,9 @@
     flex-wrap: nowrap;
 
     .home-item {
-      width: 200px;
+      object-fit: cover;
+      width: 100%;
+      height: auto;
       margin: 0 auto;
       background-color: #ffffff;
       float: left;

@@ -34,11 +34,6 @@ export const columns: BasicColumn[] = [
     dataIndex: "productSales",
     width: 120,
   },
-  {
-    title: "生产日期",
-    dataIndex: "dateOfManufacture",
-    width: 120,
-  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -95,10 +90,5 @@ export const companyProductFormSchema: FormSchema[] = [
     field: "productSales",
     label: "产品销量",
     component: "Input",
-  },
-  {
-    field: "dateOfManufacture",
-    label: "生产日期",
-    component: "DatePicker",
   },
 ];

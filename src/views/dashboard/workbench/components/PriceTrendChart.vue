@@ -1,6 +1,21 @@
 <template>
-  <div class="content">
-    <div id="charts" ref="charts" style="width: 350px; height: 250px"> </div>
+  <div class="content" style="width: 100%">
+    <Select
+      @change="selectProduct"
+      :value="flag"
+      style="
+        color: black;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 80%;
+        margin-left: 10%;
+      "
+    >
+      <Option v-for="item in productList" :value="item.value" :key="item.value">{{
+        item.name
+      }}</Option>
+    </Select>
+    <div id="charts" ref="charts" style="width: 300%; height: 250px; margin: 0 auto"> </div>
   </div>
 </template>
 
@@ -11,10 +26,18 @@
   import { ProductPriceTrend } from "/@/api/price/model/ProductPriceModel";
   export default {
     setup() {
+      const productList = ref([
+        { name: "柑橘", value: 2 },
+        { name: "兰花", value: 3 },
+        { name: "金鲳鱼", value: 8 },
+        { name: "菜心", value: 5 },
+        { name: "肉鸡", value: 1 },
+        { name: "对虾", value: 4 },
+      ]);
       const startTime = ref("");
       const endTime = ref("");
-      const flag = ref(1);
-      const unit = ref("元/斤");
+      const flag = ref(2);
+      let unit = "元/斤";
       let data: Array<ProductPriceTrend> = [];
 
       onMounted(() => {
@@ -23,6 +46,14 @@
       });
       //请求数据
       const load = async () => {
+        const productMap = new Map();
+        productMap.set(1, { unit: "元/斤" });
+        productMap.set(2, { unit: "元/斤" });
+        productMap.set(3, { unit: "元/株" });
+        productMap.set(4, { unit: "元/斤" });
+        productMap.set(5, { unit: "元/斤" });
+        productMap.set(8, { unit: "元/斤" });
+        unit = productMap.get(Number(flag.value)).unit;
         const res = await getProductPriceTrend({
           flag: flag.value,
           startTime: startTime.value,
@@ -34,6 +65,7 @@
             return {
               time: item.time.slice(-5),
               maxPrice: item.maxPrice,
+              avgPrice: item.avgPrice,
               minPrice: item.minPrice,
             };
           });
@@ -56,9 +88,8 @@
           initCharts();
         }
       };
-      const timeChange = (startDate, endDate) => {
-        startTime.value = startDate;
-        endTime.value = endDate;
+      const selectProduct = (event) => {
+        flag.value = event.target.value;
         load();
       };
       function initCharts() {
@@ -85,7 +116,7 @@
                   '<span style="font-weight: bold;">' +
                   param.value +
                   "</span>" +
-                  unit.value +
+                  unit +
                   "</div>";
               });
               return tooltip;
@@ -93,14 +124,15 @@
           },
           grid: {
             borderWidth: 0,
-            bottom: 95,
+            bottom: 90,
+            top: 40,
           },
           legend: {
             textStyle: {
               color: "#000",
-              fontSize: 16,
+              fontSize: 14,
             },
-            data: ["最高价格", "最低价格"],
+            data: ["最高价格", "平均价格", "最低价格"],
           },
           xAxis: [
             {
@@ -112,7 +144,7 @@
               },
               axisLabel: {
                 color: "#000",
-                fontSize: 16,
+                fontSize: 14,
               },
               splitLine: {
                 show: false,
@@ -134,7 +166,7 @@
               axisLabel: {
                 interval: 0,
                 color: "#000",
-                fontSize: 16,
+                fontSize: 14,
               },
               axisLine: {
                 show: false,
@@ -149,7 +181,6 @@
             {
               name: "最高价格",
               type: "line",
-              symbolSize: 10,
               symbol: "circle",
               itemStyle: {
                 color: "red",
@@ -161,10 +192,7 @@
                   {
                     type: "max",
                     name: "最大值",
-                  },
-                  {
-                    type: "min",
-                    name: "最小值",
+                    symbolSize: 40,
                   },
                 ],
               },
@@ -173,23 +201,46 @@
               }),
             },
             {
-              name: "最低价格",
+              name: "平均价格",
               type: "line",
-              symbolSize: 10,
               symbol: "circle",
               itemStyle: {
-                color: "red",
+                color: "blue",
               },
+              //标记最值
               markPoint: {
                 label: {},
                 data: [
                   {
                     type: "max",
                     name: "最大值",
+                    symbolSize: 40,
                   },
                   {
                     type: "min",
                     name: "最小值",
+                    symbolSize: 40,
+                  },
+                ],
+              },
+              data: data.map((item) => {
+                return item.avgPrice.toFixed(2);
+              }),
+            },
+            {
+              name: "最低价格",
+              type: "line",
+              symbol: "line",
+              itemStyle: {
+                color: "green",
+              },
+              markPoint: {
+                label: {},
+                data: [
+                  {
+                    type: "min",
+                    name: "最小值",
+                    symbolSize: 40,
                   },
                 ],
               },
@@ -200,7 +251,12 @@
           ],
         };
         charts.setOption(option);
+
+        window.addEventListener("resize", function () {
+          charts.resize();
+        });
       }
+      return { flag, productList, selectProduct };
     },
   };
 </script>

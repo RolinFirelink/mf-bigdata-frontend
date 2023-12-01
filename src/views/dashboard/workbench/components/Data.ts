@@ -2,7 +2,7 @@ interface EchartItem {
   title: string;
 }
 
-interface dataItem {
+export interface dataItem {
   title: string;
   id: string;
   count: number;

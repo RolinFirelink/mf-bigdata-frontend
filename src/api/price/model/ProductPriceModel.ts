@@ -20,12 +20,13 @@ export interface ProductPriceTrend {
   time: string;
   maxPrice: number;
   minPrice: number;
+  avgPrice: number;
 }
 
 export interface ReqProductPrice {
   startTime: string;
   endTime: string;
-  products: string;
+  products?: string | undefined; //可选
   flag: number;
 }
 

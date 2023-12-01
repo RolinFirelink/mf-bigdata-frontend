@@ -11,7 +11,7 @@
         {{ setContent(itemData.article, 20) }}
       </div>
       <div class="detail">
-        <span @click="goPage(itemData.path)">查看详情 >> </span>
+        <span @click="goPage(itemData.path)" class="goDetail">查看详情 >> </span>
       </div>
     </div>
   </div>
@@ -48,9 +48,12 @@
 </script>
 
 <style scoped>
+  .goDetail {
+    cursor: pointer;
+  }
+
   .cover img {
     width: 100%;
-    height: 140px;
     object-fit: cover;
     transition: all 0.3s ease;
   }

@@ -14,11 +14,10 @@
   import { ref } from "vue";
   import { PageWrapper } from "/@/components/general/Page";
   import WorkbenchHeader from "./components/WorkbenchHeader.vue";
-  import DataCard from "./components/dataCard.vue";
-  import CloudMap from "./components/CloudMap.vue";
+  import DataCard from "./components/DataCard.vue";
   import SaleRadar from "./components/SaleRadar.vue";
+  import CloudMap from "./components/CloudMap.vue";
   const loading = ref(true);
-
   setTimeout(() => {
     loading.value = false;
   }, 1500);

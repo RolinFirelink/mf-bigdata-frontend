@@ -18,6 +18,16 @@ export const columns: BasicColumn[] = [
     dataIndex: "materialName",
     width: 120,
   },
+  {
+    title: "规格",
+    dataIndex: "productSpecifications",
+    width: 120,
+  },
+  {
+    title: "价格",
+    dataIndex: "materialPrice",
+    width: 120,
+  },
 ];
 //todo 查询条件暂时用来装样子，后面增加配置条件后修改模版
 export const searchFormSchema: FormSchema[] = [
@@ -62,5 +72,15 @@ export const materialBrandRecordFormSchema: FormSchema[] = [
         value: "id",
       },
     },
+  },
+  {
+    field: "productSpecifications",
+    label: "规格",
+    component: "Input",
+  },
+  {
+    field: "materialPrice",
+    label: "价格",
+    component: "InputNumber",
   },
 ];

@@ -16,6 +16,32 @@ enum Api {
 }
 
 /**
+ * 获取生产规模
+ *
+ * @param reqProductionData
+ * @return
+ */
+export const getScaleOfProduction = (reqProductionData?: ReqProductionData) => {
+  return defHttp.get<ProductionData[]>({
+    url: Api.ProductionData + "/public/scaleOfProduction",
+    params: reqProductionData,
+  });
+};
+
+/**
+ * 获取城市信息
+ *
+ * @param reqProductionData
+ * @return
+ */
+export const getCityDatas = (reqProductionData?: ReqProductionData) => {
+  return defHttp.get<ProductionData[]>({
+    url: Api.ProductionData + "/public",
+    params: reqProductionData,
+  });
+};
+
+/**
  * 分页列表查询
  *
  * @param reqProductionData
